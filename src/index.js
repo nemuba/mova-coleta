@@ -11,11 +11,13 @@ import { icons } from './assets/icons'
 
 import { Provider } from 'react-redux'
 import store from './store'
+import { Flip, ToastContainer } from 'react-toastify';
 
 React.icons = icons
 
 ReactDOM.render(
   <Provider store={store}>
+    <ToastContainer transition={Flip} />
     <App/>
   </Provider>,
   document.getElementById('root')

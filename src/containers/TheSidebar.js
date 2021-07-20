@@ -1,5 +1,6 @@
 import React from 'react'
 import { useSelector, useDispatch } from 'react-redux'
+import { setSlide } from '../store/sidebar'
 import {
   CCreateElement,
   CSidebar,
@@ -19,12 +20,12 @@ import navigation from './_nav'
 
 const TheSidebar = () => {
   const dispatch = useDispatch()
-  const show = useSelector(state => state.sidebarShow)
+  const show = useSelector(state => state.sidebarShow.sidebarShow)
 
   return (
     <CSidebar
       show={show}
-      onShowChange={(val) => dispatch({type: 'set', sidebarShow: val })}
+      onShowChange={(val) => dispatch(setSlide(val))}
     >
       <CSidebarBrand className="d-md-down-none" to="/">
         <CIcon
