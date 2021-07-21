@@ -22,7 +22,11 @@ const Login = () => {
   const dispatch = useDispatch()
 
   const handleSubmit = (data, { reset }) => {
+    try{
     dispatch(loginFetch(data))
+    }catch(e){
+      alert(e)
+    }
   }
 
   return (

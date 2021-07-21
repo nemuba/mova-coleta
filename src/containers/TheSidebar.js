@@ -20,11 +20,12 @@ import navigation from './_nav'
 
 const TheSidebar = () => {
   const dispatch = useDispatch()
-  const show = useSelector(state => state.sidebarShow.sidebarShow)
+  const { sidebarShow } = useSelector(state => state.sidebarShow)
+  const { user } = useSelector(state => state.auth)
 
   return (
     <CSidebar
-      show={show}
+      show={sidebarShow}
       onShowChange={(val) => dispatch(setSlide(val))}
     >
       <CSidebarBrand className="d-md-down-none" to="/">
@@ -42,7 +43,7 @@ const TheSidebar = () => {
       <CSidebarNav>
 
         <CCreateElement
-          items={navigation}
+          items={navigation[user.role]}
           components={{
             CSidebarNavDivider,
             CSidebarNavDropdown,

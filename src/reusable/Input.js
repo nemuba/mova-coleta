@@ -1,7 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { useField } from '@unform/core'
 
-
 export default function Input({ name, ...rest }) {
 
   const inputRef = useRef(null)
@@ -17,7 +16,7 @@ export default function Input({ name, ...rest }) {
 
   return (
     <>
-      <input ref={inputRef} defaultValue={defaultValue} {...rest} />
+      <input ref={inputRef} defaultValue={defaultValue} {...rest} className="form-control" />
       {error && <span style={{ color: 'red', fontSize: '12px' }}>{error}</span>}
     </>
   )

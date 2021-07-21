@@ -10,7 +10,7 @@ export function loginFetch(data) {
       .then(res => {
         login(res.headers['access-token'])
         if (isAuthenticated()) {
-          dispatch(loginAction());
+          dispatch(loginAction(res.data));
           dispatch(push('/'))
           toast.success('Logado com sucesso !')
         } else {
@@ -18,8 +18,8 @@ export function loginFetch(data) {
         }
       })
       .catch(error => {
-        dispatch(goBack())
-        console.log(error.message)
+        dispatch(push('/login'))
+        toast.success('Usuário e Senha Inválidos !')
       })
   }
 }
@@ -38,7 +38,7 @@ export function signupFetch(data) {
       .then(res => {
         login(res.headers['access-token'])
         if (isAuthenticated()) {
-          dispatch(signupAction());
+          dispatch(signupAction(res.data));
           dispatch(push('/'))
           toast.success('Conta criada com sucesso !')
         } else {
@@ -48,6 +48,20 @@ export function signupFetch(data) {
       .catch(error => {
         toast.error('Não foi possivel criar sua conta !')
         dispatch(goBack())
+        console.log(error.message)
+      })
+  }
+}
+
+export function currentUserFetch() {
+  return dispatch => {
+    api.get('/currentusers')
+      .then(res => {
+        dispatch(loginAction(res.data));
+      })
+      .catch(error => {
+        dispatch(logoutAction())
+        logout()
         console.log(error.message)
       })
   }
