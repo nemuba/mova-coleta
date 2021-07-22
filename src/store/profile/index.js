@@ -1,15 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
-  id: null,
-  user_id: null,
-  name: null,
-  email: null,
-  phone: null,
-  document: null,
-  address: {},
-  created_at: null,
-  updated_at: null
+  profile: {}
 }
 
 const profileSlice = createSlice({
@@ -17,10 +9,10 @@ const profileSlice = createSlice({
   initialState: initialState,
   reducers: {
     createAction: (state, action) => {
-      return { ...state, ...action.payload }
+      return { ...state, profile: action.payload }
     },
     updateAction: (state, action) => {
-      return { ...state, ...action.payload }
+      return { ...state, profile: action.payload }
     }
   },
 })

@@ -20,12 +20,12 @@ import { createProfile, updateProfile } from '../../../store/fetch_actions/profi
 
 const Profile = () => {
   const { user } = useSelector(state => state.auth)
-  const profile = useSelector(state => state.profile)
+  const { profile } = useSelector(state => state.profile)
   const dispatch = useDispatch()
   const formRef = useRef(null)
 
   const handleSubmit = (data) => {
-    if(data.id != null){
+    if(data.id != null && data.id !== ""){
       dispatch(updateProfile(data))
     }else{
       dispatch(createProfile(data))
