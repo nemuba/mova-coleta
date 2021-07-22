@@ -3,6 +3,7 @@ import { toast } from 'react-toastify'
 import api from '../../../services/api'
 import { isAuthenticated, login, logout } from '../../../services/auth'
 import { loginAction, logoutAction, signupAction } from '../../auth'
+import { updateAction } from '../../profile'
 
 export function loginFetch(data) {
   return dispatch => {
@@ -11,6 +12,7 @@ export function loginFetch(data) {
         login(res.headers['access-token'])
         if (isAuthenticated()) {
           dispatch(loginAction(res.data));
+          dispatch(updateAction(res.data.profile));
           dispatch(push('/'))
           toast.success('Logado com sucesso !')
         } else {
@@ -39,6 +41,7 @@ export function signupFetch(data) {
         login(res.headers['access-token'])
         if (isAuthenticated()) {
           dispatch(signupAction(res.data));
+          dispatch(updateAction(res.data.profile));
           dispatch(push('/'))
           toast.success('Conta criada com sucesso !')
         } else {
@@ -58,6 +61,7 @@ export function currentUserFetch() {
     api.get('/currentusers')
       .then(res => {
         dispatch(loginAction(res.data));
+        dispatch(updateAction(res.data.profile));
       })
       .catch(error => {
         dispatch(logoutAction())

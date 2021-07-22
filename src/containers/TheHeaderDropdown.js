@@ -4,11 +4,12 @@ import {
   CDropdownItem,
   CDropdownMenu,
   CDropdownToggle,
-  CImg
+  CImg,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { useDispatch } from 'react-redux'
 import { logoutFetch } from '../store/fetch_actions/auth'
+import { Link } from 'react-router-dom'
 
 const TheHeaderDropdown = () => {
   const dispatch = useDispatch()
@@ -41,8 +42,10 @@ const TheHeaderDropdown = () => {
         >
           <strong>Settings</strong>
         </CDropdownItem>
-        <CDropdownItem>
-          <CIcon name="cil-user" className="mfe-2" />Profile
+        <CDropdownItem >
+          <Link to="/profile">
+            <CIcon name="cil-user" className="mfe-2" />Profile
+          </Link>
         </CDropdownItem>
         <CDropdownItem>
           <CIcon name="cil-settings" className="mfe-2" />
