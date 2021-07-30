@@ -16,7 +16,7 @@ import {
 import CIcon from '@coreui/icons-react'
 import { Form } from '@unform/web'
 import { Scope } from '@unform/core'
-import { Input } from '../../../reusable'
+import { Input, InputPhone } from '../../../reusable'
 import { useDispatch, useSelector } from 'react-redux'
 import { createProfile, updateProfile } from '../../../store/fetch_actions/profile'
 
@@ -103,7 +103,7 @@ const Profile = () => {
                             <CInputGroupPrepend>
                               <CInputGroupText>Telefone</CInputGroupText>
                             </CInputGroupPrepend>
-                            <Input type="phone" id="phone" name="phone" autoComplete="phone" />
+                            <InputPhone type="phone" id="phone" name="phone" autoComplete="phone" value={profile?.phone}/>
                             <CInputGroupAppend>
                               <CInputGroupText><CIcon name="cil-phone" /></CInputGroupText>
                             </CInputGroupAppend>

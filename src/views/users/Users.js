@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import {
-  CBadge,
   CCard,
   CCardBody,
   CCardHeader,
@@ -11,23 +10,18 @@ import {
   CPagination
 } from '@coreui/react'
 
-import usersData from './UsersData'
+import { useDispatch, useSelector } from 'react-redux'
+import { listUsers } from '../../store/fetch_actions/users'
 
-const getBadge = status => {
-  switch (status) {
-    case 'Active': return 'success'
-    case 'Inactive': return 'secondary'
-    case 'Pending': return 'warning'
-    case 'Banned': return 'danger'
-    default: return 'primary'
-  }
-}
 
 const Users = () => {
   const history = useHistory()
   const queryPage = useLocation().search.match(/page=([0-9]+)/, '')
   const currentPage = Number(queryPage && queryPage[1] ? queryPage[1] : 1)
   const [page, setPage] = useState(currentPage)
+  const [pages, setPages] = useState(0)
+  const { users } = useSelector(state => state.users)
+  const dispatch = useDispatch()
 
   const pageChange = newPage => {
     currentPage !== newPage && history.push(`/users?page=${newPage}`)
@@ -37,20 +31,29 @@ const Users = () => {
     currentPage !== page && setPage(currentPage)
   }, [currentPage, page])
 
+  useEffect(() => {
+    dispatch(listUsers())
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (users) {
+      const totalPages = Math.ceil(users.length / 5)
+      setPages(totalPages)
+    }
+  }, [users])
+
   return (
     <CRow>
-      <CCol xl={6}>
+      <CCol>
         <CCard>
           <CCardHeader>
-            Users
-            <small className="text-muted"> example</small>
+            Usuários
           </CCardHeader>
           <CCardBody>
           <CDataTable
-            items={usersData}
+              items={users}
             fields={[
-              { key: 'name', _classes: 'font-weight-bold' },
-              'registered', 'role', 'status'
+              'Nome', 'Módulos', 'role', 'Criado em', 'Atualizado em'
             ]}
             hover
             striped
@@ -59,21 +62,38 @@ const Users = () => {
             clickableRows
             onRowClick={(item) => history.push(`/users/${item.id}`)}
             scopedSlots = {{
-              'status':
+              'Nome':
                 (item)=>(
                   <td>
-                    <CBadge color={getBadge(item.status)}>
-                      {item.status}
-                    </CBadge>
+                    {item?.profile?.name}
                   </td>
-                )
+                ),
+              'Módulos':
+                (item) => (
+                  <td>
+                    {item.user_modules.map(({ name }) => name).join(', ')}
+                  </td>
+                ),
+              'Criado em':
+                (item) => (
+                  <td>
+                    {item.created_at}
+                  </td>
+                ),
+              'Atualizado em':
+                (item) => (
+                  <td>
+                    {item.updated_at}
+                  </td>
+                ),
+
             }}
           />
           <CPagination
             activePage={page}
             onActivePageChange={pageChange}
-            pages={5}
-            doubleArrows={false} 
+              pages={pages}
+              doubleArrows={false}
             align="center"
           />
           </CCardBody>

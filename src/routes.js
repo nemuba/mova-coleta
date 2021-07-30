@@ -37,6 +37,7 @@ const Typography = React.lazy(() => import('./views/theme/typography/Typography'
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'));
 const Users = React.lazy(() => import('./views/users/Users'));
 const User = React.lazy(() => import('./views/users/User'));
+const NewUser = React.lazy(() => import('./views/users/NewUser'));
 const Profile = React.lazy(() => import('./views/pages/profile/Profile'));
 
 const routes = [
@@ -78,8 +79,9 @@ const routes = [
   { path: '/notifications/modals', name: 'Modals', component: Modals },
   { path: '/notifications/toaster', name: 'Toaster', component: Toaster },
   { path: '/widgets', name: 'Widgets', component: Widgets },
-  { path: '/users', exact: true,  name: 'Users', component: Users },
-  { path: '/users/:id', exact: true, name: 'User Details', component: User },
+  { path: '/users', exact: true, name: 'Usuários', component: Users },
+  { path: '/users/new', exact: true, name: 'Cadastrar usuário', component: NewUser },
+  { path: '/users/:id', exact: true, name: 'Informações do usuário', component: User },
   { path: '/profile', exact: true, name: 'Perfil', component: Profile },
 ];
 

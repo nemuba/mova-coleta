@@ -8,25 +8,35 @@ const _nav = {
       name: 'Dashboard',
       to: '/dashboard',
       icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
-      badge: {
-        color: 'info',
-        text: 'NEW',
-      }
+      // badge: {
+      //   color: 'info',
+      //   text: 'NEW',
+      // }
     },
     {
-      _tag: 'CSidebarNavTitle',
-      _children: ['Theme']
+      _tag: 'CSidebarNavDropdown',
+      name: 'Usuários',
+      route: '/users',
+      icon: 'cil-user',
+      _children: [
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'Listar',
+          icon: 'cil-clipboard',
+          to: '/users',
+        },
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'Cadastrar',
+          icon: 'cil-plus',
+          to: '/users/new',
+        },
+      ]
     },
     {
       _tag: 'CSidebarNavItem',
-      name: 'Colors',
-      to: '/theme/colors',
-      icon: 'cil-drop',
-    },
-    {
-      _tag: 'CSidebarNavItem',
-      name: 'Typography',
-      to: '/theme/typography',
+      name: 'Manutenção Coletas',
+      to: '/collects',
       icon: 'cil-pencil',
     },
     {

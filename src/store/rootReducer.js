@@ -3,12 +3,14 @@ import { combineReducers } from 'redux'
 import sidebarShowReducer from './sidebar'
 import AuthReducer from './auth'
 import ProfileReducer from './profile'
+import UsersReducer from './users'
 
 const rootReducer = (history) => combineReducers({
   router: connectRouter(history),
   sidebarShow: sidebarShowReducer,
   auth: AuthReducer,
-  profile: ProfileReducer
+  profile: ProfileReducer,
+  users: UsersReducer
 })
 
 export default rootReducer
