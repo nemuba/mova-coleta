@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import { Link } from 'react-router-dom'
 import {
   CButton,
@@ -14,18 +14,43 @@ import {
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { Form } from '@unform/web'
+import logo from '../../../assets/images/logo.png'
+import * as Yup from 'yup'
 import { Input } from  '../../../reusable'
 import { useDispatch } from 'react-redux'
 import { loginFetch } from '../../../store/fetch_actions/auth'
 
 const Login = () => {
   const dispatch = useDispatch()
+  const formRef = useRef(null)
 
-  const handleSubmit = (data, { reset }) => {
+  const handleSubmit = async (data, { reset }) => {
     try{
-    dispatch(loginFetch(data))
-    }catch(e){
-      alert(e)
+      formRef.current.setErrors({});
+
+      const schema = Yup.object().shape({
+        email: Yup.string()
+          .email()
+          .required('Email obrigatório'),
+        password: Yup.string()
+          .min(6)
+          .required('Senha obrigatória'),
+      });
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+
+      dispatch(loginFetch(data))
+    } catch (err) {
+      const validationErrors = {};
+
+      if (err instanceof Yup.ValidationError) {
+        err.inner.forEach(error => {
+          validationErrors[error.path] = error.message;
+        });
+        formRef.current.setErrors(validationErrors);
+      }
     }
   }
 
@@ -37,9 +62,9 @@ const Login = () => {
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
-                  <Form onSubmit={handleSubmit}>
-                    <h1>Login</h1>
-                    <p className="text-muted">Sign In to your account</p>
+                  <Form ref={formRef} onSubmit={handleSubmit}>
+                    <img src={logo} alt="logo" className="logo" />
+                    <p className="text-muted">Entrar</p>
                     <CInputGroup className="mb-3">
                       <CInputGroupPrepend>
                         <CInputGroupText>
@@ -54,7 +79,7 @@ const Login = () => {
                           <CIcon name="cil-lock-locked" />
                         </CInputGroupText>
                       </CInputGroupPrepend>
-                      <Input id="password" name="password" type="password" placeholder="Password" autoComplete="current-password" />
+                      <Input id="password" name="password" type="password" placeholder="Senha" autoComplete="current-password" />
                     </CInputGroup>
                     <CRow>
                       <CCol xs="6">
@@ -70,11 +95,10 @@ const Login = () => {
               <CCard className="text-white bg-primary py-5 d-md-down-none" style={{ width: '44%' }}>
                 <CCardBody className="text-center">
                   <div>
-                    <h2>Sign up</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut
-                      labore et dolore magna aliqua.</p>
+                    <h2>Criar conta</h2>
+                    <p>Ainda não criou sua conta ?</p>
                     <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>Register Now!</CButton>
+                      <CButton color="primary" className="mt-3" active tabIndex={-1}>Registrar-se</CButton>
                     </Link>
                   </div>
                 </CCardBody>

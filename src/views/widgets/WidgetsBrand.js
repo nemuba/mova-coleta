@@ -77,7 +77,7 @@ const WidgetsBrand = ({withCharts})=>{
           labels="months"
         />
       </CWidgetBrand>
-    </CCol> 
+    </CCol>
 
     <CCol sm="6" lg="3">
       <CWidgetBrand
@@ -102,7 +102,7 @@ const WidgetsBrand = ({withCharts})=>{
       </CWidgetBrand>
     </CCol>
   </CRow> :
-  
+
   <CRow>
     <CCol sm="6" lg="3">
       <CWidgetBrand

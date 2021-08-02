@@ -16,9 +16,10 @@ import {
 import CIcon from '@coreui/icons-react'
 import { Form } from '@unform/web'
 import { Scope } from '@unform/core'
-import { Input, InputPhone } from '../../../reusable'
+import { Input } from '../../../reusable'
 import { useDispatch, useSelector } from 'react-redux'
 import { createProfile, updateProfile } from '../../../store/fetch_actions/profile'
+import * as Yup from 'yup'
 
 const Profile = () => {
   const { user } = useSelector(state => state.auth)
@@ -26,11 +27,48 @@ const Profile = () => {
   const dispatch = useDispatch()
   const formRef = useRef(null)
 
-  const handleSubmit = (data) => {
-    if(data.id != null && data.id !== ""){
-      dispatch(updateProfile(data))
-    }else{
-      dispatch(createProfile(data))
+  const handleSubmit = async (data) => {
+    try {
+      const schema = Yup.object().shape({
+        id: Yup.number().nullable(),
+        user_id: Yup.number()
+          .required(),
+        name: Yup.string()
+          .required('Nome obrigatório'),
+        phone: Yup.string()
+          .required('Telefone obrigatório'),
+        document: Yup.string()
+          .required('Documento obrigatório'),
+        address_attributes: Yup.object().shape({
+          id: Yup.number().nullable(),
+          number: Yup.string().required('Número Obrigatório'),
+          street: Yup.string().required('Rua Obrigatório'),
+          neighborhood: Yup.string().required('Bairro Obrigatório'),
+          city: Yup.string().required('Cidade Obrigatório'),
+          state: Yup.string().required('Estado Obrigatório'),
+          country: Yup.string().required('País Obrigatório'),
+          zip_code: Yup.string().required('CEP Obrigatório'),
+        }),
+      });
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+
+      if (data.id != null && data.id !== "") {
+        dispatch(updateProfile(data))
+      } else {
+        dispatch(createProfile(data))
+      }
+    } catch (err) {
+      const validationErrors = {};
+
+      if (err instanceof Yup.ValidationError) {
+        err.inner.forEach(error => {
+          validationErrors[error.path] = error.message;
+        });
+        formRef.current.setErrors(validationErrors);
+      }
     }
   }
 
@@ -103,7 +141,7 @@ const Profile = () => {
                             <CInputGroupPrepend>
                               <CInputGroupText>Telefone</CInputGroupText>
                             </CInputGroupPrepend>
-                            <InputPhone type="phone" id="phone" name="phone" autoComplete="phone" value={profile?.phone}/>
+                            <Input type="phone" id="phone" name="phone" autoComplete="phone" />
                             <CInputGroupAppend>
                               <CInputGroupText><CIcon name="cil-phone" /></CInputGroupText>
                             </CInputGroupAppend>
