@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 import { Input } from '../../reusable'
 import { useHistory } from 'react-router-dom'
 import { toast } from 'react-toastify'
+
 const User = ({match}) => {
   const { users } = useSelector(state => state.users)
   const [user, setUser] = useState(null)
