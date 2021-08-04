@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { CCard, CCardBody, CCardHeader, CCol, CNav, CNavItem, CNavLink, CRow, CTabContent, CTabPane, CTabs } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import Collector from './collector/Collector'
-import Business from './business/Business'
-import Customer from './customer/Customer'
+import Collector from 'src/views/users/collector/Collector'
+import Business from 'src/views/users/business/Business'
+import Customer from 'src/views/users/customer/Customer'
 
 
 const NewUser = () => {
