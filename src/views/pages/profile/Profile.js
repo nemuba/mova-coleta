@@ -29,8 +29,9 @@ const Profile = () => {
 
   const handleSubmit = async (data) => {
     try {
+      console.log(data)
       const schema = Yup.object().shape({
-        id: Yup.number().nullable(),
+        id: Yup.string().nullable(),
         user_id: Yup.number()
           .required(),
         name: Yup.string()
@@ -40,7 +41,7 @@ const Profile = () => {
         document: Yup.string()
           .required('Documento obrigatório'),
         address_attributes: Yup.object().shape({
-          id: Yup.number().nullable(),
+          id: Yup.string().nullable(),
           number: Yup.string().required('Número Obrigatório'),
           street: Yup.string().required('Rua Obrigatório'),
           neighborhood: Yup.string().required('Bairro Obrigatório'),
@@ -61,6 +62,7 @@ const Profile = () => {
         dispatch(createProfile(data))
       }
     } catch (err) {
+      console.log(err)
       const validationErrors = {};
 
       if (err instanceof Yup.ValidationError) {

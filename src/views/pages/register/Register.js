@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useRef } from 'react'
 import {
   CButton,
   CCard,
@@ -17,12 +17,38 @@ import { Input } from '../../../reusable'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import { signupFetch } from '../../../store/fetch_actions/auth'
+import * as Yup from 'yup'
 
 const Register = () => {
   const dispatch = useDispatch()
+  const formRef = useRef(null)
 
-  const handleSubmit = (data) => {
-    dispatch(signupFetch(data))
+  const handleSubmit = async (data) => {
+    console.log(data)
+    try {
+      formRef.current.setErrors({});
+
+      const schema = Yup.object().shape({
+        email: Yup.string().email().required('Email obrigatório'),
+        password: Yup.string().required('Senha Obrigatória'),
+        password_confirmation: Yup.mixed().oneOf([Yup.ref('password')], 'Confirmação de Senha Obrigatória'),
+      });
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+
+      dispatch(signupFetch(data))
+    } catch (err) {
+      const validationErrors = {};
+      if (err instanceof Yup.ValidationError) {
+        err.inner.forEach(error => {
+          validationErrors[error.path] = error.message;
+        });
+        formRef.current.setErrors(validationErrors);
+      }
+    }
+
   }
 
 
@@ -33,14 +59,14 @@ const Register = () => {
           <CCol md="9" lg="7" xl="6">
             <CCard className="mx-4">
               <CCardBody className="p-4">
-                <Form onSubmit={handleSubmit}>
-                  <h1>Register</h1>
-                  <p className="text-muted">Create your account</p>
+                <Form onSubmit={handleSubmit} ref={formRef}>
+                  <h1>Registrar-se</h1>
+                  <p className="text-muted">Crie uma conta</p>
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
                       <CInputGroupText>@</CInputGroupText>
                     </CInputGroupPrepend>
-                    <Input name="email" type="text" placeholder="Email" autoComplete="email" />
+                    <Input id="email" name="email" type="text" placeholder="Email" autoComplete="email" />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
@@ -48,7 +74,7 @@ const Register = () => {
                         <CIcon name="cil-lock-locked" />
                       </CInputGroupText>
                     </CInputGroupPrepend>
-                    <Input name="password" type="password" placeholder="Password" autoComplete="new-password" />
+                    <Input id="password" name="password" type="password" placeholder="Senha" autoComplete="new-password" />
                   </CInputGroup>
                   <CInputGroup className="mb-4">
                     <CInputGroupPrepend>
@@ -56,9 +82,9 @@ const Register = () => {
                         <CIcon name="cil-lock-locked" />
                       </CInputGroupText>
                     </CInputGroupPrepend>
-                    <Input name="password_confirmation" type="password" placeholder="Repeat password" autoComplete="new-password" />
+                    <Input id="password-confirmation" name="password_confirmation" type="password" placeholder="Repita Senha" autoComplete="new-password" />
                   </CInputGroup>
-                  <CButton type="submit" color="success" block>Create Account</CButton>
+                  <CButton type="submit" color="success" block>Criar conta</CButton>
                 </Form>
               </CCardBody>
               <CCardFooter className="p-4">

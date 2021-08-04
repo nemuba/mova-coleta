@@ -4,17 +4,25 @@ import { Form } from '@unform/web'
 import { Scope } from '@unform/core'
 import { useSelector } from 'react-redux'
 import { Input } from '../../reusable'
-
+import { useHistory } from 'react-router-dom'
+import { toast } from 'react-toastify'
 const User = ({match}) => {
   const { users } = useSelector(state => state.users)
   const [user, setUser] = useState(null)
   const formRef = useRef(null)
+  const history = useHistory()
 
   useEffect(() => {
     if (users && match.params.id) {
-      setUser(users.find(u => u.id === Number(match.params.id)))
+      const findUser = users.find(user => user.id === Number(match.params.id))
+      if (findUser) {
+        setUser(findUser)
+      } else {
+        toast.warn('Usuário não encontrado')
+        history.push(`/users`)
+      }
     }
-  }, [users, match.params.id])
+  }, [users, match.params.id, history])
 
   useEffect(() => {
     if (user) {
