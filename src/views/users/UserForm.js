@@ -138,7 +138,7 @@ const UserForm = ({ title, role }) => {
               <CInputGroup className="mb-4">
                 <CInputGroupPrepend>
                   <CInputGroupText>
-                    CPF/CNPJ
+                    { role === 'business' ? 'CNPJ' : 'CPF'}
                   </CInputGroupText>
                 </CInputGroupPrepend>
                 <Input id={`profile-document-${role}`} name="document" type="text" placeholder="Documento(CPF/CNPJ)" autoComplete="Documento" />
