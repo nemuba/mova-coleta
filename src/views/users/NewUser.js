@@ -1,10 +1,11 @@
 import React, { useState } from 'react'
 import { CCard, CCardBody, CCardHeader, CCol, CNav, CNavItem, CNavLink, CRow, CTabContent, CTabPane, CTabs } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
+import { retry } from '../../services/functions'
 
-const Collector = React.lazy(() => import('./collector/Collector'))
-const Business = React.lazy(() => import('./business/Business'))
-const Customer = React.lazy(() => import('./customer/Customer'))
+const Collector = React.lazy(() => retry(() => import('./collector/Collector')))
+const Business = React.lazy(() => retry(() => import('./business/Business')))
+const Customer = React.lazy(() => retry(() => import('./customer/Customer')))
 
 const NewUser = () => {
 

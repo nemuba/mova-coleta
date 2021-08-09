@@ -1,6 +1,8 @@
 
 import React from 'react';
-import UserForm from '../UserForm';
+import { retry } from '../../../services/functions';
+
+const UserForm = React.lazy(() => retry(() => import('../UserForm')));
 
 
 const Customer = () => {
