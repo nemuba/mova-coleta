@@ -25,12 +25,22 @@ const UserForm = ({ title, role }) => {
           email: Yup.string().email().required('Email Obrigatório'),
           phone: Yup.string().required('Telefone Obrigatório'),
           document: Yup.string().required('Número de documento obrigatório'),
+          address_attributes: Yup.object().shape({
+            street: Yup.string().required('Rua Obrigatória'),
+            number: Yup.string().required('Número Obrigatório'),
+            neighborhood: Yup.string().required('Bairro Obrigatório'),
+            city: Yup.string().required('Cidade Obrigatória'),
+            state: Yup.string().required('Estado Obrigatório'),
+            country: Yup.string().required('País Obrigatório'),
+            zip_code: Yup.string().required('CEP Obrigatório')
+          })
         }),
       });
 
       await schema.validate(data, {
         abortEarly: false,
       });
+
 
       dispatch(createUser(data))
 
@@ -147,6 +157,100 @@ const UserForm = ({ title, role }) => {
                 </CInputGroupAppend>
               </CInputGroup>
             </CFormGroup>
+            <Scope path="address_attributes">
+              <h5 className="mt-3">Informações de Endereço</h5>
+              <CFormGroup>
+                <CInputGroup className="mb-4">
+                  <CInputGroupPrepend>
+                    <CInputGroupText>
+                      Rua
+                    </CInputGroupText>
+                  </CInputGroupPrepend>
+                  <Input id={`address-street-${role}`} name="street" type="text" placeholder="Rua" autoComplete="Rua" />
+                  <CInputGroupAppend>
+                    <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
+                  </CInputGroupAppend>
+                </CInputGroup>
+              </CFormGroup>
+              <CFormGroup>
+                <CInputGroup className="mb-4">
+                  <CInputGroupPrepend>
+                    <CInputGroupText>
+                      Número
+                    </CInputGroupText>
+                  </CInputGroupPrepend>
+                  <Input id={`address-number-${role}`} name="number" type="text" placeholder="Número" autoComplete="Número" />
+                  <CInputGroupAppend>
+                    <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
+                  </CInputGroupAppend>
+                </CInputGroup>
+              </CFormGroup>
+              <CFormGroup>
+                <CInputGroup className="mb-4">
+                  <CInputGroupPrepend>
+                    <CInputGroupText>
+                      Bairro
+                    </CInputGroupText>
+                  </CInputGroupPrepend>
+                  <Input id={`address-neighbor-${role}`} name="neighborhood" type="text" placeholder="Bairro" autoComplete="Bairro" />
+                  <CInputGroupAppend>
+                    <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
+                  </CInputGroupAppend>
+                </CInputGroup>
+              </CFormGroup>
+              <CFormGroup>
+                <CInputGroup className="mb-4">
+                  <CInputGroupPrepend>
+                    <CInputGroupText>
+                      Cidade
+                    </CInputGroupText>
+                  </CInputGroupPrepend>
+                  <Input id={`address-city-${role}`} name="city" type="text" placeholder="Cidade" autoComplete="Cidade" />
+                  <CInputGroupAppend>
+                    <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
+                  </CInputGroupAppend>
+                </CInputGroup>
+              </CFormGroup>
+              <CFormGroup>
+                <CInputGroup className="mb-4">
+                  <CInputGroupPrepend>
+                    <CInputGroupText>
+                      Estado
+                    </CInputGroupText>
+                  </CInputGroupPrepend>
+                  <Input id={`address-state-${role}`} name="state" type="text" placeholder="Estado" autoComplete="Estado" />
+                  <CInputGroupAppend>
+                    <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
+                  </CInputGroupAppend>
+                </CInputGroup>
+              </CFormGroup>
+              <CFormGroup>
+                <CInputGroup className="mb-4">
+                  <CInputGroupPrepend>
+                    <CInputGroupText>
+                      Pais
+                    </CInputGroupText>
+                  </CInputGroupPrepend>
+                  <Input id={`address-country-${role}`} name="country" type="text" placeholder="Pais" autoComplete="Pais" />
+                  <CInputGroupAppend>
+                    <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
+                  </CInputGroupAppend>
+                </CInputGroup>
+              </CFormGroup>
+              <CFormGroup>
+                <CInputGroup className="mb-4">
+                  <CInputGroupPrepend>
+                    <CInputGroupText>
+                      CEP
+                    </CInputGroupText>
+                  </CInputGroupPrepend>
+                  <Input id={`address-zipcode-${role}`} name="zip_code" type="text" placeholder="CEP" autoComplete="CEP" />
+                  <CInputGroupAppend>
+                    <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
+                  </CInputGroupAppend>
+                </CInputGroup>
+              </CFormGroup>
+            </Scope>
           </Scope>
           <CFormGroup>
             <CButton color="primary" type="submit" className="mb-2">Cadastrar</CButton>
