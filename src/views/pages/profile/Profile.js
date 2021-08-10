@@ -22,7 +22,6 @@ import { createProfile, updateProfile } from '../../../store/fetch_actions/profi
 import * as Yup from 'yup'
 
 const Profile = () => {
-  const { user } = useSelector(state => state.auth)
   const { profile } = useSelector(state => state.profile)
   const dispatch = useDispatch()
   const formRef = useRef(null)
@@ -32,8 +31,6 @@ const Profile = () => {
       console.log(data)
       const schema = Yup.object().shape({
         id: Yup.string().nullable(),
-        user_id: Yup.string()
-          .required(),
         email: Yup.string().email().required('Email obrigatório'),
         name: Yup.string()
           .required('Nome obrigatório'),
@@ -76,10 +73,9 @@ const Profile = () => {
   }
 
  useEffect(() => {
-   if (user || profile) {
+   if (profile) {
       formRef.current.setData({
         id: profile?.id,
-        user_id: user?.id || profile?.user_id,
         name: profile?.name,
         email: profile?.email,
         phone: profile?.phone,
@@ -96,7 +92,7 @@ const Profile = () => {
         }
       });
     }
- }, [user, profile]);
+ }, [profile]);
 
   return (
     <CContainer>
@@ -115,7 +111,6 @@ const Profile = () => {
                     </CCardHeader>
                     <CCardBody>
                       <Form onSubmit={handleSubmit} ref={formRef}>
-                        <Input name="user_id" hidden />
                         <Input name="id" hidden />
                         <CFormGroup>
                           <CInputGroup>
