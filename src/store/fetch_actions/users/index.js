@@ -46,7 +46,7 @@ export function deleteUser(data) {
   return dispatch => {
     api.delete(`/collect/users/${data.id}`)
       .then(res => {
-        dispatch(deleteAction(res.data))
+        dispatch(deleteAction(data))
         toast.success('Usuário deletado !')
       })
       .catch(error => {

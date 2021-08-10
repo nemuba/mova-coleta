@@ -9,6 +9,9 @@ import { toast } from 'react-toastify'
 import { updateUser } from '../../store/fetch_actions/users'
 import * as Yup from 'yup'
 import { listModules } from '../../store/fetch_actions/system_modules'
+import { retry } from '../../services/functions'
+
+const Modal = React.lazy(() => retry(() => import('./Modal')))
 
 const roles = [
   {
@@ -103,7 +106,7 @@ const User = ({match}) => {
     }
   }
 
-  const handleSubmit = async (data, { reset }) => {
+  const handleSubmit = async (data) => {
     try {
       formRef.current.setErrors({});
 
@@ -135,7 +138,6 @@ const User = ({match}) => {
 
       dispatch(updateUser(user_data))
 
-      // reset()
     } catch (err) {
       const validationErrors = {};
 
@@ -158,6 +160,7 @@ const User = ({match}) => {
         <CCard>
           <CCardHeader>
             Perfil - Informações do Usuário
+
           </CCardHeader>
           <CCardBody>
             <Form ref={formRef} onSubmit={handleSubmit}>
@@ -266,6 +269,7 @@ const User = ({match}) => {
               </Scope>
               <CFormGroup>
                 <CButton type="submit" color="primary" className="mt-2">Salvar</CButton>
+                <Modal user={user} title={'Excluir usuário ?'} />
               </CFormGroup>
               <CInputGroup className="mt-3">
                 <CLink className="text-danger" to="/users">Voltar</CLink>

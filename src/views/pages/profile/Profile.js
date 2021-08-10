@@ -114,7 +114,7 @@ const Profile = () => {
                     </CCardHeader>
                     <CCardBody>
                       <Form onSubmit={handleSubmit} ref={formRef}>
-                        <Input name="user_id" hidden value={user?.id} />
+                        <Input name="user_id" hidden />
                         <Input name="id" hidden />
                         <CFormGroup>
                           <CInputGroup>

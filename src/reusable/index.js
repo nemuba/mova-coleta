@@ -1,8 +1,12 @@
-import DocsLink from './DocsLink'
-import ProtectedRouter from './ProtectedRouter'
-import Input from './Input'
-import InputPhone from './InputPhone'
-import SelectInput from './SelectInput'
+import React from 'react';
+import { retry } from '../services/functions';
+
+const DocsLink = React.lazy(() => retry(() => import('./DocsLink')))
+const ProtectedRouter = React.lazy(() => retry(() => import('./ProtectedRouter')))
+const Input = React.lazy(() => retry(() => import('./Input')))
+const InputPhone = React.lazy(() => retry(() => import('./InputPhone')))
+const SelectInput = React.lazy(() => retry(() => import('./SelectInput')))
+
 
 export {
   DocsLink,

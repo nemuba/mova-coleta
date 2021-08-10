@@ -19,7 +19,7 @@ export default function Input({ name, ...rest }) {
         ref={inputRef}
         defaultValue={defaultValue}
         className={error ? 'form-control is-invalid' : 'form-control'}
-        placeHolder={error}
+        placeholder={error}
         {...rest}
       />
     </>
