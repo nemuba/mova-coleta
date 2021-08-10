@@ -32,8 +32,9 @@ const Profile = () => {
       console.log(data)
       const schema = Yup.object().shape({
         id: Yup.string().nullable(),
-        user_id: Yup.number()
+        user_id: Yup.string()
           .required(),
+        email: Yup.string().email().required('Email obrigatório'),
         name: Yup.string()
           .required('Nome obrigatório'),
         phone: Yup.string()
@@ -75,23 +76,23 @@ const Profile = () => {
   }
 
  useEffect(() => {
-   if (formRef.current && profile?.id != null && user?.id != null) {
+   if (user || profile) {
       formRef.current.setData({
-        id: profile.id,
-        user_id: user.id,
-        name: profile.name,
-        email: profile.email,
-        phone: profile.phone,
-        document: profile.document,
+        id: profile?.id,
+        user_id: user?.id || profile?.user_id,
+        name: profile?.name,
+        email: profile?.email,
+        phone: profile?.phone,
+        document: profile?.document,
         address_attributes: {
-          id: profile.address?.id,
-          street: profile.address?.street,
-          number: profile.address?.number,
-          neighborhood: profile.address?.neighborhood,
-          city: profile.address?.city,
-          state: profile.address?.state,
-          zip_code: profile.address?.zip_code,
-          country: profile.address?.country,
+          id: profile?.address?.id,
+          street: profile?.address?.street,
+          number: profile?.address?.number,
+          neighborhood: profile?.address?.neighborhood,
+          city: profile?.address?.city,
+          state: profile?.address?.state,
+          zip_code: profile?.address?.zip_code,
+          country: profile?.address?.country,
         }
       });
     }

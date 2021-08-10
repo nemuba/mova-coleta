@@ -5,7 +5,7 @@ export function reject(obj, keys) {
     .reduce((res, o) => Object.assign(res, o), {});
 };
 
-export function retry(fn, retriesLeft = 5, interval = 1000) {
+export function retry(fn, retriesLeft = 10, interval = 1000) {
   return new Promise((resolve, reject) => {
     fn()
       .then(resolve)
