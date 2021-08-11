@@ -4,9 +4,7 @@ import { Form } from '@unform/web'
 import { Scope } from '@unform/core'
 import { useDispatch, useSelector } from 'react-redux'
 import { Input, SelectInput } from '../../reusable'
-import { useHistory } from 'react-router-dom'
-import { toast } from 'react-toastify'
-import { updateUser } from '../../store/fetch_actions/users'
+import { getUser, updateUser } from '../../store/fetch_actions/users'
 import * as Yup from 'yup'
 import { listModules } from '../../store/fetch_actions/system_modules'
 import { retry } from '../../services/functions'
@@ -33,63 +31,62 @@ const roles = [
 ]
 
 const User = ({match}) => {
-  const { users } = useSelector(state => state.users)
+  const { user } = useSelector(state => state.users)
   const { system_modules } = useSelector(state => state.system_modules)
 
-  const [user, setUser] = useState(null)
+  const [user_form, setUserForm] = useState(null)
   const formRef = useRef(null)
-  const history = useHistory()
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (users && match.params.id) {
-      const findUser = users.find(user => user.id === Number(match.params.id))
-      if (findUser) {
-        setUser(findUser)
-      } else {
-        toast.warn('Usuário não encontrado')
-        history.push(`/users`)
-      }
+    if (match.params.id) {
+      dispatch(getUser(match.params.id))
     }
-  }, [users, match.params.id, history])
+  }, [match.params.id, dispatch])
+
+  useEffect(() => {
+    if (user) {
+      setUserForm(user)
+    }
+  }, [user])
 
 
   useEffect(() => {
 
-    if (user) {
-      const getRole = () => roles.filter(role => role.value === user.role);
-      const getModules = () => user?.user_modules?.map(({ id, name }) => ({ label: name, value: id }))
+    if (user_form) {
+      const getRole = () => roles.filter(role => role.value === user_form.role);
+      const getModules = () => user_form?.user_modules?.map(({ id, name }) => ({ label: name, value: id }))
       formRef.current.setData({
-        id: user?.id,
+        id: user_form?.id,
         role: getRole()[0],
         system_module_users_attributes: getModules(),
         profile_attributes: {
-          id: user?.profile?.id,
-          user_id: user?.id,
-          name: user?.profile?.name,
-          email: user?.profile?.email,
-          phone: user?.profile?.phone,
-          document: user?.profile?.document,
+          id: user_form?.profile?.id,
+          user_id: user_form?.id,
+          name: user_form?.profile?.name,
+          email: user_form?.profile?.email,
+          phone: user_form?.profile?.phone,
+          document: user_form?.profile?.document,
           address_attributes: {
-            id: user?.profile?.address?.id,
-            profile_id: user?.profile?.id,
-            street: user?.profile?.address?.street,
-            number: user?.profile?.address?.number,
-            neighborhood: user?.profile?.address?.neighborhood,
-            city: user?.profile?.address?.city,
-            state: user?.profile?.address?.state,
-            country: user?.profile?.address?.country,
-            zip_code: user?.profile?.address?.zip_code
+            id: user_form?.profile?.address?.id,
+            profile_id: user_form?.profile?.id,
+            street: user_form?.profile?.address?.street,
+            number: user_form?.profile?.address?.number,
+            neighborhood: user_form?.profile?.address?.neighborhood,
+            city: user_form?.profile?.address?.city,
+            state: user_form?.profile?.address?.state,
+            country: user_form?.profile?.address?.country,
+            zip_code: user_form?.profile?.address?.zip_code
           }
         }
       });
     }
 
-  }, [user])
+  }, [user_form])
 
   const treatSystemModuleUsers = (data) => {
-    let user_modules = user.system_module_users.map(module => ({ id: module.id, user_id: module.user_id, system_module_id: module.system_module_id, _destroy: '1' }));
-    let modules = data.system_module_users_attributes.map(sm => ({ user_id: user.id, system_module_id: sm }))
+    let user_modules = user_form.system_module_users.map(module => ({ id: module.id, user_id: module.user_id, system_module_id: module.system_module_id, _destroy: '1' }));
+    let modules = data.system_module_users_attributes.map(sm => ({ user_id: user_form.id, system_module_id: sm }))
 
     if (user_modules.length < 0) {
       return modules

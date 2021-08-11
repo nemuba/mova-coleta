@@ -1,7 +1,8 @@
 import { toast } from 'react-toastify'
 import api from '../../../services/api'
-import { createAction, updateAction, listAction, deleteAction } from '../../users'
+import { createAction, updateAction, listAction, deleteAction, setAction } from '../../users'
 import {reject} from '../../../services/functions'
+import { push } from 'connected-react-router'
 
 export function listUsers() {
   return dispatch => {
@@ -51,6 +52,19 @@ export function deleteUser(data) {
       })
       .catch(error => {
         toast.error('Não foi possível deletar usuário !')
+      })
+  }
+}
+
+export function getUser(id) {
+  return dispatch => {
+    api.get(`/collect/users/${id}`)
+      .then(res => {
+        dispatch(setAction(res.data))
+      })
+      .catch(error => {
+        toast.error('Não foi possível buscar informação do usuário !')
+        dispatch(push('/users'))
       })
   }
 }

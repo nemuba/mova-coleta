@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   users: [],
+  user: {}
 }
 
 const userSlice = createSlice({
@@ -19,6 +20,9 @@ const userSlice = createSlice({
     },
     deleteAction: (state, action) => {
       return { ...state, users: state.users.filter(user => user.id !== action.payload.id) }
+    },
+    setAction: (state, action) => {
+      return { ...state, user: action.payload }
     }
   },
 })
@@ -28,5 +32,6 @@ export const {
   listAction,
   updateAction,
   deleteAction,
+  setAction
 } = userSlice.actions
 export default userSlice.reducer
