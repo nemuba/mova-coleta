@@ -34,7 +34,7 @@ const Modal = ({ user, title }) => {
       >
         <CModalHeader>{title}</CModalHeader>
         <CModalBody>
-          Deseja Confirmar operação ?
+          Confirmar operação ?
         </CModalBody>
         <CModalFooter>
           <CButton onClick={() => handleExcludeUser(user)} type="button" color="primary">Excluir</CButton>{' '}
