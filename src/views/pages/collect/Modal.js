@@ -2,8 +2,8 @@ import { CButton, CModal, CModalBody, CModalFooter, CModalHeader } from '@coreui
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { currentUserFetch } from '../../../../store/fetch_actions/auth';
-import { deleteCollect } from '../../../../store/fetch_actions/collects';
+import { currentUserFetch } from '../../../store/fetch_actions/auth';
+import { deleteCollect } from '../../../store/fetch_actions/collects';
 
 const Modal = ({ collect, title, status }) => {
   const dispatch = useDispatch(null);

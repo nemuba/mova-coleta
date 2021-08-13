@@ -24,3 +24,12 @@ export function retry(fn, retriesLeft = 10, interval = 1000) {
   });
 }
 
+
+export function getBadge(status) {
+  switch (status) {
+    case 'Coletado': return 'success'
+    case 'Aguardando Coleta': return 'warning'
+    case 'Aguardando Confirmação': return 'danger'
+    default: return 'primary'
+  }
+}

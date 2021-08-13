@@ -3,7 +3,7 @@ import Users from './views/pages/users/Users'
 import User from './views/pages/users/User'
 import NewUser from './views/pages/users/NewUser'
 import Profile from './views/pages/profile/Profile'
-import Collect from './views/pages/collect/customer/Collect'
+import Collect from './views/pages/collect/Collect'
 import NewCollect from './views/pages/collect/customer/NewCollect'
 
 const routes = [

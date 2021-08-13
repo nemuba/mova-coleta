@@ -11,7 +11,7 @@ export function listCollects() {
         dispatch(listAction(res.data))
       })
       .catch(error => {
-        toast.success('Não foi possível listar os usuários !')
+        toast.success('Não foi possível listar as coletas !')
       })
   }
 }
