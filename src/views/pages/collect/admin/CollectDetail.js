@@ -1,4 +1,4 @@
-import { CCard, CCardBody, CCardHeader, CContainer } from '@coreui/react';
+import { CBadge, CCard, CCardBody, CCardHeader, CContainer } from '@coreui/react';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,6 +10,7 @@ import { setLocation } from 'src/store/map';
 import L from 'leaflet'
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png'
+import { getBadge } from 'src/services/functions';
 
 const markerIcon = L.icon({
   iconUrl: icon,
@@ -50,12 +51,17 @@ const CollectDetail = () => {
         <CCardBody>
           <p>Solicitante: {collect?.user?.email}</p>
           <p>Data da solicitação: {collect?.created_at}</p>
+          <p>Status: <CBadge color={getBadge(collect?.collect_status?.name)}>{collect?.collect_status?.name}</CBadge></p>
           <Map center={map} scrollZoom={true}>
-            <Marker position={map} icon={markerIcon} />
+            <Marker position={map} icon={markerIcon} eventHandlers={{
+              click: () => setAddress(address)
+            }} />
             {
               address && (
                 <Popup
                   position={[address.latitude, address.longitude]}
+                  closeOnClick={false}
+                  closeButton={false}
                 >
                   <CContainer>
                     <span>Rua: {address.street}</span><br />
