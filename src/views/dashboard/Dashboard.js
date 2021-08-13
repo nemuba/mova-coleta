@@ -1,4 +1,5 @@
 import AdminDashBoard from './admin/Dashboard'
+import CustomerDashboard from './customer/Dashboard'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { listUsers } from '../../store/fetch_actions/users'
@@ -12,8 +13,14 @@ const Dashboard = () => {
     dispatch(listUsers())
   }, [dispatch])
 
-  return user && user.role === 'admin' ? <AdminDashBoard users={users} /> : <div>Loading...</div>
-
+  switch (user.role) {
+    case 'admin':
+      return <AdminDashBoard users={users} />
+    case 'customer':
+      return <CustomerDashboard user={user} />
+    default:
+      return <div>Loading...</div>
+  }
 }
 
 export default Dashboard

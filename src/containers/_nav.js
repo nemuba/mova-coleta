@@ -331,10 +331,24 @@ const _nav = {
       icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
     },
     {
-      _tag: 'CSidebarNavItem',
-      name: 'Coletas',
-      to: '/dashboard',
+      _tag: 'CSidebarNavDropdown',
+      name: 'Solicitação de Coleta',
+      route: '/collects',
       icon: <CIcon name="cil-leaf" customClasses="c-sidebar-nav-icon" />,
+      _children: [
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'Listar',
+          icon: 'cil-clipboard',
+          to: '/collects',
+        },
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'Cadastrar',
+          icon: 'cil-plus',
+          to: '/collects/new',
+        },
+      ]
     },
   ]
 }

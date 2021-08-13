@@ -40,6 +40,8 @@ const Users = React.lazy(() => retry(()=> import('./views/users/Users')));
 const User = React.lazy(() => retry(()=> import('./views/users/User')));
 const NewUser = React.lazy(() => retry(()=> import('./views/users/NewUser')));
 const Profile = React.lazy(() => retry(()=> import('./views/pages/profile/Profile')));
+const Collect = React.lazy(() => retry(()=> import('./views/pages/collect/customer/Collect')));
+const NewCollect = React.lazy(() => retry(()=> import('./views/pages/collect/customer/NewCollect')));
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -80,10 +82,12 @@ const routes = [
   { path: '/notifications/modals', name: 'Modals', component: Modals },
   { path: '/notifications/toaster', name: 'Toaster', component: Toaster },
   { path: '/widgets', name: 'Widgets', component: Widgets },
-  { path: '/users', exact: true, name: 'Usuários', component: Users },
-  { path: '/users/new', exact: true, name: 'Cadastrar usuário', component: NewUser },
-  { path: '/users/:id', exact: true, name: 'Informações do usuário', component: User },
-  { path: '/profile', exact: true, name: 'Perfil', component: Profile },
+  { protected: true, path: '/users', exact: true, name: 'Usuários', component: Users },
+  { protected: true, path: '/users/new', exact: true, name: 'Cadastrar usuário', component: NewUser },
+  { protected: true, path: '/users/:id', exact: true, name: 'Informações do usuário', component: User },
+  { protected: true, path: '/profile', exact: true, name: 'Perfil', component: Profile },
+  { protected: true, path: '/collects', exact: true, name: 'Histórico de Solicitações', component: Collect },
+  { protected: true, path: '/collects/new', exact: true, name: 'Solicitação de Coleta', component: NewCollect },
 ];
 
 export default routes;

@@ -2,9 +2,10 @@ import { CButton, CModal, CModalBody, CModalFooter, CModalHeader } from '@coreui
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { deleteUser, listUsers } from 'src/store/fetch_actions/users';
+import { currentUserFetch } from '../../../../store/fetch_actions/auth';
+import { deleteCollect } from '../../../../store/fetch_actions/collects';
 
-const Modal = ({ user, title }) => {
+const Modal = ({ collect, title, status }) => {
   const dispatch = useDispatch(null);
   const history = useHistory();
   const [modal, setModal] = useState(false);
@@ -13,21 +14,22 @@ const Modal = ({ user, title }) => {
     setModal(!modal);
   }
 
-  const handleExcludeUser = (user) => {
-    dispatch(deleteUser(user))
-    dispatch(listUsers())
+  const handleExcludeCollect = (collect) => {
+    dispatch(deleteCollect(collect))
+    dispatch(currentUserFetch())
     toggle();
-    history.push('/users');
+    history.push('/collects');
   }
 
   return (
     <>
       <CButton
         type="button"
-        color="danger"
+        size="sm"
+        color="secondary"
+        disabled={collect?.collect_status?.name !== status}
         onClick={toggle}
-        className="mt-2 ml-1"
-      >Excluir Usuário</CButton>
+      >Excluir</CButton>
       <CModal
         show={modal}
         onClose={toggle}
@@ -35,10 +37,10 @@ const Modal = ({ user, title }) => {
       >
         <CModalHeader>{title}</CModalHeader>
         <CModalBody>
-          Confirmar operação ?
+          Realmente deseja confirmar operação de exclusão?
         </CModalBody>
         <CModalFooter>
-          <CButton onClick={() => handleExcludeUser(user)} type="button" color="primary">Excluir</CButton>{' '}
+          <CButton onClick={() => handleExcludeCollect(collect)} type="button" color="primary">Excluir</CButton>{' '}
           <CButton
             type="button"
             color="danger"

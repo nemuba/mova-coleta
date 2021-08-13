@@ -5,6 +5,7 @@ import {
   Switch
 } from 'react-router-dom'
 import { CContainer, CFade } from '@coreui/react'
+import { ProtectedRouter } from '../reusable'
 
 // routes config
 import routes from '../routes'
@@ -15,6 +16,12 @@ const loading = (
   </div>
 )
 
+const MakeRoute = (props) =>{
+  if(props.protected) return <ProtectedRouter {...props} />
+
+  return <Route {...props} />
+}
+
 const TheContent = () => {
   return (
     <main className="c-main">
@@ -23,7 +30,7 @@ const TheContent = () => {
           <Switch>
             {routes.map((route, idx) => {
               return route.component && (
-                <Route
+                <MakeRoute
                   key={idx}
                   path={route.path}
                   exact={route.exact}

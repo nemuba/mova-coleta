@@ -100,157 +100,146 @@ const Profile = () => {
         <CCol>
           <CCard>
             <CCardHeader>
-              Perfil
+              Informações do usuário
             </CCardHeader>
             <CCardBody>
-              <CRow>
-                <CCol>
+              <Form onSubmit={handleSubmit} ref={formRef}>
+                <Input name="id" hidden />
+                <CFormGroup>
+                  <CInputGroup>
+                    <CInputGroupPrepend>
+                      <CInputGroupText>Nome</CInputGroupText>
+                    </CInputGroupPrepend>
+                    <Input type="text" id="name" name="name" autoComplete="name" />
+                    <CInputGroupAppend>
+                      <CInputGroupText><CIcon name="cil-user" /></CInputGroupText>
+                    </CInputGroupAppend>
+                  </CInputGroup>
+                </CFormGroup>
+                <CFormGroup>
+                  <CInputGroup>
+                    <CInputGroupPrepend>
+                      <CInputGroupText>Email</CInputGroupText>
+                    </CInputGroupPrepend>
+                    <Input type="email" id="email" name="email" autoComplete="Email" />
+                    <CInputGroupAppend>
+                      <CInputGroupText><CIcon name="cil-envelope-closed" /></CInputGroupText>
+                    </CInputGroupAppend>
+                  </CInputGroup>
+                </CFormGroup>
+                <CFormGroup>
+                  <CInputGroup>
+                    <CInputGroupPrepend>
+                      <CInputGroupText>Telefone</CInputGroupText>
+                    </CInputGroupPrepend>
+                    <Input type="phone" id="phone" name="phone" autoComplete="phone" />
+                    <CInputGroupAppend>
+                      <CInputGroupText><CIcon name="cil-phone" /></CInputGroupText>
+                    </CInputGroupAppend>
+                  </CInputGroup>
+                </CFormGroup>
+                <CFormGroup>
+                  <CInputGroup>
+                    <CInputGroupPrepend>
+                      <CInputGroupText>(CPF/CNPJ)</CInputGroupText>
+                    </CInputGroupPrepend>
+                    <Input type="text" id="document" name="document" autoComplete="document" />
+                    <CInputGroupAppend>
+                      <CInputGroupText><CIcon name="cil-asterisk" /></CInputGroupText>
+                    </CInputGroupAppend>
+                  </CInputGroup>
+                </CFormGroup>
+                <Scope path="address_attributes">
                   <CCard>
                     <CCardHeader>
-                      Informações de Perfil
+                      Endereço
                     </CCardHeader>
                     <CCardBody>
-                      <Form onSubmit={handleSubmit} ref={formRef}>
-                        <Input name="id" hidden />
-                        <CFormGroup>
-                          <CInputGroup>
-                            <CInputGroupPrepend>
-                              <CInputGroupText>Nome</CInputGroupText>
-                            </CInputGroupPrepend>
-                            <Input type="text" id="name" name="name" autoComplete="name" />
-                            <CInputGroupAppend>
-                              <CInputGroupText><CIcon name="cil-user" /></CInputGroupText>
-                            </CInputGroupAppend>
-                          </CInputGroup>
-                        </CFormGroup>
-                        <CFormGroup>
-                          <CInputGroup>
-                            <CInputGroupPrepend>
-                              <CInputGroupText>Email</CInputGroupText>
-                            </CInputGroupPrepend>
-                            <Input type="email" id="email" name="email" autoComplete="Email" />
-                            <CInputGroupAppend>
-                              <CInputGroupText><CIcon name="cil-envelope-closed" /></CInputGroupText>
-                            </CInputGroupAppend>
-                          </CInputGroup>
-                        </CFormGroup>
-                        <CFormGroup>
-                          <CInputGroup>
-                            <CInputGroupPrepend>
-                              <CInputGroupText>Telefone</CInputGroupText>
-                            </CInputGroupPrepend>
-                            <Input type="phone" id="phone" name="phone" autoComplete="phone" />
-                            <CInputGroupAppend>
-                              <CInputGroupText><CIcon name="cil-phone" /></CInputGroupText>
-                            </CInputGroupAppend>
-                          </CInputGroup>
-                        </CFormGroup>
-                        <CFormGroup>
-                          <CInputGroup>
-                            <CInputGroupPrepend>
-                              <CInputGroupText>(CPF/CNPJ)</CInputGroupText>
-                            </CInputGroupPrepend>
-                            <Input type="text" id="document" name="document" autoComplete="document" />
-                            <CInputGroupAppend>
-                              <CInputGroupText><CIcon name="cil-asterisk" /></CInputGroupText>
-                            </CInputGroupAppend>
-                          </CInputGroup>
-                        </CFormGroup>
-                        <Scope path="address_attributes">
-                          <CCard>
-                            <CCardHeader>
-                              Endereço
-                            </CCardHeader>
-                            <CCardBody>
-                              <Input name="id" hidden />
-                              <CFormGroup>
-                                <CInputGroup>
-                                  <CInputGroupPrepend>
-                                    <CInputGroupText>Rua</CInputGroupText>
-                                  </CInputGroupPrepend>
-                                  <Input type="text" id="street" name="street" autoComplete="street" />
-                                  <CInputGroupAppend>
-                                    <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
-                                  </CInputGroupAppend>
-                                </CInputGroup>
-                              </CFormGroup>
-                              <CFormGroup>
-                                <CInputGroup>
-                                  <CInputGroupPrepend>
-                                    <CInputGroupText>Número</CInputGroupText>
-                                  </CInputGroupPrepend>
-                                  <Input type="text" id="number" name="number" autoComplete="number" />
-                                  <CInputGroupAppend>
-                                    <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
-                                  </CInputGroupAppend>
-                                </CInputGroup>
-                              </CFormGroup>
-                              <CFormGroup>
-                                <CInputGroup>
-                                  <CInputGroupPrepend>
-                                    <CInputGroupText>Bairro</CInputGroupText>
-                                  </CInputGroupPrepend>
-                                  <Input type="text" id="neighborhood" name="neighborhood" autoComplete="neighborhood" />
-                                  <CInputGroupAppend>
-                                    <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
-                                  </CInputGroupAppend>
-                                </CInputGroup>
-                              </CFormGroup>
-                              <CFormGroup>
-                                <CInputGroup>
-                                  <CInputGroupPrepend>
-                                    <CInputGroupText>Cidade</CInputGroupText>
-                                  </CInputGroupPrepend>
-                                  <Input type="text" id="city" name="city" autoComplete="city" />
-                                  <CInputGroupAppend>
-                                    <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
-                                  </CInputGroupAppend>
-                                </CInputGroup>
-                              </CFormGroup>
-                              <CFormGroup>
-                                <CInputGroup>
-                                  <CInputGroupPrepend>
-                                    <CInputGroupText>Estado</CInputGroupText>
-                                  </CInputGroupPrepend>
-                                  <Input type="text" id="state" name="state" autoComplete="state" />
-                                  <CInputGroupAppend>
-                                    <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
-                                  </CInputGroupAppend>
-                                </CInputGroup>
-                              </CFormGroup>
-                              <CFormGroup>
-                                <CInputGroup>
-                                  <CInputGroupPrepend>
-                                    <CInputGroupText>Pais</CInputGroupText>
-                                  </CInputGroupPrepend>
-                                  <Input type="text" id="country" name="country" autoComplete="country" />
-                                  <CInputGroupAppend>
-                                    <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
-                                  </CInputGroupAppend>
-                                </CInputGroup>
-                              </CFormGroup>
-                              <CFormGroup>
-                                <CInputGroup>
-                                  <CInputGroupPrepend>
-                                    <CInputGroupText>CEP</CInputGroupText>
-                                  </CInputGroupPrepend>
-                                  <Input type="text" id="zip_code" name="zip_code" autoComplete="zip_code" />
-                                  <CInputGroupAppend>
-                                    <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
-                                  </CInputGroupAppend>
-                                </CInputGroup>
-                              </CFormGroup>
-                            </CCardBody>
-                          </CCard>
-                        </Scope>
-                        <CFormGroup className="form-actions">
-                          <CButton type="submit" size="sm" color="primary">Salvar</CButton>
-                        </CFormGroup>
-                      </Form>
+                      <Input name="id" hidden />
+                      <CFormGroup>
+                        <CInputGroup>
+                          <CInputGroupPrepend>
+                            <CInputGroupText>Rua</CInputGroupText>
+                          </CInputGroupPrepend>
+                          <Input type="text" id="street" name="street" autoComplete="street" />
+                          <CInputGroupAppend>
+                            <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
+                          </CInputGroupAppend>
+                        </CInputGroup>
+                      </CFormGroup>
+                      <CFormGroup>
+                        <CInputGroup>
+                          <CInputGroupPrepend>
+                            <CInputGroupText>Número</CInputGroupText>
+                          </CInputGroupPrepend>
+                          <Input type="text" id="number" name="number" autoComplete="number" />
+                          <CInputGroupAppend>
+                            <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
+                          </CInputGroupAppend>
+                        </CInputGroup>
+                      </CFormGroup>
+                      <CFormGroup>
+                        <CInputGroup>
+                          <CInputGroupPrepend>
+                            <CInputGroupText>Bairro</CInputGroupText>
+                          </CInputGroupPrepend>
+                          <Input type="text" id="neighborhood" name="neighborhood" autoComplete="neighborhood" />
+                          <CInputGroupAppend>
+                            <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
+                          </CInputGroupAppend>
+                        </CInputGroup>
+                      </CFormGroup>
+                      <CFormGroup>
+                        <CInputGroup>
+                          <CInputGroupPrepend>
+                            <CInputGroupText>Cidade</CInputGroupText>
+                          </CInputGroupPrepend>
+                          <Input type="text" id="city" name="city" autoComplete="city" />
+                          <CInputGroupAppend>
+                            <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
+                          </CInputGroupAppend>
+                        </CInputGroup>
+                      </CFormGroup>
+                      <CFormGroup>
+                        <CInputGroup>
+                          <CInputGroupPrepend>
+                            <CInputGroupText>Estado</CInputGroupText>
+                          </CInputGroupPrepend>
+                          <Input type="text" id="state" name="state" autoComplete="state" />
+                          <CInputGroupAppend>
+                            <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
+                          </CInputGroupAppend>
+                        </CInputGroup>
+                      </CFormGroup>
+                      <CFormGroup>
+                        <CInputGroup>
+                          <CInputGroupPrepend>
+                            <CInputGroupText>Pais</CInputGroupText>
+                          </CInputGroupPrepend>
+                          <Input type="text" id="country" name="country" autoComplete="country" />
+                          <CInputGroupAppend>
+                            <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
+                          </CInputGroupAppend>
+                        </CInputGroup>
+                      </CFormGroup>
+                      <CFormGroup>
+                        <CInputGroup>
+                          <CInputGroupPrepend>
+                            <CInputGroupText>CEP</CInputGroupText>
+                          </CInputGroupPrepend>
+                          <Input type="text" id="zip_code" name="zip_code" autoComplete="zip_code" />
+                          <CInputGroupAppend>
+                            <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
+                          </CInputGroupAppend>
+                        </CInputGroup>
+                      </CFormGroup>
                     </CCardBody>
                   </CCard>
-                </CCol>
-              </CRow>
+                </Scope>
+                <CFormGroup className="form-actions">
+                  <CButton type="submit" size="sm" color="primary">Salvar</CButton>
+                </CFormGroup>
+              </Form>
             </CCardBody>
           </CCard>
         </CCol>

@@ -83,24 +83,23 @@ const Login = () => {
                     </CInputGroup>
                     <CRow>
                       <CCol xs="6">
-                        <CButton color="primary" className="px-4" type="submit">Login</CButton>
-                      </CCol>
-                      <CCol xs="6" className="text-right">
-                        <CButton color="link" className="px-0">Forgot password?</CButton>
+                        <CButton color="primary" className="px-4" type="submit">Entrar</CButton>
                       </CCol>
                     </CRow>
                   </Form>
                 </CCardBody>
               </CCard>
               <CCard className="text-white bg-primary py-5 d-md-down-none" style={{ width: '44%' }}>
-                <CCardBody className="text-center">
-                  <div>
+                <CCardBody className="d-flex align-items-between flex-column">
+                  <CCol sm="12" lg="12" xs="12" className="text-center">
                     <h2>Criar conta</h2>
                     <p>Ainda não criou sua conta ?</p>
+                  </CCol>
+                  <CCol sm="12" lg="12" xs="12" className="text-center">
                     <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>Registrar-se</CButton>
+                      <CButton color="primary" className="mb-3" active tabIndex={-1}>Registrar-se</CButton>
                     </Link>
-                  </div>
+                  </CCol>
                 </CCardBody>
               </CCard>
             </CCardGroup>

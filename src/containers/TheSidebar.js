@@ -11,9 +11,11 @@ import {
   CSidebarMinimizer,
   CSidebarNavDropdown,
   CSidebarNavItem,
+  CImg,
 } from '@coreui/react'
 
-import CIcon from '@coreui/icons-react'
+import sygnet from '../assets/images/mova.svg'
+import logo from '../assets/images/logo.svg'
 
 // sidebar nav config
 import navigation from './_nav'
@@ -29,16 +31,8 @@ const TheSidebar = () => {
       onShowChange={(val) => dispatch(setSlide(val))}
     >
       <CSidebarBrand className="d-md-down-none" to="/">
-        <CIcon
-          className="c-sidebar-brand-full"
-          name="logo-negative"
-          height={35}
-        />
-        <CIcon
-          className="c-sidebar-brand-minimized"
-          name="sygnet"
-          height={35}
-        />
+        <CImg src={logo} className="c-sidebar-brand-full" height={45} />
+        <CImg src={sygnet} className="c-sidebar-brand-minimized" height={45} width={45} />
       </CSidebarBrand>
       <CSidebarNav>
 

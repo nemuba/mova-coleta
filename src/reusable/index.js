@@ -6,7 +6,7 @@ const ProtectedRouter = React.lazy(() => retry(() => import('./ProtectedRouter')
 const Input = React.lazy(() => retry(() => import('./Input')))
 const InputPhone = React.lazy(() => retry(() => import('./InputPhone')))
 const SelectInput = React.lazy(() => retry(() => import('./SelectInput')))
-
+const TextArea = React.lazy(() => retry(() => import('./TextArea')))
 
 export {
   DocsLink,
@@ -14,4 +14,5 @@ export {
   Input,
   InputPhone,
   SelectInput,
+  TextArea,
 }
