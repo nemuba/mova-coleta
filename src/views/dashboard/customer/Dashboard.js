@@ -1,5 +1,5 @@
 import CIcon from '@coreui/icons-react'
-import { CCard, CCardBody, CCardGroup, CCardHeader, CProgress, CWidgetProgressIcon } from '@coreui/react'
+import { CBadge, CCard, CCardBody, CCardGroup, CCardHeader, CProgress, CWidgetProgressIcon } from '@coreui/react'
 import React, { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 import { currentUserFetch } from 'src/store/fetch_actions/auth'
@@ -13,6 +13,15 @@ const Dashboard = ({ user }) => {
   const dispatch = useDispatch()
 
   const name = 'Aguardando Confirmação'
+
+  const getBadge = (status) => {
+    switch (status) {
+      case 'Coletado': return 'success'
+      case 'Aguardando Coleta': return 'warning'
+      case 'Aguardando Confirmação': return 'danger'
+      default: return 'primary'
+    }
+  }
 
   useEffect(() => {
     dispatch(currentUserFetch())
@@ -43,7 +52,11 @@ const Dashboard = ({ user }) => {
               <CCardHeader>Solicitação de Coleta</CCardHeader>
               <CCardBody>
                 <p>Ultima solicitação: {lastCollect?.created_at} </p>
-                <p>Status: {lastCollect?.collect_status?.name}</p>
+                <p>Status:
+                  <CBadge color={getBadge(lastCollect?.collect_status?.name)} className="ml-2 p-2">
+                    {lastCollect?.collect_status?.name}
+                  </CBadge>
+                </p>
               </CCardBody>
             </CCard>
           ) : (

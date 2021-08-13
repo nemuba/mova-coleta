@@ -84,7 +84,7 @@ const FormCollect = () => {
                     <CInputGroupPrepend>
                       <CInputGroupText>Rua</CInputGroupText>
                     </CInputGroupPrepend>
-                    <Input type="text" id="street" name="street" autoComplete="Rua" disabled />
+                    <Input placeholder="Rua" type="text" id="street" name="street" autoComplete="Rua" disabled />
                     <CInputGroupAppend>
                       <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
                     </CInputGroupAppend>
@@ -95,7 +95,7 @@ const FormCollect = () => {
                     <CInputGroupPrepend>
                       <CInputGroupText>Número</CInputGroupText>
                     </CInputGroupPrepend>
-                    <Input type="text" id="number" name="number" autoComplete="Número" disabled />
+                    <Input placeholder="Número" type="text" id="number" name="number" autoComplete="Número" disabled />
                     <CInputGroupAppend>
                       <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
                     </CInputGroupAppend>
@@ -106,7 +106,7 @@ const FormCollect = () => {
                     <CInputGroupPrepend>
                       <CInputGroupText>Bairro</CInputGroupText>
                     </CInputGroupPrepend>
-                    <Input type="text" id="neighborhood" name="neighborhood" autoComplete="Bairro" disabled />
+                    <Input placeholder="Bairro" type="text" id="neighborhood" name="neighborhood" autoComplete="Bairro" disabled />
                     <CInputGroupAppend>
                       <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
                     </CInputGroupAppend>
@@ -117,15 +117,15 @@ const FormCollect = () => {
                     <CInputGroupPrepend>
                       <CInputGroupText>Cidade</CInputGroupText>
                     </CInputGroupPrepend>
-                    <Input type="text" id="city" name="city" autoComplete="Cidade" disabled />
+                    <Input placeholder="Cidade" type="text" id="city" name="city" autoComplete="Cidade" disabled />
                     <CInputGroupAppend>
                       <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
                     </CInputGroupAppend>
                   </CInputGroup>
                 </CFormGroup>
                 <CFormGroup>
-                  <CLabel>Descrição</CLabel>
-                  <TextArea id="note" name="note" rows="9" placeholder="Nota" disabled={notification} />
+                  <CLabel>Observação</CLabel>
+                  <TextArea id="note" name="note" rows="9" placeholder="Observação" disabled={notification} />
                 </CFormGroup>
                 <CButtonGroup>
                   <CButton
