@@ -1,10 +1,12 @@
 import { CBadge, CDataTable } from '@coreui/react'
 import React from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import { getBadge } from '../../../services/functions'
 import Modal from './Modal'
 
-const TableCollect = ({ collects, status }) => {
+const TableCollect = ({ collects, status, admin }) => {
+  const history = useHistory()
+
   const fields = [
     { key: 'created_at', label: 'Data da Solicitação', _style: { width: '20%' } },
     { key: 'note', label: 'Observação', _style: { width: '20%' } },
@@ -21,6 +23,7 @@ const TableCollect = ({ collects, status }) => {
       footer
       fields={fields}
       items={collects}
+      onRowClick={(row) => { admin === true ? history.push(`/collects/${row.id}`) : history.push(`/collects`) }}
       noItemsViewSlot={
         <p className="text-center">
           Nenhuma coleta encontrada.

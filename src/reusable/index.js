@@ -4,6 +4,8 @@ import Input from './Input'
 import InputPhone from './InputPhone'
 import SelectInput from './SelectInput'
 import TextArea from './TextArea'
+import Map from './Map'
+import Marker from './Marker'
 
 export {
   DocsLink,
@@ -12,4 +14,6 @@ export {
   InputPhone,
   SelectInput,
   TextArea,
+  Marker,
+  Map,
 }

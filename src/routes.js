@@ -5,6 +5,7 @@ import NewUser from './views/pages/users/NewUser'
 import Profile from './views/pages/profile/Profile'
 import Collect from './views/pages/collect/Collect'
 import NewCollect from './views/pages/collect/customer/NewCollect'
+import CollectDetail from './views/pages/collect/admin/CollectDetail'
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -15,6 +16,7 @@ const routes = [
   { protected: true, path: '/profile', exact: true, name: 'Perfil', component: Profile },
   { protected: true, path: '/collects', exact: true, name: 'Histórico de Solicitações', component: Collect },
   { protected: true, path: '/collects/new', exact: true, name: 'Solicitação de Coleta', component: NewCollect },
+  { protected: true, path: '/collects/:id', exact: true, name: 'Detalhes da solicitação', component: CollectDetail },
 ];
 
 export default routes;

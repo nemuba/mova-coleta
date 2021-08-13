@@ -8,6 +8,7 @@ import { getUser, updateUser } from '../../../store/fetch_actions/users'
 import * as Yup from 'yup'
 import { listModules } from '../../../store/fetch_actions/system_modules'
 import Modal from './Modal'
+import { useRouteMatch } from 'react-router-dom'
 
 const roles = [
   {
@@ -28,19 +29,20 @@ const roles = [
   },
 ]
 
-const User = ({ match }) => {
+const User = () => {
   const { user } = useSelector(state => state.users)
   const { system_modules } = useSelector(state => state.system_modules)
+  const { params } = useRouteMatch()
 
   const [user_form, setUserForm] = useState(null)
   const formRef = useRef(null)
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (match.params.id) {
-      dispatch(getUser(match.params.id))
+    if (params && params.id) {
+      dispatch(getUser(params.id))
     }
-  }, [match.params.id, dispatch])
+  }, [params, dispatch])
 
   useEffect(() => {
     if (user) {

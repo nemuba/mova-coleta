@@ -25,6 +25,7 @@ const Collect = ({ user }) => {
               <TableCollect
                 collects={collects}
                 status={status}
+                admin={true}
               />
             </CCardBody>
           </CCard>
