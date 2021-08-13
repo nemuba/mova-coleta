@@ -1,87 +1,14 @@
-import React from 'react';
-import { retry } from './services/functions';
-
-const Toaster = React.lazy(() => retry(()=> import('./views/notifications/toaster/Toaster')));
-const Tables = React.lazy(() => retry(()=> import('./views/base/tables/Tables')));
-
-const Breadcrumbs = React.lazy(() => retry(()=> import('./views/base/breadcrumbs/Breadcrumbs')));
-const Cards = React.lazy(() => retry(()=> import('./views/base/cards/Cards')));
-const Carousels = React.lazy(() => retry(()=> import('./views/base/carousels/Carousels')));
-const Collapses = React.lazy(() => retry(()=> import('./views/base/collapses/Collapses')));
-const BasicForms = React.lazy(() => retry(()=> import('./views/base/forms/BasicForms')));
-
-const Jumbotrons = React.lazy(() => retry(()=> import('./views/base/jumbotrons/Jumbotrons')));
-const ListGroups = React.lazy(() => retry(()=> import('./views/base/list-groups/ListGroups')));
-const Navbars = React.lazy(() => retry(()=> import('./views/base/navbars/Navbars')));
-const Navs = React.lazy(() => retry(()=> import('./views/base/navs/Navs')));
-const Paginations = React.lazy(() => retry(()=> import('./views/base/paginations/Pagnations')));
-const Popovers = React.lazy(() => retry(()=> import('./views/base/popovers/Popovers')));
-const ProgressBar = React.lazy(() => retry(()=> import('./views/base/progress-bar/ProgressBar')));
-const Switches = React.lazy(() => retry(()=> import('./views/base/switches/Switches')));
-
-const Tabs = React.lazy(() => retry(()=> import('./views/base/tabs/Tabs')));
-const Tooltips = React.lazy(() => retry(()=> import('./views/base/tooltips/Tooltips')));
-const BrandButtons = React.lazy(() => retry(()=> import('./views/buttons/brand-buttons/BrandButtons')));
-const ButtonDropdowns = React.lazy(() => retry(()=> import('./views/buttons/button-dropdowns/ButtonDropdowns')));
-const ButtonGroups = React.lazy(() => retry(()=> import('./views/buttons/button-groups/ButtonGroups')));
-const Buttons = React.lazy(() => retry(()=> import('./views/buttons/buttons/Buttons')));
-const Charts = React.lazy(() => retry(()=> import('./views/charts/Charts')));
-const Dashboard = React.lazy(() => retry(()=> import('./views/dashboard/Dashboard')));
-const CoreUIIcons = React.lazy(() => retry(()=> import('./views/icons/coreui-icons/CoreUIIcons')));
-const Flags = React.lazy(() => retry(()=> import('./views/icons/flags/Flags')));
-const Brands = React.lazy(() => retry(()=> import('./views/icons/brands/Brands')));
-const Alerts = React.lazy(() => retry(()=> import('./views/notifications/alerts/Alerts')));
-const Badges = React.lazy(() => retry(()=> import('./views/notifications/badges/Badges')));
-const Modals = React.lazy(() => retry(()=> import('./views/notifications/modals/Modals')));
-const Colors = React.lazy(() => retry(()=> import('./views/theme/colors/Colors')));
-const Typography = React.lazy(() => retry(()=> import('./views/theme/typography/Typography')));
-const Widgets = React.lazy(() => retry(()=> import('./views/widgets/Widgets')));
-const Users = React.lazy(() => retry(()=> import('./views/users/Users')));
-const User = React.lazy(() => retry(()=> import('./views/users/User')));
-const NewUser = React.lazy(() => retry(()=> import('./views/users/NewUser')));
-const Profile = React.lazy(() => retry(()=> import('./views/pages/profile/Profile')));
-const Collect = React.lazy(() => retry(()=> import('./views/pages/collect/customer/Collect')));
-const NewCollect = React.lazy(() => retry(()=> import('./views/pages/collect/customer/NewCollect')));
+import Dashboard from './views/dashboard/Dashboard'
+import Users from './views/pages/users/Users'
+import User from './views/pages/users/User'
+import NewUser from './views/pages/users/NewUser'
+import Profile from './views/pages/profile/Profile'
+import Collect from './views/pages/collect/customer/Collect'
+import NewCollect from './views/pages/collect/customer/NewCollect'
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
-  { path: '/dashboard', name: 'Dashboard', component: Dashboard },
-  { path: '/theme', name: 'Theme', component: Colors, exact: true },
-  { path: '/theme/colors', name: 'Colors', component: Colors },
-  { path: '/theme/typography', name: 'Typography', component: Typography },
-  { path: '/base', name: 'Base', component: Cards, exact: true },
-  { path: '/base/breadcrumbs', name: 'Breadcrumbs', component: Breadcrumbs },
-  { path: '/base/cards', name: 'Cards', component: Cards },
-  { path: '/base/carousels', name: 'Carousel', component: Carousels },
-  { path: '/base/collapses', name: 'Collapse', component: Collapses },
-  { path: '/base/forms', name: 'Forms', component: BasicForms },
-  { path: '/base/jumbotrons', name: 'Jumbotrons', component: Jumbotrons },
-  { path: '/base/list-groups', name: 'List Groups', component: ListGroups },
-  { path: '/base/navbars', name: 'Navbars', component: Navbars },
-  { path: '/base/navs', name: 'Navs', component: Navs },
-  { path: '/base/paginations', name: 'Paginations', component: Paginations },
-  { path: '/base/popovers', name: 'Popovers', component: Popovers },
-  { path: '/base/progress-bar', name: 'Progress Bar', component: ProgressBar },
-  { path: '/base/switches', name: 'Switches', component: Switches },
-  { path: '/base/tables', name: 'Tables', component: Tables },
-  { path: '/base/tabs', name: 'Tabs', component: Tabs },
-  { path: '/base/tooltips', name: 'Tooltips', component: Tooltips },
-  { path: '/buttons', name: 'Buttons', component: Buttons, exact: true },
-  { path: '/buttons/buttons', name: 'Buttons', component: Buttons },
-  { path: '/buttons/button-dropdowns', name: 'Dropdowns', component: ButtonDropdowns },
-  { path: '/buttons/button-groups', name: 'Button Groups', component: ButtonGroups },
-  { path: '/buttons/brand-buttons', name: 'Brand Buttons', component: BrandButtons },
-  { path: '/charts', name: 'Charts', component: Charts },
-  { path: '/icons', exact: true, name: 'Icons', component: CoreUIIcons },
-  { path: '/icons/coreui-icons', name: 'CoreUI Icons', component: CoreUIIcons },
-  { path: '/icons/flags', name: 'Flags', component: Flags },
-  { path: '/icons/brands', name: 'Brands', component: Brands },
-  { path: '/notifications', name: 'Notifications', component: Alerts, exact: true },
-  { path: '/notifications/alerts', name: 'Alerts', component: Alerts },
-  { path: '/notifications/badges', name: 'Badges', component: Badges },
-  { path: '/notifications/modals', name: 'Modals', component: Modals },
-  { path: '/notifications/toaster', name: 'Toaster', component: Toaster },
-  { path: '/widgets', name: 'Widgets', component: Widgets },
+  { protected: true, path: '/dashboard', name: 'Dashboard', component: Dashboard },
   { protected: true, path: '/users', exact: true, name: 'Usuários', component: Users },
   { protected: true, path: '/users/new', exact: true, name: 'Cadastrar usuário', component: NewUser },
   { protected: true, path: '/users/:id', exact: true, name: 'Informações do usuário', component: User },

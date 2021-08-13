@@ -1,12 +1,9 @@
-import React from 'react';
-import { retry } from '../services/functions';
-
-const DocsLink = React.lazy(() => retry(() => import('./DocsLink')))
-const ProtectedRouter = React.lazy(() => retry(() => import('./ProtectedRouter')))
-const Input = React.lazy(() => retry(() => import('./Input')))
-const InputPhone = React.lazy(() => retry(() => import('./InputPhone')))
-const SelectInput = React.lazy(() => retry(() => import('./SelectInput')))
-const TextArea = React.lazy(() => retry(() => import('./TextArea')))
+import DocsLink from './DocsLink'
+import ProtectedRouter from './ProtectedRouter'
+import Input from './Input'
+import InputPhone from './InputPhone'
+import SelectInput from './SelectInput'
+import TextArea from './TextArea'
 
 export {
   DocsLink,
