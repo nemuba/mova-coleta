@@ -42,6 +42,14 @@ const Users = () => {
     }
   }, [users])
 
+  const fields = [
+    { key: 'profile', label: 'Nome', sorter: true, filter: true },
+    { key: 'user_modules', label: 'Módulos', sorter: true, filter: true },
+    { key: 'role', label: 'Role', sorter: true, filter: true },
+    { key: 'created_at', label: 'Criado em', sorter: true, filter: true },
+    { key: 'updated_at', label: 'Atualizado em', sorter: true, filter: true },
+  ]
+
   return (
     <CRow>
       <CCol>
@@ -52,38 +60,39 @@ const Users = () => {
           <CCardBody>
           <CDataTable
               items={users}
-            fields={[
-              'Nome', 'Módulos', 'role', 'Criado em', 'Atualizado em'
-            ]}
+              fields={fields}
             hover
             striped
+              tableFilter={{ label: 'Pesquisar:', placeholder: 'Digite o termo da busca' }}
+              footer
+              sorter
             itemsPerPage={5}
             activePage={page}
             clickableRows
             onRowClick={(item) => history.push(`/users/${item.id}`)}
             scopedSlots = {{
-              'Nome':
+              'profile':
                 (item)=>(
                   <td>
                     {item?.profile?.name}
                   </td>
                 ),
-              'Módulos':
+              'user_modules':
                 (item) => (
                   <td>
-                    {item.user_modules.map(({ name }) => name).join(', ')}
+                    {item?.user_modules?.map(({ name }) => name).join(', ')}
                   </td>
                 ),
-              'Criado em':
+              'created_at':
                 (item) => (
                   <td>
-                    {item.created_at}
+                    {item?.created_at}
                   </td>
                 ),
-              'Atualizado em':
+              'updated_at':
                 (item) => (
                   <td>
-                    {item.updated_at}
+                    {item?.updated_at}
                   </td>
                 ),
 

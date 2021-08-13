@@ -4,19 +4,21 @@ import { Link } from 'react-router-dom'
 import { getBadge } from '../../../services/functions'
 import Modal from './Modal'
 
-const TableCollect = ({collects, status}) => {
-
+const TableCollect = ({ collects, status }) => {
   const fields = [
-    { key: 'created_at', label: 'Data da Solicitação' },
-    { key: 'note', label: 'Observação' },
-    { key: 'collect_status', label: 'Status' },
-    { key: 'options', label: 'Opções' },
+    { key: 'created_at', label: 'Data da Solicitação', _style: { width: '20%' } },
+    { key: 'note', label: 'Observação', _style: { width: '20%' } },
+    { key: 'collect_status', label: 'Status', _style: { width: '20%' } },
+    { key: 'options', label: 'Opções', sorter: false, filter: false, _style: { width: '20%' } },
   ]
 
   return(
     <CDataTable
       hover
+      tableFilter={{ label: "Pesquisar:", placeholder: "Digite um termo para busca" }}
+      sorter
       striped
+      footer
       fields={fields}
       items={collects}
       noItemsViewSlot={
