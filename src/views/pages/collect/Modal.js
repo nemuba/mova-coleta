@@ -1,3 +1,4 @@
+import CIcon from '@coreui/icons-react';
 import { CButton, CModal, CModalBody, CModalFooter, CModalHeader } from '@coreui/react';
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
@@ -26,10 +27,13 @@ const Modal = ({ collect, title, status }) => {
       <CButton
         type="button"
         size="sm"
-        color="secondary"
+        color="danger"
         disabled={collect?.collect_status?.name !== status}
         onClick={toggle}
-      >Excluir</CButton>
+        title="Excluir"
+      >
+        <CIcon name="cil-trash" />
+      </CButton>
       <CModal
         show={modal}
         onClose={toggle}

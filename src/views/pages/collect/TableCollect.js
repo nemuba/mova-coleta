@@ -1,4 +1,5 @@
-import { CBadge, CDataTable } from '@coreui/react'
+import CIcon from '@coreui/icons-react'
+import { CBadge, CButton, CDataTable } from '@coreui/react'
 import React from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import { getBadge } from '../../../services/functions'
@@ -14,6 +15,14 @@ const TableCollect = ({ collects, status, admin }) => {
     { key: 'options', label: 'Opções', sorter: false, filter: false, _style: { width: '20%' } },
   ]
 
+  const viewCollects = (row) => {
+    if (admin === true)
+      history.push(`/collects/${row.id}`)
+    else {
+      history.push(`/collects`)
+    }
+  }
+
   return(
     <CDataTable
       hover
@@ -23,7 +32,6 @@ const TableCollect = ({ collects, status, admin }) => {
       footer
       fields={fields}
       items={collects}
-      onRowClick={(row) => { admin === true ? history.push(`/collects/${row.id}`) : history.push(`/collects`) }}
       noItemsViewSlot={
         <p className="text-center">
           Nenhuma coleta encontrada.
@@ -39,13 +47,16 @@ const TableCollect = ({ collects, status, admin }) => {
             </td>
           )
         },
-        'options': (item) => {
-          return (
-            <td>
-              <Modal collect={item} title="Excluir solicitação de coleta" status={status} />
-            </td>
-          )
-        }
+        'options': (item) => (
+          <td>
+            {admin && (
+              <CButton title="Visualizar" size="sm" color="primary" className="mr-1" onClick={() => viewCollects(item)}>
+                <CIcon name="cil-search" />
+              </CButton>
+            )}
+            <Modal collect={item} title="Excluir solicitação de coleta" status={status} />
+          </td>
+        )
       }}
     />
   )
