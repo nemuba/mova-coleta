@@ -6,6 +6,7 @@ import ProfileReducer from './profile'
 import UsersReducer from './users'
 import SystemModuleReducer from './system_modules'
 import CollectReducer from './collects'
+import RouteReducer from './routes'
 import MapReducer from './map'
 import LocationReducer from './location'
 
@@ -19,6 +20,7 @@ const rootReducer = (history) => combineReducers({
   collects: CollectReducer,
   map: MapReducer,
   location: LocationReducer,
+  routes: RouteReducer
 })
 
 export default rootReducer

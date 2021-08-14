@@ -6,6 +6,9 @@ import Profile from './views/pages/profile/Profile'
 import Collect from './views/pages/collect/Collect'
 import NewCollect from './views/pages/collect/customer/NewCollect'
 import CollectDetail from './views/pages/collect/admin/CollectDetail'
+import Route from './views/pages/route/Route'
+import NewRoute from './views/pages/route/NewRoute'
+import RouteDetail from './views/pages/route/RouteDetail'
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -17,6 +20,9 @@ const routes = [
   { protected: true, path: '/collects', exact: true, name: 'Histórico de Solicitações', component: Collect },
   { protected: true, path: '/collects/new', exact: true, name: 'Solicitação de Coleta', component: NewCollect },
   { protected: true, path: '/collects/:id', exact: true, name: 'Detalhes da solicitação', component: CollectDetail },
+  { protected: true, path: '/routes', exact: true, name: 'Histórico de Rotas', component: Route },
+  { protected: true, path: '/routes/new', exact: true, name: 'Criar Rota', component: NewRoute },
+  { protected: true, path: '/routes/:id', exact: true, name: 'Detalhes da Rota', component: RouteDetail },
 ];
 
 export default routes;

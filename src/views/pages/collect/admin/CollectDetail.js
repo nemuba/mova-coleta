@@ -40,7 +40,13 @@ const CollectDetail = () => {
     }
   }, [collect, dispatch]);
 
-  if (map === null || map.length === 0 || map.includes(null)) return <h1>loading ...</h1>
+  if (map === null || map.length === 0 || map.includes(null)) {
+    return (
+      <div className="container">
+        <div className="sk-spinner sk-spinner-pulse"></div>
+      </div>
+    )
+  }
 
   return (
     <CContainer>
@@ -51,6 +57,7 @@ const CollectDetail = () => {
         <CCardBody>
           <p>Solicitante: {collect?.user?.email}</p>
           <p>Data da solicitação: {collect?.created_at}</p>
+          <p>Observação: {collect?.note}</p>
           <p>Status: <CBadge color={getBadge(collect?.collect_status?.name)}>{collect?.collect_status?.name}</CBadge></p>
           <Map center={map} scrollZoom={true}>
             <Marker position={map} icon={markerIcon} eventHandlers={{
