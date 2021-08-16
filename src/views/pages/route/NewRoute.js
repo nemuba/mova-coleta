@@ -62,6 +62,7 @@ const NewRoute = () => {
             <CCardBody>
               <Form ref={formRef} onSubmit={handleSubmit}>
                 <CFormGroup>
+                  <CLabel>Data da Coleta</CLabel>
                   <CInputGroup>
                     <CInputGroupPrepend>
                       <CInputGroupText><CIcon name="cil-calendar" /></CInputGroupText>
@@ -73,6 +74,7 @@ const NewRoute = () => {
                   </CInputGroup>
                 </CFormGroup>
                 <CFormGroup>
+                  <CLabel>Data de Inicio</CLabel>
                   <CInputGroup>
                     <CInputGroupPrepend>
                       <CInputGroupText><CIcon name="cil-calendar" /></CInputGroupText>
@@ -84,11 +86,12 @@ const NewRoute = () => {
                   </CInputGroup>
                 </CFormGroup>
                 <CFormGroup>
+                  <CLabel>Data Final</CLabel>
                   <CInputGroup>
                     <CInputGroupPrepend>
                       <CInputGroupText><CIcon name="cil-calendar" /></CInputGroupText>
                     </CInputGroupPrepend>
-                    <Input type="date" id="date_end" name="date_end" placeholder="Data Fim" />
+                    <Input type="date" id="date_finish" name="date_finish" placeholder="Data Fim" />
                     <CInputGroupAppend>
                       <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
                     </CInputGroupAppend>

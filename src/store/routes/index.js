@@ -16,7 +16,8 @@ const routeSlice = createSlice({
       return { ...state, routes: action.payload }
     },
     updateAction: (state, action) => {
-      return { ...state, routes: state.routes.map(route => (route.id === action.payload.id ? action.payload : route)) }
+      const routes = state.routes.map(route => (route.id === action.payload.id ? action.payload : route))
+      return { ...state, routes: routes, route: action.payload }
     },
     deleteAction: (state, action) => {
       return { ...state, routes: state.routes.filter(route => route.id !== action.payload.id) }

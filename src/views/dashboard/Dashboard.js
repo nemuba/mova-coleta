@@ -7,6 +7,7 @@ import { listUsers } from '../../store/fetch_actions/users'
 const Dashboard = () => {
   const { user } = useSelector(state => state.auth)
   const { users } = useSelector(state => state.users)
+
   const dispatch = useDispatch()
 
   useEffect(() => {
