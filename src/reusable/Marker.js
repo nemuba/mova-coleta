@@ -5,7 +5,7 @@ import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
 import { useDispatch } from 'react-redux';
 import { setLocation } from '../store/map'
-import { setLocationFetch } from '../store/fetch_actions/location';
+import { getLocation } from '../store/fetch_actions/location';
 
 const markerIcon = L.icon({
   iconUrl: icon,
@@ -38,7 +38,7 @@ export default function DraggableMarker({ center }) {
 
   useEffect(() => {
     if (position && typeof Object)
-      dispatch(setLocationFetch({ lat: position.lat, lng: position.lng }))
+      dispatch(getLocation())
   }, [dispatch, position])
 
   return (

@@ -1,12 +1,9 @@
-import api from '../../../services/api'
-import { setAddress } from '../../location'
+import { setLocation } from '../../location'
 
-export const setLocationFetch = ({ lat, lng }) => {
+export const getLocation = () => {
   return dispatch => {
-    api.get(`/getlocation?latitude=${lat}&longitude=${lng}`)
-      .then(res => dispatch(setAddress(res.data)))
-      .catch(error => {
-        console.log(error.message)
-      })
+    navigator.geolocation.getCurrentPosition(function (position) {
+      dispatch(setLocation([position.coords.latitude, position.coords.longitude]));
+    });
   }
 }

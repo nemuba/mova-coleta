@@ -38,13 +38,12 @@ const RouteDetail = () => {
   }, [params, dispatch])
 
   useEffect(() => {
-    if (route) {
+    if (route !== null) {
       formRef.current.setData({
         id: route.id,
-        date_collect: route.date_collect,
-        date_start: route.date_start,
-        date_finish: route.date_finish,
-        user_id: { label: route?.user?.email, value: route.user_id },
+        request_date: route.request_date,
+        collect_date: route.collect_date,
+        user_id: { label: route?.user?.email, value: route?.user_id },
       })
     }
   }, [route])
@@ -52,7 +51,7 @@ const RouteDetail = () => {
   const handleSubmit = async (data) => {
     try {
       const schema = Yup.object().shape({
-        date_collect: Yup.string().required('Date da coleta é obrigatória'),
+        request_date: Yup.string().required('Date da coleta é obrigatória'),
         user_id: Yup.string().required('Selecione um Coletor'),
       });
 
@@ -84,36 +83,24 @@ const RouteDetail = () => {
               <Form ref={formRef} onSubmit={handleSubmit}>
                 <Input id="id" name="id" hidden />
                 <CFormGroup>
-                  <CLabel>Data da Coleta</CLabel>
+                  <CLabel>Data da Solicitação</CLabel>
                   <CInputGroup>
                     <CInputGroupPrepend>
                       <CInputGroupText><CIcon name="cil-calendar" /></CInputGroupText>
                     </CInputGroupPrepend>
-                    <Input type="text" id="date_collect" name="date_collect" placeholder="Data da Coleta" />
+                    <Input type="date" id="request_date" name="request_date" placeholder="Data da Solicitação" />
                     <CInputGroupAppend>
                       <CInputGroupText><CIcon name="cil-truck" /></CInputGroupText>
                     </CInputGroupAppend>
                   </CInputGroup>
                 </CFormGroup>
                 <CFormGroup>
-                  <CLabel>Data de Inicio</CLabel>
+                  <CLabel>Data da Coleta</CLabel>
                   <CInputGroup>
                     <CInputGroupPrepend>
                       <CInputGroupText><CIcon name="cil-calendar" /></CInputGroupText>
                     </CInputGroupPrepend>
-                    <Input type="text" id="date_start" name="date_start" placeholder="Data de Inicio" />
-                    <CInputGroupAppend>
-                      <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
-                    </CInputGroupAppend>
-                  </CInputGroup>
-                </CFormGroup>
-                <CFormGroup>
-                  <CLabel>Data Final</CLabel>
-                  <CInputGroup>
-                    <CInputGroupPrepend>
-                      <CInputGroupText><CIcon name="cil-calendar" /></CInputGroupText>
-                    </CInputGroupPrepend>
-                    <Input type="text" id="date_finish" name="date_finish" placeholder="Data Fim" />
+                    <Input type="date" id="collect_date" name="collect_date" placeholder="Data da Coleta" />
                     <CInputGroupAppend>
                       <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
                     </CInputGroupAppend>

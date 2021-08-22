@@ -9,6 +9,7 @@ import CollectReducer from './collects'
 import RouteReducer from './routes'
 import MapReducer from './map'
 import LocationReducer from './location'
+import RouteCollectReducer from './route_collect'
 
 const rootReducer = (history) => combineReducers({
   router: connectRouter(history),
@@ -20,7 +21,8 @@ const rootReducer = (history) => combineReducers({
   collects: CollectReducer,
   map: MapReducer,
   location: LocationReducer,
-  routes: RouteReducer
+  routes: RouteReducer,
+  route_collect: RouteCollectReducer
 })
 
 export default rootReducer

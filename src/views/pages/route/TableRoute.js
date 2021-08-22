@@ -3,14 +3,14 @@ import { CButton, CDataTable } from '@coreui/react'
 import React from 'react'
 import { Link, useHistory } from 'react-router-dom'
 import Modal from './Modal'
+import moment from 'moment'
 
 const TableRoute = ({ routes }) => {
   const history = useHistory()
 
   const fields = [
-    { key: 'date_collect', label: 'Data da Solicitação', _style: { width: '20%' } },
-    { key: 'date_start', label: 'Data de Inicio', _style: { width: '20%' } },
-    { key: 'date_finish', label: 'Data de Fim', _style: { width: '20%' } },
+    { key: 'request_date', label: 'Data da Solicitação', _style: { width: '20%' } },
+    { key: 'collect_date', label: 'Data da Coleta', _style: { width: '20%' } },
     { key: 'user_id', label: 'Coletor', _style: { width: '20%' } },
     { key: 'options', label: 'Opções', sorter: false, filter: false, _style: { width: '20%' } },
   ]
@@ -35,13 +35,15 @@ const TableRoute = ({ routes }) => {
         </p>}
       scopedSlots={{
         'user_id': (item) => {
-          return <td>{item.user.email}</td>
+          return <td>{item?.user?.email}</td>
         },
-        'date_start': (item) => {
-          return <td>{item.date_start}</td>
+        'request_date': (item) => {
+          const date = moment(item.request_date)
+          return <td>{date.format('DD/MM/YYYY')}</td>
         },
-        'date_finish': (item) => {
-          return <td>{item.date_end}</td>
+        'collect_date': (item) => {
+          const date = moment(item.collect_date)
+          return <td>{date.format('DD/MM/YYYY')}</td>
         },
         'options': (item) => (
           <td>
