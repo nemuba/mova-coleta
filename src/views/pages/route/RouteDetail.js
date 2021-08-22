@@ -82,33 +82,35 @@ const RouteDetail = () => {
             <CCardBody>
               <Form ref={formRef} onSubmit={handleSubmit}>
                 <Input id="id" name="id" hidden />
-                <CFormGroup>
-                  <CLabel>Data da Solicitação</CLabel>
-                  <CInputGroup>
-                    <CInputGroupPrepend>
-                      <CInputGroupText><CIcon name="cil-calendar" /></CInputGroupText>
-                    </CInputGroupPrepend>
-                    <Input type="date" id="request_date" name="request_date" placeholder="Data da Solicitação" />
-                    <CInputGroupAppend>
-                      <CInputGroupText><CIcon name="cil-truck" /></CInputGroupText>
-                    </CInputGroupAppend>
-                  </CInputGroup>
-                </CFormGroup>
-                <CFormGroup>
-                  <CLabel>Data da Coleta</CLabel>
-                  <CInputGroup>
-                    <CInputGroupPrepend>
-                      <CInputGroupText><CIcon name="cil-calendar" /></CInputGroupText>
-                    </CInputGroupPrepend>
-                    <Input type="date" id="collect_date" name="collect_date" placeholder="Data da Coleta" />
-                    <CInputGroupAppend>
-                      <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
-                    </CInputGroupAppend>
-                  </CInputGroup>
-                </CFormGroup>
-                <CFormGroup>
-                  <CLabel>Selecione um Coletor</CLabel>
-                  <SelectInput id="user_id" name="user_id" placeholder="Coletor" options={collectors} />
+                <CFormGroup row>
+                  <CCol>
+                    <CLabel>Data da Solicitação</CLabel>
+                    <CInputGroup>
+                      <CInputGroupPrepend>
+                        <CInputGroupText><CIcon name="cil-calendar" /></CInputGroupText>
+                      </CInputGroupPrepend>
+                      <Input type="date" id="request_date" name="request_date" placeholder="Data da Solicitação" />
+                      <CInputGroupAppend>
+                        <CInputGroupText><CIcon name="cil-truck" /></CInputGroupText>
+                      </CInputGroupAppend>
+                    </CInputGroup>
+                  </CCol>
+                  <CCol>
+                    <CLabel>Data da Coleta</CLabel>
+                    <CInputGroup>
+                      <CInputGroupPrepend>
+                        <CInputGroupText><CIcon name="cil-calendar" /></CInputGroupText>
+                      </CInputGroupPrepend>
+                      <Input type="date" id="collect_date" name="collect_date" placeholder="Data da Coleta" />
+                      <CInputGroupAppend>
+                        <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
+                      </CInputGroupAppend>
+                    </CInputGroup>
+                  </CCol>
+                  <CCol>
+                    <CLabel>Selecione um Coletor</CLabel>
+                    <SelectInput id="user_id" name="user_id" placeholder="Coletor" options={collectors} />
+                  </CCol>
                 </CFormGroup>
                 <CFormGroup>
                   <CButton color="success" type="submit">Atualizar</CButton>

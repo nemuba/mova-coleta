@@ -157,33 +157,37 @@ const NewRoute = () => {
                     <SelectInput id="user_id" name="user_id" placeholder="Coletor" options={collectors} />
                   </CCol>
                 </CFormGroup>
-                <CFormGroup>
-                  <CLabel>Selecione as solicitações de coleta para adicionar na rota</CLabel>
-                  <MapRouteCollect location={location} collects={mapCollects} />
-                </CFormGroup>
-                <CFormGroup>
-                  <CDataTable
-                    items={collectSelected}
-                    fields={fields}
-                    sortable
-                    scopedSlots={{
-                      'address': (item) => {
-                        return (
-                          <td>
-                            {item.address.street}, {item.address.number} - {item.address.city} - {item.address.state}
-                          </td>
-                        )
-                      },
-                      'options': (item) => {
-                        return (
-                          <td>
-                            <ModalRemoveRouteCollect collect={item} title={'Remover Coleta'} />
-                          </td>
-                        )
-                      }
+                <CFormGroup row>
+                  <CCol>
+                    <CLabel>Selecione as solicitações de coleta para adicionar na rota</CLabel>
+                    <MapRouteCollect location={location} collects={mapCollects} />
+                  </CCol>
+                  <CCol>
+                    <CLabel>Lista de solicitações selecionadas</CLabel>
+                    <CDataTable
+                      items={collectSelected}
+                      fields={fields}
+                      sortable
+                      noItemsViewSlot={'Nenhuma Solitação selecionada '}
+                      scopedSlots={{
+                        'address': (item) => {
+                          return (
+                            <td>
+                              {item.address.street}, {item.address.number} - {item.address.city} - {item.address.state}
+                            </td>
+                          )
+                        },
+                        'options': (item) => {
+                          return (
+                            <td>
+                              <ModalRemoveRouteCollect collect={item} title={'Remover Coleta'} />
+                            </td>
+                          )
+                        }
 
-                    }}
-                  />
+                      }}
+                    />
+                  </CCol>
                 </CFormGroup>
                 <CFormGroup>
                   <CButton color="primary" type="submit">Cadastrar</CButton>
