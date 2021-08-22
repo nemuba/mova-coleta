@@ -38,12 +38,12 @@ const TableRoute = ({ routes }) => {
           return <td>{item?.user?.email}</td>
         },
         'request_date': (item) => {
-          const date = moment(item.request_date)
+          const date = item.request_date ? moment(item.request_date) : null
           return <td>{date.format('DD/MM/YYYY')}</td>
         },
         'collect_date': (item) => {
-          const date = moment(item.collect_date)
-          return <td>{date.format('DD/MM/YYYY')}</td>
+          const date = item.collect_date ? moment(item.collect_date) : null
+          return <td>{date ? date.format('DD/MM/YYYY') : date}</td>
         },
         'options': (item) => (
           <td>

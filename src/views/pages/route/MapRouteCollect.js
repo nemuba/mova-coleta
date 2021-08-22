@@ -29,9 +29,9 @@ const MapRouteCollect = ({ location, collects }) => {
 
   if (location.length === 0 || collects.length === 0) {
     return (
-      <div className="container">
-        <div className="sk-spinner sk-spinner-pulse"></div>
-      </div>
+      <CContainer>
+        <h4 className="text-danger">Não há coletas cadastradas</h4>
+      </CContainer>
     )
   }
 

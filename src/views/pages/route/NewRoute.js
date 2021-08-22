@@ -44,7 +44,8 @@ const NewRoute = () => {
 
   useEffect(() => {
     if (collects.length > 0) {
-      const mapCollects = collects.map(collect => ({
+      const collectUnselected = collects.filter(collect => collect?.collect_status?.name !== "Aguardando Coleta")
+      const mapCollects = collectUnselected.map(collect => ({
         id: collect.id,
         address: collect?.user?.profile?.address,
         selected: false,
@@ -128,7 +129,7 @@ const NewRoute = () => {
             <CCardBody>
               <Form ref={formRef} onSubmit={handleSubmit}>
                 <CFormGroup row>
-                  <CCol>
+                  <CCol lg="4" md="4" sm="12" className="pt-2">
                     <CLabel>Data da Solicitação</CLabel>
                     <CInputGroup>
                       <CInputGroupPrepend>
@@ -140,7 +141,7 @@ const NewRoute = () => {
                       </CInputGroupAppend>
                     </CInputGroup>
                   </CCol>
-                  <CCol>
+                  <CCol lg="4" md="4" sm="12" className="pt-2">
                     <CLabel>Data da Coleta</CLabel>
                     <CInputGroup>
                       <CInputGroupPrepend>
@@ -152,23 +153,23 @@ const NewRoute = () => {
                       </CInputGroupAppend>
                     </CInputGroup>
                   </CCol>
-                  <CCol>
+                  <CCol lg="4" md="4" sm="12" className="pt-2">
                     <CLabel>Selecione um Coletor</CLabel>
                     <SelectInput id="user_id" name="user_id" placeholder="Coletor" options={collectors} />
                   </CCol>
                 </CFormGroup>
                 <CFormGroup row>
-                  <CCol>
+                  <CCol lg="6" md="6" sm="12" className="pt-2">
                     <CLabel>Selecione as solicitações de coleta para adicionar na rota</CLabel>
                     <MapRouteCollect location={location} collects={mapCollects} />
                   </CCol>
-                  <CCol>
+                  <CCol lg="6" md="6" sm="12" className="pt-2">
                     <CLabel>Lista de solicitações selecionadas</CLabel>
                     <CDataTable
                       items={collectSelected}
                       fields={fields}
                       sortable
-                      noItemsViewSlot={'Nenhuma Solitação selecionada '}
+                      noItemsViewSlot={'Nenhuma Solicitação selecionada '}
                       scopedSlots={{
                         'address': (item) => {
                           return (
@@ -190,7 +191,11 @@ const NewRoute = () => {
                   </CCol>
                 </CFormGroup>
                 <CFormGroup>
-                  <CButton color="primary" type="submit">Cadastrar</CButton>
+                  <CButton
+                    color="primary"
+                    type="submit"
+                    disabled={mapCollects.length === 0}
+                  >Cadastrar</CButton>
                 </CFormGroup>
               </Form>
             </CCardBody>
