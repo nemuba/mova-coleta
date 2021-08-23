@@ -1,5 +1,5 @@
 import CIcon from '@coreui/icons-react';
-import { CButton, CCard, CCardBody, CCardHeader, CCol, CContainer, CDataTable, CFormGroup, CInputGroup, CInputGroupAppend, CInputGroupPrepend, CInputGroupText, CLabel, CRow } from '@coreui/react';
+import { CButton, CCard, CCardBody, CCardHeader, CCol, CContainer, CFormGroup, CInputGroup, CInputGroupAppend, CInputGroupPrepend, CInputGroupText, CLabel, CRow } from '@coreui/react';
 import { Form } from '@unform/web';
 import React, { useState } from 'react';
 import { useEffect } from 'react';
@@ -11,25 +11,20 @@ import { getRoute, updateRoute } from '../../../store/fetch_actions/routes';
 import { useRef } from 'react';
 import * as Yup from 'yup'
 import { listCollects } from '../../../store/fetch_actions/collects';
-import { getLocation } from '../../../store/map';
-import ModalRemoveRouteCollect from './ModalRemoveRouteCollect';
+import { getLocation } from '../../../store/fetch_actions/location';
+import MapRouteCollect from './MapRouteCollect';
 
 
 const RouteDetail = () => {
   const { route } = useSelector(state => state.routes);
   const { users } = useSelector(state => state.users)
   const { collects } = useSelector(state => state.collects)
-  const [collectSelected, setCollectSelected] = useState([])
-  const [mapCollects, setMapCollects] = useState([])
+  const { location } = useSelector(state => state.location)
   const [collectors, setCollectors] = useState([])
+  const [mapCollects, setMapCollects] = useState([])
   const { params } = useRouteMatch()
   const dispatch = useDispatch(null)
   const formRef = useRef(null)
-  const fields = [
-    { key: 'address', label: 'Endereço' },
-    { key: 'order', label: 'Ordem' },
-    { key: 'options', label: 'Opções' }
-  ]
 
   useEffect(() => {
     dispatch(listUsers())
@@ -59,33 +54,23 @@ const RouteDetail = () => {
         collect_date: route.collect_date,
         user_id: { label: route?.user?.email, value: route?.user_id },
       })
-      const collectSelected = route?.route_collects.map(collect => {
-        const selected = mapCollects.find(item => Number(item.id) === Number(collect.collect_id))
-        return {
-          ...selected,
-          order: collect.order,
-        }
-      })
 
-      setCollectSelected(collectSelected)
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [route, mapCollects.length])
+  }, [route])
 
   useEffect(() => {
-    if (route !== null && collects.length > 0) {
-
-      const data = collects.map(collect => {
-        const selected = route?.route_collects.find(item => Number(item.collect_id) === Number(collect.id))
+    if (route && collects.length > 0) {
+      const mapCollects = route?.route_collects.map(rc => {
+        const collect = collects.find(collect => collect.id === rc.collect_id)
         return {
-          id: collect.id,
+          id: rc.collect_id,
           address: collect?.user?.profile?.address,
-          selected: selected ? true : false,
+          order: rc.order,
+          selected: true
         }
       })
-      setMapCollects(data)
+      setMapCollects(mapCollects)
     }
-
   }, [route, collects])
 
   const handleSubmit = async (data) => {
@@ -153,35 +138,9 @@ const RouteDetail = () => {
                   </CCol>
                 </CFormGroup>
                 <CFormGroup row>
-
-                  <CCol lg="12" md="12" sm="12" className="pt-2">
-                    <CLabel>Lista de solicitações selecionadas</CLabel>
-                    <CDataTable
-                      items={collectSelected}
-                      fields={fields}
-                      sortable
-                      noItemsViewSlot={'Nenhuma Solicitação selecionada '}
-                      scopedSlots={{
-                        'address': (item) => {
-                          return (
-                            <td>
-                              {item?.address?.street},
-                              {item?.address?.number} -
-                              {item?.address?.city} -
-                              {item?.address?.state}
-                            </td>
-                          )
-                        },
-                        'options': (item) => {
-                          return (
-                            <td>
-                              <ModalRemoveRouteCollect collect={item} title={'Remover Coleta'} />
-                            </td>
-                          )
-                        }
-
-                      }}
-                    />
+                  <CCol className="pt-2">
+                    <CLabel>Lista de Coletas</CLabel>
+                    <MapRouteCollect zoom={10} location={location} collects={mapCollects} />
                   </CCol>
                 </CFormGroup>
                 <CFormGroup>

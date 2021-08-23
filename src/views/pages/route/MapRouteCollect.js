@@ -1,18 +1,14 @@
-import React, { useRef } from 'react';
+import React from 'react';
 import { Marker, Popup } from 'react-leaflet';
-import { Input, Map } from '../../../reusable';
+import { Map } from '../../../reusable';
 import { CButton, CContainer, CFormGroup, CLabel } from '@coreui/react';
-import { Form } from '@unform/web';
 import { useDispatch } from 'react-redux';
 import { addCollect } from '../../../store/route_collect';
 import { MarkerIcon, MarkerIconSelected } from '../../../reusable'
 
 
-const MapRouteCollect = ({ location, collects }) => {
-
-  const formRef = useRef(null);
+const MapRouteCollect = ({ location, collects, zoom }) => {
   const dispatch = useDispatch();
-
 
   const mountAddress = (address) => {
     return (
@@ -22,9 +18,9 @@ const MapRouteCollect = ({ location, collects }) => {
     )
   }
 
-  const handleSubmit = (data, { reset }) => {
-    dispatch(addCollect(data))
-    reset()
+  const handleSubmit = (item) => {
+    const order = document.getElementById(`order-${item.id}`).value
+    dispatch(addCollect({ collect_id: item.id, order: order }))
   }
 
   if (location.length === 0 || collects.length === 0) {
@@ -38,32 +34,31 @@ const MapRouteCollect = ({ location, collects }) => {
 
   return (
     <>
-      <Map center={location} scrollZoom={true}>
+      <Map center={location} scrollZoom={true} zoom={zoom}>
         {collects.map(item => {
           return (
             <div key={item.id}>
               <Marker
                 position={[item.address.latitude, item.address.longitude]}
                 icon={item.selected ? MarkerIconSelected : MarkerIcon}
-                opacity={item.selected ? 0.5 : 1.0}
+                opacity={item.selected ? 0.8 : 1.0}
 
               >
                 <Popup>
                   <CContainer>
                     {mountAddress(item.address)}
                     <br />
-                    <Form onSubmit={handleSubmit} ref={formRef}>
-                      <Input name="collect_id" id="collect_id" defaultValue={item.id} hidden />
+                    <form>
                       <CFormGroup>
                         <CLabel>Ordem</CLabel>
-                        <Input id="order" name="order" type='number' placeholder="ordem" />
+                        <input id={`order-${item.id}`} className="form-control" name="order" type='number' placeholder="ordem" />
                       </CFormGroup>
                       <CButton
-                        type="submit"
                         color='primary'
                         size="sm"
+                        onClick={() => handleSubmit(item)}
                       >Adicionar</CButton>
-                    </Form>
+                    </form>
                   </CContainer>
                 </Popup>
               </Marker>
