@@ -7,11 +7,14 @@ import {
   CCol,
   CDataTable,
   CRow,
-  CPagination
+  CPagination,
+  CButton
 } from '@coreui/react'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { listUsers } from '../../../store/fetch_actions/users'
+import CIcon from '@coreui/icons-react'
+import Modal from './Modal'
 
 
 const Users = () => {
@@ -48,6 +51,7 @@ const Users = () => {
     { key: 'role', label: 'Role', sorter: true, filter: true },
     { key: 'created_at', label: 'Criado em', sorter: true, filter: true },
     { key: 'updated_at', label: 'Atualizado em', sorter: true, filter: true },
+    { key: 'options', label: 'Opções' }
   ]
 
   return (
@@ -68,8 +72,7 @@ const Users = () => {
               sorter
             itemsPerPage={5}
             activePage={page}
-            clickableRows
-            onRowClick={(item) => history.push(`/users/${item.id}`)}
+              clickableRows
             scopedSlots = {{
               'profile':
                 (item)=>(
@@ -95,6 +98,15 @@ const Users = () => {
                     {item?.updated_at}
                   </td>
                 ),
+              'options':
+                (item) => (
+                  <td>
+                    <CButton size="sm" color="primary" onClick={() => history.push(`/users/${item.id}`)}>
+                      <CIcon name="cil-search" />
+                    </CButton>
+                    <Modal user={item} title={'Excluir usuário ?'} />
+                  </td>
+                )
 
             }}
           />

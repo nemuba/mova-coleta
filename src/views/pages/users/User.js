@@ -7,7 +7,6 @@ import { Input, SelectInput } from '../../../reusable'
 import { getUser, updateUser } from '../../../store/fetch_actions/users'
 import * as Yup from 'yup'
 import { listModules } from '../../../store/fetch_actions/system_modules'
-import Modal from './Modal'
 import { useRouteMatch } from 'react-router-dom'
 
 const roles = [
@@ -265,8 +264,7 @@ const User = () => {
                 </Scope>
               </Scope>
               <CFormGroup>
-                <CButton type="submit" color="primary" className="mt-2">Salvar</CButton>
-                <Modal user={user} title={'Excluir usuário ?'} />
+                <CButton type="submit" color="success" className="mt-2">Salvar</CButton>
               </CFormGroup>
               <CInputGroup className="mt-3">
                 <CLink className="text-danger" to="/users">Voltar</CLink>

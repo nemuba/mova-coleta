@@ -44,8 +44,8 @@ const TheHeaderDropdown = () => {
           </Link>
         </CDropdownItem>
         <CDropdownItem>
-          <CIcon name="cil-settings" className="mfe-2" />
-          Configurações
+          <CIcon name="cil-send" className="mfe-2" />
+          Convidar
         </CDropdownItem>
         <CDropdownItem divider />
         <CDropdownItem onClick={handleLogout}>

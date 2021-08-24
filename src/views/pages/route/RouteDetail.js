@@ -140,7 +140,7 @@ const RouteDetail = () => {
                 <CFormGroup row>
                   <CCol className="pt-2">
                     <CLabel>Lista de Coletas</CLabel>
-                    <MapRouteCollect zoom={10} location={location} collects={mapCollects} />
+                    {mapCollects && <MapRouteCollect show={false} zoom={10} location={location} collects={mapCollects} />}
                   </CCol>
                 </CFormGroup>
                 <CFormGroup>

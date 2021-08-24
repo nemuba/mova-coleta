@@ -7,14 +7,14 @@ import { addCollect } from '../../../store/route_collect';
 import { MarkerIcon, MarkerIconSelected } from '../../../reusable'
 
 
-const MapRouteCollect = ({ location, collects, zoom }) => {
+const MapRouteCollect = ({ location, collects, zoom, show = true }) => {
   const dispatch = useDispatch();
 
   const mountAddress = (address) => {
     return (
-      <span>
+      <h5>
         {address.street}, {address.number} - {address.neighborhood} - {address.city} - {address.state} -  {address.zip_code}
-      </span>
+      </h5>
     )
   }
 
@@ -47,8 +47,9 @@ const MapRouteCollect = ({ location, collects, zoom }) => {
                 <Popup>
                   <CContainer>
                     {mountAddress(item.address)}
+                    {show === false && <h5>Ordem: {item.order}</h5>}
                     <br />
-                    <form>
+                    {show && <form>
                       <CFormGroup>
                         <CLabel>Ordem</CLabel>
                         <input id={`order-${item.id}`} className="form-control" name="order" type='number' placeholder="ordem" />
@@ -58,7 +59,7 @@ const MapRouteCollect = ({ location, collects, zoom }) => {
                         size="sm"
                         onClick={() => handleSubmit(item)}
                       >Adicionar</CButton>
-                    </form>
+                    </form>}
                   </CContainer>
                 </Popup>
               </Marker>
