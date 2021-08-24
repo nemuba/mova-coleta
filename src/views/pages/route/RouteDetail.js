@@ -60,8 +60,8 @@ const RouteDetail = () => {
 
   useEffect(() => {
     if (route && collects.length > 0) {
-      const mapCollects = route?.route_collects.map(rc => {
-        const collect = collects.find(collect => collect.id === rc.collect_id)
+      const mapCollects = route?.route_collects?.map(rc => {
+        const collect = collects?.find(collect => collect.id === rc.collect_id)
         return {
           id: rc.collect_id,
           address: collect?.user?.profile?.address,
