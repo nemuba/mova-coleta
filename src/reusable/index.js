@@ -5,7 +5,6 @@ import InputPhone from './InputPhone'
 import SelectInput from './SelectInput'
 import TextArea from './TextArea'
 import Map from './Map'
-import Marker from './Marker'
 import MarkerIcon from './MarkerIcon'
 import MarkerIconSelected from './MarkerIconSelected'
 
@@ -16,7 +15,6 @@ export {
   InputPhone,
   SelectInput,
   TextArea,
-  Marker,
   Map,
   MarkerIcon,
   MarkerIconSelected,

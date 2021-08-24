@@ -12,7 +12,7 @@ import { useRef } from 'react';
 import * as Yup from 'yup'
 import { listCollects } from '../../../store/fetch_actions/collects';
 import { getLocation } from '../../../store/fetch_actions/location';
-import MapRouteCollect from './MapRouteCollect';
+import MapRouteCollectDetail from './MapRouteCollectDetail';
 
 
 const RouteDetail = () => {
@@ -140,7 +140,7 @@ const RouteDetail = () => {
                 <CFormGroup row>
                   <CCol className="pt-2">
                     <CLabel>Lista de Coletas</CLabel>
-                    {mapCollects && <MapRouteCollect show={false} zoom={10} location={location} collects={mapCollects} />}
+                    {mapCollects && <MapRouteCollectDetail zoom={10} location={location} collects={mapCollects} />}
                   </CCol>
                 </CFormGroup>
                 <CFormGroup>
