@@ -43,8 +43,8 @@ const MapRouteCollect = ({ location, collects, zoom, show = true }) => {
                 icon={item.selected ? MarkerIconSelected : MarkerIcon}
                 opacity={item.selected ? 0.8 : 1.0}
 
-              >
-                <Popup>
+              />
+              <Popup position={[item.address.latitude, item.address.longitude]} closeOnClick={false} closeButton={false}>
                   <CContainer>
                     {mountAddress(item.address)}
                     {show === false && <h5>Ordem: {item.order}</h5>}
@@ -61,8 +61,7 @@ const MapRouteCollect = ({ location, collects, zoom, show = true }) => {
                       >Adicionar</CButton>
                     </form>}
                   </CContainer>
-                </Popup>
-              </Marker>
+              </Popup>
             </div>
           )
         })
