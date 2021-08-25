@@ -48,15 +48,16 @@ const RouteDetail = () => {
 
   useEffect(() => {
     if (route !== null) {
+      const collector = users.find(c => c.id === route.user_id)
       formRef.current.setData({
         id: route.id,
         request_date: route.request_date,
         collect_date: route.collect_date,
-        user_id: { label: route?.user?.email, value: route?.user_id },
+        user_id: { label: collector?.profile?.name, value: route?.user_id },
       })
 
     }
-  }, [route])
+  }, [route, users])
 
   useEffect(() => {
     if (route && collects.length > 0) {

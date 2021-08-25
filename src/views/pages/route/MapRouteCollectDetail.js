@@ -1,16 +1,15 @@
 import React from 'react';
-import { Marker, Popup, Map, TileLayer } from 'react-leaflet';
+import { Marker, Map, TileLayer, Tooltip } from 'react-leaflet';
 import { CContainer } from '@coreui/react';
 import { MarkerIcon, MarkerIconSelected } from '../../../reusable'
-
 
 const MapRouteCollectDetail = ({ location, collects, zoom }) => {
 
   const mountAddress = (address) => {
     return (
-      <h5>
+      <h6>
         {address.street}, {address.number} - {address.neighborhood} - {address.city} - {address.state} -  {address.zip_code}
-      </h5>
+      </h6>
     )
   }
 
@@ -18,7 +17,7 @@ const MapRouteCollectDetail = ({ location, collects, zoom }) => {
   if (location.length === 0 || collects.length === 0) {
     return (
       <CContainer>
-        <h4 className="text-danger">Não há coletas cadastradas</h4>
+        <h5 className="text-danger">Não há coletas cadastradas</h5>
       </CContainer>
     )
   }
@@ -39,12 +38,10 @@ const MapRouteCollectDetail = ({ location, collects, zoom }) => {
                 icon={item.selected ? MarkerIconSelected : MarkerIcon}
                 opacity={item.selected ? 0.8 : 1.0}
               >
-                <Popup>
-                  <CContainer>
-                    {mountAddress(item.address)}
-                    <h5>Ordem: {item.order}</h5>
-                  </CContainer>
-                </Popup>
+                <Tooltip direction="bottom" offset={[0, 20]} opacity={1} permanent>
+                  <h6 className='text-center text-danger'>Ordem: {item.order}</h6>
+                  {mountAddress(item.address)}
+                </Tooltip>
               </Marker>
             </div>
           )
