@@ -15,16 +15,17 @@ import CIcon from '@coreui/icons-react'
 import { Form } from '@unform/web'
 import { Input } from '../../../reusable'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { signupFetch } from '../../../store/fetch_actions/auth'
 import * as Yup from 'yup'
+import { useEffect } from 'react'
 
 const Register = () => {
   const dispatch = useDispatch()
   const formRef = useRef(null)
+  const { search } = useSelector(state => state.router.location)
 
   const handleSubmit = async (data) => {
-    console.log(data)
     try {
       formRef.current.setErrors({});
 
@@ -51,6 +52,14 @@ const Register = () => {
 
   }
 
+  useEffect(() => {
+    if (search && formRef) {
+      formRef.current.setData({
+        token: search.split('=')[1],
+      });
+    }
+  }, [search, formRef])
+
 
   return (
     <div className="c-app c-default-layout flex-row align-items-center">
@@ -62,6 +71,7 @@ const Register = () => {
                 <Form onSubmit={handleSubmit} ref={formRef}>
                   <h1>Registrar-se</h1>
                   <p className="text-muted">Crie uma conta</p>
+                  <Input id="token" type="text" name="token" hidden />
                   <CInputGroup className="mb-3">
                     <CInputGroupPrepend>
                       <CInputGroupText>@</CInputGroupText>

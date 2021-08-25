@@ -8,7 +8,6 @@ import {
 import CIcon from '@coreui/icons-react'
 import { useDispatch, useSelector } from 'react-redux'
 import { logoutFetch } from '../store/fetch_actions/auth'
-import { Link } from 'react-router-dom'
 
 const TheHeaderDropdown = () => {
   const { user } = useSelector(state => state.auth)
@@ -38,12 +37,11 @@ const TheHeaderDropdown = () => {
         >
           <strong>{user?.email}</strong>
         </CDropdownItem>
-        <CDropdownItem >
-          <Link to="/profile">
-            <CIcon name="cil-user" className="mfe-2" />Perfil
-          </Link>
+        <CDropdownItem to="/profile">
+          <CIcon name="cil-user" className="mfe-2" />
+          Perfil
         </CDropdownItem>
-        <CDropdownItem>
+        <CDropdownItem to="/invite">
           <CIcon name="cil-send" className="mfe-2" />
           Convidar
         </CDropdownItem>

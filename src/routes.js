@@ -9,6 +9,7 @@ import CollectDetail from './views/pages/collect/admin/CollectDetail'
 import Route from './views/pages/route/Route'
 import NewRoute from './views/pages/route/NewRoute'
 import RouteDetail from './views/pages/route/RouteDetail'
+import Invite from './views/pages/invite/Invite'
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -23,6 +24,7 @@ const routes = [
   { protected: true, path: '/routes', exact: true, name: 'Histórico de Rotas', component: Route },
   { protected: true, path: '/routes/new', exact: true, name: 'Criar Rota', component: NewRoute },
   { protected: true, path: '/routes/:id', exact: true, name: 'Detalhes da Rota', component: RouteDetail },
+  { protected: true, path: '/invite', exact: true, name: 'Convidar cliente', component: Invite },
 ];
 
 export default routes;
