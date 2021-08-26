@@ -9,7 +9,7 @@ export function loginFetch(data) {
   return dispatch => {
     api.post('/users/sign_in', { auth: data })
       .then(res => {
-        login(res.headers['access-token'])
+        login(res.headers['access-token'], res.headers['refresh-token'])
         if (isAuthenticated()) {
           dispatch(loginAction(res.data));
           dispatch(updateAction(res.data.profile));
