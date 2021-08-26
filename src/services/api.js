@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { getToken } from './auth'
+import { getToken, login } from './auth'
 
 const api = axios.create({
   baseURL: 'https://app-coleta-api.herokuapp.com/api/v1',
@@ -9,6 +9,44 @@ const api = axios.create({
   }
 })
 
+async function refreshToken(error) {
+  return new Promise((resolve, reject) => {
+    try {
+      const refresh_token = localStorage.getItem("refresh_jwt");
+      const token = getToken()
+      const header = {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}` ,
+      };
+      const parameters = {
+        method: "POST",
+        headers: header,
+      };
+      const body = {
+        grant_type: "refresh_token",
+        refresh_token,
+      };
+      axios
+        .post(
+          "https://app-coleta-api.herokuapp.com/api/v1/users/tokens",
+          body,
+          parameters
+        )
+        .then(async (res) => {
+          login(res.headers['access-token'], res.headers['refresh-token'])
+          // Fazer algo caso seja feito o refresh token
+          return resolve(res);
+        })
+        .catch((err) => {
+          // Fazer algo caso não seja feito o refresh token
+          return reject(error);
+        });
+    } catch (err) {
+      return reject(err);
+    }
+  });
+};
+
 api.interceptors.request.use(async (config) => {
   const token = getToken()
   if (token) {
@@ -16,5 +54,19 @@ api.interceptors.request.use(async (config) => {
   }
   return config
 })
+
+api.interceptors.response.use(
+  (response) => {
+    return response;
+  },
+  async function (error) {
+    const access_token = getToken()
+    if (error.response.status === 401 && access_token) {
+      const response = await refreshToken(error);
+      return response;
+    }
+    return Promise.reject(error);
+  }
+);
 
 export default api
