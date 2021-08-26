@@ -1,16 +1,19 @@
 import CIcon from '@coreui/icons-react';
-import { CButton, CCol, CFormGroup, CHeader, CInputGroup, CInputGroupAppend, CInputGroupPrepend, CInputGroupText, CRow } from '@coreui/react';
+import { CButton, CCol, CFormGroup, CInputGroup, CInputGroupAppend, CInputGroupPrepend, CInputGroupText, CLabel, CRow } from '@coreui/react';
 import { Scope } from '@unform/core';
 import { Form } from '@unform/web';
-import React, { useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import { useDispatch } from 'react-redux';
+import GooglePlacesAutocomplete, { geocodeByPlaceId } from 'react-google-places-autocomplete';
 import { Input } from '../../../reusable';
 import { createUser } from '../../../store/fetch_actions/users'
 import * as Yup from 'yup'
+import { useState } from 'react';
 
 const UserForm = ({ title, role }) => {
   const dispatch = useDispatch()
   const formRef = useRef(null)
+  const [value, setValue] = useState(null)
 
   const handleSubmit = async (data, { reset }) => {
     try {
@@ -55,14 +58,47 @@ const UserForm = ({ title, role }) => {
         formRef.current.setErrors(validationErrors);
       }
     }
-  };
+  }
+
+  useEffect(() => {
+    if (value) {
+      console.log(value)
+      geocodeByPlaceId(value.value.place_id)
+        .then(results => {
+
+          const { address_components, geometry } = results[0]
+          const street = address_components.find(component => component.types.includes('route'))
+          const neighborhood = address_components.find(component => component.types.includes('sublocality'))
+          const city = address_components.find(component => component.types.includes('administrative_area_level_2'))
+          const state = address_components.find(component => component.types.includes('administrative_area_level_1'))
+          const country = address_components.find(component => component.types.includes('country'))
+          const postal_code = address_components.find(component => component.types.includes('postal_code'))
+
+          formRef.current.setData({
+            profile_attributes: {
+              address_attributes: {
+                street: street?.long_name,
+                neighborhood: neighborhood?.long_name,
+                city: city?.long_name,
+                state: state?.long_name,
+                country: country?.long_name,
+                zip_code: postal_code?.long_name,
+                latitude: geometry?.location?.lat(),
+                longitude: geometry?.location?.lng(),
+              },
+            },
+          })
+
+        })
+        .catch(error => console.error(error));
+    }
+  }, [value])
+
 
   return (
     <CRow>
       <CCol>
-        <CHeader>
-          <h3 className="mt-2">{title}</h3>
-        </CHeader>
+        <h3 className="mt-2">{title}</h3>
         <h5 className="mt-3">Informações de Usuário</h5>
         <Form onSubmit={handleSubmit} ref={formRef}>
           <Input name="role" defaultValue={role} hidden />
@@ -160,6 +196,16 @@ const UserForm = ({ title, role }) => {
             <Scope path="address_attributes">
               <h5 className="mt-3">Informações de Endereço</h5>
               <CFormGroup>
+                <CLabel>Pesquise pelo endereço:</CLabel>
+                <GooglePlacesAutocomplete
+                  apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+                  selectProps={{
+                    value,
+                    onChange: setValue,
+                  }}
+                />
+              </CFormGroup>
+              <CFormGroup>
                 <CInputGroup className="mb-4">
                   <CInputGroupPrepend>
                     <CInputGroupText>
@@ -250,6 +296,8 @@ const UserForm = ({ title, role }) => {
                   </CInputGroupAppend>
                 </CInputGroup>
               </CFormGroup>
+              <Input type="text" name="latitude" hidden />
+              <Input type="text" name="longitude" hidden />
             </Scope>
           </Scope>
           <CFormGroup>

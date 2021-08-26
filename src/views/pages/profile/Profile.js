@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react'
 import {
   CButton,
   CCard,
@@ -16,6 +16,8 @@ import {
 import CIcon from '@coreui/icons-react'
 import { Form } from '@unform/web'
 import { Scope } from '@unform/core'
+import GooglePlacesAutocomplete, { geocodeByPlaceId } from 'react-google-places-autocomplete';
+
 import { Input } from '../../../reusable'
 import { useDispatch, useSelector } from 'react-redux'
 import { createProfile, updateProfile } from '../../../store/fetch_actions/profile'
@@ -25,6 +27,7 @@ const Profile = () => {
   const { profile } = useSelector(state => state.profile)
   const dispatch = useDispatch()
   const formRef = useRef(null)
+  const [value, setValue] = useState(null)
 
   const handleSubmit = async (data) => {
     try {
@@ -94,6 +97,38 @@ const Profile = () => {
     }
  }, [profile]);
 
+  useEffect(() => {
+    if (value) {
+      console.log(value)
+      geocodeByPlaceId(value.value.place_id)
+        .then(results => {
+
+          const { address_components, geometry } = results[0]
+          const street = address_components.find(component => component.types.includes('route'))
+          const neighborhood = address_components.find(component => component.types.includes('sublocality'))
+          const city = address_components.find(component => component.types.includes('administrative_area_level_2'))
+          const state = address_components.find(component => component.types.includes('administrative_area_level_1'))
+          const country = address_components.find(component => component.types.includes('country'))
+          const postal_code = address_components.find(component => component.types.includes('postal_code'))
+
+          formRef.current.setData({
+            address_attributes: {
+              street: street?.long_name,
+              neighborhood: neighborhood?.long_name,
+              city: city?.long_name,
+              state: state?.long_name,
+              country: country?.long_name,
+              zip_code: postal_code?.long_name,
+              latitude: geometry?.location?.lat(),
+              longitude: geometry?.location?.lng(),
+            }
+          })
+
+        })
+        .catch(error => console.error(error));
+    }
+  }, [value])
+
   return (
     <CContainer>
       <CRow>
@@ -156,6 +191,15 @@ const Profile = () => {
                     </CCardHeader>
                     <CCardBody>
                       <Input name="id" hidden />
+                      <CFormGroup>
+                        <GooglePlacesAutocomplete
+                          apiKey={process.env.REACT_APP_GOOGLE_MAPS_API_KEY}
+                          selectProps={{
+                            value,
+                            onChange: setValue,
+                          }}
+                        />
+                      </CFormGroup>
                       <CFormGroup>
                         <CInputGroup>
                           <CInputGroupPrepend>
@@ -233,6 +277,8 @@ const Profile = () => {
                           </CInputGroupAppend>
                         </CInputGroup>
                       </CFormGroup>
+                      <Input type="text" name="latitude" hidden />
+                      <Input type="text" name="longitude" hidden />
                     </CCardBody>
                   </CCard>
                 </Scope>
