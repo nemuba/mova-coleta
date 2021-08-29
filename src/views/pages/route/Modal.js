@@ -3,7 +3,8 @@ import { CButton, CModal, CModalBody, CModalFooter, CModalHeader } from '@coreui
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { currentUserFetch } from '../../../store/fetch_actions/auth';
+import { updateAction } from 'src/store/profile';
+import { fetchCurrentUser } from '../../../store/auth';
 import { deleteRoute } from '../../../store/fetch_actions/routes';
 
 const Modal = ({ route, title }) => {
@@ -15,9 +16,11 @@ const Modal = ({ route, title }) => {
     setModal(!modal);
   }
 
-  const handleExcludeCollect = (route) => {
+  const handleExcludeCollect = async (route) => {
     dispatch(deleteRoute(route))
-    dispatch(currentUserFetch())
+    await dispatch(fetchCurrentUser())
+      .unwrap()
+      .then(res => dispatch(updateAction(res.data.profile)))
     toggle();
     history.push('/routes');
   }

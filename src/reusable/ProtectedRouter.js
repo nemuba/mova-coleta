@@ -1,19 +1,22 @@
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom'
-import { currentUserFetch } from '../store/fetch_actions/auth'
-import { isAuthenticated as Authenticated } from '../services/auth'
+import { fetchCurrentUser } from 'src/store/auth';
+import { updateAction } from 'src/store/profile';
 
 const PrivateRoute = ({ component: Component, ...rest }) => {
-  const { isAuthenticated } = useSelector((state) => state.auth);
+  const { isAuthenticated, user } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
 
 
   useEffect(() => {
-    if (Authenticated()){
-      dispatch(currentUserFetch())
+    if (user) {
+      dispatch(updateAction(user?.profile))
+    } else if (isAuthenticated) {
+      dispatch(fetchCurrentUser())
     }
-  }, [dispatch]);
+  }, [user, isAuthenticated, dispatch]);
+
 
   return (
     <Route

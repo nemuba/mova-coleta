@@ -17,11 +17,16 @@ import { Form } from '@unform/web'
 import logo from '../../../assets/images/logo.png'
 import * as Yup from 'yup'
 import { Input } from  '../../../reusable'
-import { useDispatch } from 'react-redux'
-import { loginFetch } from '../../../store/fetch_actions/auth'
+import { useDispatch, useSelector } from 'react-redux'
+import { fetchLoginAuth } from '../../../store/auth'
+import { updateAction } from '../../../store/profile'
+import { login, isAuthenticated } from '../../../services/auth'
+import { toast } from 'react-toastify'
+import { push } from 'connected-react-router'
 
 const Login = () => {
-  const dispatch = useDispatch()
+  const { loading } = useSelector(state => state.auth)
+  const dispatch = useDispatch(null)
   const formRef = useRef(null)
 
   const handleSubmit = async (data, { reset }) => {
@@ -41,7 +46,20 @@ const Login = () => {
         abortEarly: false,
       });
 
-      dispatch(loginFetch(data))
+      await dispatch(fetchLoginAuth(data))
+        .unwrap()
+        .then((response) => {
+          login(response.headers['access-token'], response.headers['refresh-token']);
+          dispatch(updateAction(response.data.profile));
+          toast.success('Login realizado com sucesso!');
+        })
+        .catch(() => {
+          toast.error('Usuário o senha inválido!');
+        });
+
+      if (isAuthenticated()) {
+        dispatch(push('/dashboard'));
+      }
     } catch (err) {
       const validationErrors = {};
 
@@ -83,7 +101,7 @@ const Login = () => {
                     </CInputGroup>
                     <CRow>
                       <CCol xs="6">
-                        <CButton color="primary" className="px-4" type="submit">Entrar</CButton>
+                        <CButton disabled={loading} color="primary" className="px-4" type="submit">Entrar</CButton>
                       </CCol>
                     </CRow>
                   </Form>

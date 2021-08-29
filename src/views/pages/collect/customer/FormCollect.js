@@ -7,8 +7,9 @@ import { Input, TextArea } from '../../../../reusable';
 import Notification from './Notification';
 import { createCollect } from '../../../../store/fetch_actions/collects'
 import * as Yup from 'yup';
-import { currentUserFetch } from '../../../../store/fetch_actions/auth';
+import { fetchCurrentUser } from '../../../../store/auth';
 import { push } from 'connected-react-router';
+import { updateAction } from 'src/store/profile';
 
 const FormCollect = () => {
   const formRef = useRef(null)
@@ -36,7 +37,9 @@ const FormCollect = () => {
       }
 
       dispatch(createCollect(collect))
-      dispatch(currentUserFetch())
+      await dispatch(fetchCurrentUser())
+        .unwrap()
+        .then(res => dispatch(updateAction(res.data.profile)))
       dispatch(push('/collects'))
 
     } catch (err) {

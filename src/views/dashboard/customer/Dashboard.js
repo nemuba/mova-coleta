@@ -1,16 +1,12 @@
 import CIcon from '@coreui/icons-react'
 import { CBadge, CCard, CCardBody, CCardGroup, CCardHeader, CProgress, CWidgetProgressIcon } from '@coreui/react'
-import React, { useEffect } from 'react'
-import { useDispatch } from 'react-redux'
-import { currentUserFetch } from 'src/store/fetch_actions/auth'
-
+import React from 'react'
 
 const Dashboard = ({ user }) => {
 
   const lastCollect = user?.collects[user.collects.length - 1]
   const totalCollects = user?.collects?.length
   const userPoints = user?.user_point?.value
-  const dispatch = useDispatch()
 
   const name = 'Aguardando Confirmação'
 
@@ -22,10 +18,6 @@ const Dashboard = ({ user }) => {
       default: return 'primary'
     }
   }
-
-  useEffect(() => {
-    dispatch(currentUserFetch())
-  }, [dispatch])
 
   return (
     <>

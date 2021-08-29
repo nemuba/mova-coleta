@@ -37,7 +37,7 @@ const TheSidebar = () => {
       <CSidebarNav>
 
         <CCreateElement
-          items={navigation[user.role]}
+          items={navigation[user?.role]}
           components={{
             CSidebarNavDivider,
             CSidebarNavDropdown,

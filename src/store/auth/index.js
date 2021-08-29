@@ -1,27 +1,80 @@
 import { isAuthenticated } from '../../services/auth'
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit'
+import api from '../../services/api'
 
 const initialState = {
   isAuthenticated: isAuthenticated(),
   user: {},
+  loading: false,
+  error: null,
 }
+
+export const fetchLoginAuth = createAsyncThunk('auth/fetchLoginAuth',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await api.post('/users/sign_in', { auth: data })
+      return response
+    } catch (err) {
+      return rejectWithValue(err)
+    }
+  }
+)
+
+export const fetchRegisterAuth = createAsyncThunk('auth/fetchRegisterAuth',
+  async (data, { rejectWithValue }) => {
+    try {
+      const response = await api.post('/users/sign_up', { auth: data })
+      return response
+    } catch (err) {
+      return rejectWithValue(err)
+    }
+  }
+)
+
+export const fetchCurrentUser = createAsyncThunk('auth/fetchCurrentUser',
+  async () => {
+    const response = await api.get('/currentusers')
+    return response.data
+  }
+)
+
+const pending = (state, action) => {
+  state.loading = true
+  state.error = null
+}
+
+const rejected = (state, action) => {
+  state.error = action.error.message
+  state.loading = false
+}
+
+const fulfilled = (state, action) => {
+  state.isAuthenticated = true
+  state.user = action.payload
+  state.loading = false
+  state.error = null
+}
+
+
 
 const authSlice = createSlice({
   name: 'auth',
   initialState: initialState,
   reducers: {
-    loginAction: (state, action) => {
-      return { ...state, isAuthenticated: true, user: action.payload }
-    },
     logoutAction: (state, action) => {
-      return { ...state, isAuthenticated: false, user: {} }
+      return { ...state, isAuthenticated: false, user: null }
     },
-    currentUserAction: (state, action) => {
-      return { ...state, user: action.payload }
-    },
-    signupAction: (state, action) => {
-      return { ...state, isAuthenticated: true, user: action.payload }
-    }
+  },
+  extraReducers: {
+    [fetchLoginAuth.pending]: pending,
+    [fetchLoginAuth.rejected]: rejected,
+    [fetchLoginAuth.fulfilled]: fulfilled,
+    [fetchRegisterAuth.pending]: pending,
+    [fetchRegisterAuth.rejected]: rejected,
+    [fetchRegisterAuth.fulfilled]: fulfilled,
+    [fetchCurrentUser.pending]: pending,
+    [fetchCurrentUser.rejected]: rejected,
+    [fetchCurrentUser.fulfilled]: fulfilled,
   },
 })
 

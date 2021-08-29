@@ -16,11 +16,16 @@ import { Form } from '@unform/web'
 import { Input } from '../../../reusable'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { signupFetch } from '../../../store/fetch_actions/auth'
 import * as Yup from 'yup'
 import { useEffect } from 'react'
+import { fetchRegisterAuth } from 'src/store/auth'
+import { isAuthenticated, login } from 'src/services/auth'
+import { updateAction } from 'src/store/profile'
+import { toast } from 'react-toastify'
+import { push } from 'connected-react-router'
 
 const Register = () => {
+  const { loading } = useSelector(state => state.auth)
   const dispatch = useDispatch()
   const formRef = useRef(null)
   const { search } = useSelector(state => state.router.location)
@@ -39,7 +44,20 @@ const Register = () => {
         abortEarly: false,
       });
 
-      dispatch(signupFetch(data))
+      await dispatch(fetchRegisterAuth(data))
+        .unwrap()
+        .then((response) => {
+          login(response.headers['access-token'], response.headers['refresh-token']);
+          dispatch(updateAction(response.data.profile));
+          toast.success('Conta criada com sucesso!');
+        })
+        .catch(() => {
+          toast.error('Erro ao criar o conta!');
+        });
+
+      if (isAuthenticated()) {
+        dispatch(push('/dashboard'));
+      }
     } catch (err) {
       const validationErrors = {};
       if (err instanceof Yup.ValidationError) {
@@ -94,7 +112,7 @@ const Register = () => {
                     </CInputGroupPrepend>
                     <Input id="password-confirmation" name="password_confirmation" type="password" placeholder="Repita Senha" autoComplete="new-password" />
                   </CInputGroup>
-                  <CButton type="submit" color="success" block>Criar conta</CButton>
+                  <CButton disabled={loading} type="submit" color="success" block>Criar conta</CButton>
                 </Form>
               </CCardBody>
               <CCardFooter className="p-4">
