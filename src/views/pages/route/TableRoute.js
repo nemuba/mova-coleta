@@ -5,7 +5,7 @@ import { Link, useHistory } from 'react-router-dom'
 import Modal from './Modal'
 import moment from 'moment'
 
-const TableRoute = ({ routes }) => {
+const TableRoute = ({ routes = [], loading }) => {
   const history = useHistory()
 
   const fields = [
@@ -26,6 +26,7 @@ const TableRoute = ({ routes }) => {
       sorter
       striped
       footer
+      loading={loading}
       fields={fields}
       items={routes}
       noItemsViewSlot={

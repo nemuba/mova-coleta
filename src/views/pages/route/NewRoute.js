@@ -6,13 +6,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Input, SelectInput } from '../../../reusable';
 import { fetchAllUsers } from '../../../store/users';
 import * as Yup from 'yup';
-import { createRoute } from '../../../store/fetch_actions/routes';
-import { listCollects } from '../../../store/fetch_actions/collects';
+import { fetchCreateRoute } from '../../../store/routes';
+import { fetchAllCollects } from '../../../store/collects';
 import { getLocation } from '../../../store/fetch_actions/location';
 import MapRouteCollect from './MapRouteCollect';
 import ModalRemoveRouteCollect from './ModalRemoveRouteCollect';
+import { push } from 'connected-react-router';
+import { toast } from 'react-toastify';
 
 const NewRoute = () => {
+  const { loading } = useSelector(state => state.routes);
   const { users } = useSelector(state => state.users)
   const { location } = useSelector(state => state.location)
   const { collects } = useSelector(state => state.collects)
@@ -30,7 +33,7 @@ const NewRoute = () => {
 
   useEffect(() => {
     dispatch(fetchAllUsers())
-    dispatch(listCollects())
+    dispatch(fetchAllCollects())
     dispatch(getLocation())
   }, [dispatch])
 
@@ -105,7 +108,15 @@ const NewRoute = () => {
         ...data,
         route_collects_attributes
       }
-      dispatch(createRoute(route))
+      await dispatch(fetchCreateRoute(route))
+        .unwrap()
+        .then(() => {
+          toast.success('Rota criada com sucesso!')
+          dispatch(push('/routes'))
+        })
+        .catch(() => {
+          toast.error('Erro ao criar rota!')
+        })
     } catch (error) {
       const validationErrors = {};
 
@@ -194,7 +205,7 @@ const NewRoute = () => {
                   <CButton
                     color="primary"
                     type="submit"
-                    disabled={mapCollects.length === 0}
+                    disabled={mapCollects.length === 0 || loading}
                   >Cadastrar</CButton>
                 </CFormGroup>
               </Form>

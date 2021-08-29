@@ -5,10 +5,11 @@ import React, { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, TextArea } from '../../../../reusable';
 import Notification from './Notification';
-import { createCollect } from '../../../../store/fetch_actions/collects'
+import { fetchCreateCollect } from '../../../../store/collects'
 import * as Yup from 'yup';
-import { fetchCurrentUser } from '../../../../store/auth';
 import { push } from 'connected-react-router';
+import { toast } from 'react-toastify';
+import { fetchCurrentUser } from 'src/store/auth';
 import { updateAction } from 'src/store/profile';
 
 const FormCollect = () => {
@@ -16,6 +17,7 @@ const FormCollect = () => {
   const dispatch = useDispatch()
   const { profile } = useSelector(state => state.profile)
   const [notification, setNotification] = useState(profile === null)
+  const { loading } = useSelector(state => state.collects)
 
   const handleSubmit = async (data) => {
     try {
@@ -36,11 +38,20 @@ const FormCollect = () => {
         collect_status_attributes: { name: 'Aguardando Confirmação' }
       }
 
-      dispatch(createCollect(collect))
-      await dispatch(fetchCurrentUser())
+      await dispatch(fetchCreateCollect(collect))
         .unwrap()
-        .then(res => dispatch(updateAction(res.data.profile)))
-      dispatch(push('/collects'))
+        .then(async () => {
+          toast.success('Coleta criada com sucesso!')
+          await dispatch(fetchCurrentUser())
+            .unwrap()
+            .then(res => {
+              dispatch(updateAction(res.profile))
+            })
+          dispatch(push('/collects'))
+        })
+        .catch(() => {
+          toast.error('Erro ao criar coleta!')
+        })
 
     } catch (err) {
       console.log(err)
@@ -69,6 +80,12 @@ const FormCollect = () => {
     }
 
   }, [profile])
+
+  useEffect(() => {
+    if (loading) {
+      setNotification(loading)
+    }
+  }, [loading])
 
   return (
     <CContainer>

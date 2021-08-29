@@ -3,8 +3,8 @@ import { CCardGroup, CProgress, CWidgetProgressIcon } from '@coreui/react'
 import React, { useState } from 'react'
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { listCollects } from '../../../store/fetch_actions/collects'
-import { listRoutes } from '../../../store/fetch_actions/routes'
+import { fetchAllCollects } from '../../../store/collects'
+import { fetchAllRoutes } from '../../../store/routes'
 
 
 const Dashboard = ({ users }) => {
@@ -21,8 +21,8 @@ const Dashboard = ({ users }) => {
   const [totalRoutes, setTotalRoutes] = useState(0)
 
   useEffect(() => {
-    dispatch(listCollects())
-    dispatch(listRoutes())
+    dispatch(fetchAllCollects())
+    dispatch(fetchAllRoutes())
   }, [dispatch])
 
   useEffect(() => {

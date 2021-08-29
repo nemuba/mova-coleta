@@ -4,7 +4,7 @@ import api from '../../services/api'
 
 const initialState = {
   isAuthenticated: isAuthenticated(),
-  user: {},
+  user: null,
   loading: false,
   error: null,
 }

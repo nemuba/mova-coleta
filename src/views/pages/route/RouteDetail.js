@@ -7,16 +7,18 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router';
 import { Input, SelectInput } from 'src/reusable';
 import { fetchAllUsers } from '../../../store/users';
-import { getRoute, updateRoute } from '../../../store/fetch_actions/routes';
+import { fetchFindRoute, fetchUpdateRoute } from '../../../store/routes';
 import { useRef } from 'react';
 import * as Yup from 'yup'
-import { listCollects } from '../../../store/fetch_actions/collects';
+import { fetchAllCollects } from '../../../store/collects';
 import { getLocation } from '../../../store/fetch_actions/location';
 import MapRouteCollectDetail from './MapRouteCollectDetail';
+import { toast } from 'react-toastify';
+import { push } from 'connected-react-router';
 
 
 const RouteDetail = () => {
-  const { route } = useSelector(state => state.routes);
+  const { route, loading } = useSelector(state => state.routes);
   const { users } = useSelector(state => state.users)
   const { collects } = useSelector(state => state.collects)
   const { location } = useSelector(state => state.location)
@@ -28,7 +30,7 @@ const RouteDetail = () => {
 
   useEffect(() => {
     dispatch(fetchAllUsers())
-    dispatch(listCollects())
+    dispatch(fetchAllCollects())
     dispatch(getLocation())
   }, [dispatch])
 
@@ -42,7 +44,7 @@ const RouteDetail = () => {
 
   useEffect(() => {
     if (params && params.id) {
-      dispatch(getRoute(params.id))
+      dispatch(fetchFindRoute(params.id))
     }
   }, [params, dispatch])
 
@@ -83,8 +85,15 @@ const RouteDetail = () => {
 
       await schema.validate(data, { abortEarly: false })
 
-      console.log(data)
-      dispatch(updateRoute(data))
+      await dispatch(fetchUpdateRoute(data))
+        .unwrap()
+        .then(() => {
+          toast.success('Rota atualizada com sucesso!')
+          dispatch(push('/routes'))
+        })
+        .catch(() => {
+          toast.error('Erro ao atualizar rota!')
+        })
     } catch (error) {
       const validationErrors = {};
 
@@ -145,7 +154,7 @@ const RouteDetail = () => {
                   </CCol>
                 </CFormGroup>
                 <CFormGroup>
-                  <CButton color="success" type="submit">Atualizar</CButton>
+                  <CButton disabled={loading} color="success" type="submit">Atualizar</CButton>
                 </CFormGroup>
               </Form>
             </CCardBody>

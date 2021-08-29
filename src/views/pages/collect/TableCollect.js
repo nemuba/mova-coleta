@@ -5,7 +5,7 @@ import { Link, useHistory } from 'react-router-dom'
 import { getBadge } from '../../../services/functions'
 import Modal from './Modal'
 
-const TableCollect = ({ collects, status, admin }) => {
+const TableCollect = ({ collects = [], status, admin, loading }) => {
   const history = useHistory()
 
   const fields = [
@@ -30,6 +30,7 @@ const TableCollect = ({ collects, status, admin }) => {
       sorter
       striped
       footer
+      loading={loading}
       fields={fields}
       items={collects}
       noItemsViewSlot={

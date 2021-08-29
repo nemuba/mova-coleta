@@ -69,7 +69,7 @@ const SettingsDetails = () => {
   useEffect(() => {
     if (router) {
       const { params } = router
-      dispatch(fetchFindSettings(params.id))
+      dispatch(fetchFindSettings(params?.id))
     }
   }, [router, dispatch])
 
@@ -79,7 +79,7 @@ const SettingsDetails = () => {
         id: setting.id,
         param: setting.param,
         value: setting.value,
-        system_module_id: { value: setting.system_module.id, label: setting.system_module.name },
+        system_module_id: { value: setting?.system_module?.id, label: setting?.system_module?.name },
       })
     }
   }, [setting])

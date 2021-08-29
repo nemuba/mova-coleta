@@ -1,16 +1,16 @@
 import { CCard, CCardBody, CCardHeader, CCol, CContainer, CRow } from '@coreui/react';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { listCollects } from '../../../../store/fetch_actions/collects';
+import { fetchAllCollects } from '../../../../store/collects';
 import TableCollect from '../TableCollect';
 
 const Collect = ({ user }) => {
-  const { collects } = useSelector(state => state.collects);
+  const { collects, loading } = useSelector(state => state.collects);
   const dispatch = useDispatch();
   const status = 'Aguardando Confirmação';
 
   useEffect(() => {
-    dispatch(listCollects())
+    dispatch(fetchAllCollects())
   }, [dispatch])
 
   return (
@@ -24,6 +24,7 @@ const Collect = ({ user }) => {
             <CCardBody>
               <TableCollect
                 collects={collects}
+                loading={loading}
                 status={status}
                 admin={true}
               />

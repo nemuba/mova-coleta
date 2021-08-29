@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router-dom';
 import { Marker, Popup } from 'react-leaflet';
 import Map from 'src/reusable/Map';
-import { getCollect } from 'src/store/fetch_actions/collects';
+import { fetchFindCollect } from 'src/store/collects';
 import { setLocation } from 'src/store/map';
 import L from 'leaflet'
 import icon from 'leaflet/dist/images/marker-icon.png';
@@ -26,7 +26,7 @@ const CollectDetail = () => {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    if (params && params.id) dispatch(getCollect(params.id))
+    if (params && params.id) dispatch(fetchFindCollect(params.id))
   }, [dispatch, params]);
 
   useEffect(() => {

@@ -3,9 +3,10 @@ import { CButton, CModal, CModalBody, CModalFooter, CModalHeader } from '@coreui
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { updateAction } from 'src/store/profile';
 import { fetchCurrentUser } from '../../../store/auth';
-import { deleteRoute } from '../../../store/fetch_actions/routes';
+import { fetchDeleteRoute } from '../../../store/routes';
 
 const Modal = ({ route, title }) => {
   const dispatch = useDispatch(null);
@@ -17,10 +18,18 @@ const Modal = ({ route, title }) => {
   }
 
   const handleExcludeCollect = async (route) => {
-    dispatch(deleteRoute(route))
-    await dispatch(fetchCurrentUser())
+    await dispatch(fetchDeleteRoute(route.id))
       .unwrap()
-      .then(res => dispatch(updateAction(res.data.profile)))
+      .then(async () =>{
+        toast.success('Rota excluída com sucesso!');
+        await dispatch(fetchCurrentUser())
+          .unwrap()
+          .then(res => dispatch(updateAction(res.profile)))
+      })
+      .catch(() =>{
+        toast.error('Erro ao excluir rota');
+      })
+
     toggle();
     history.push('/routes');
   }

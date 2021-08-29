@@ -16,7 +16,7 @@ const Dashboard = () => {
     dispatch(fetchCurrentUser())
   }, [dispatch])
 
-  switch (user.role) {
+  switch (user?.role) {
     case 'admin':
       return <AdminDashBoard users={users} />
     case 'customer':

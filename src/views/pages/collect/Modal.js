@@ -1,26 +1,34 @@
 import CIcon from '@coreui/icons-react';
 import { CButton, CModal, CModalBody, CModalFooter, CModalHeader } from '@coreui/react';
 import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { updateAction } from 'src/store/profile';
 import { fetchCurrentUser } from '../../../store/auth';
-import { deleteCollect } from '../../../store/fetch_actions/collects';
+import { fetchAllCollects, fetchDeleteCollect } from '../../../store/collects';
 
 const Modal = ({ collect, title, status }) => {
   const dispatch = useDispatch(null);
   const history = useHistory();
   const [modal, setModal] = useState(false);
+  const { loading } = useSelector(state => state.collects);
 
   const toggle = () => {
     setModal(!modal);
   }
 
   const handleExcludeCollect = async (collect) => {
-    dispatch(deleteCollect(collect))
-    await dispatch(fetchCurrentUser())
+    await dispatch(fetchDeleteCollect(collect.id))
       .unwrap()
-      .then(res => dispatch(updateAction(res.data.profile)))
+      .then(async () => {
+        await dispatch(fetchAllCollects());
+        await dispatch(fetchCurrentUser())
+          .unwrap()
+          .then(res => dispatch(updateAction(res.profile)))
+        toast.success('Coleta excluída com sucesso!');
+      })
+
     toggle();
     history.push('/collects');
   }
@@ -47,7 +55,14 @@ const Modal = ({ collect, title, status }) => {
           Realmente deseja confirmar operação de exclusão?
         </CModalBody>
         <CModalFooter>
-          <CButton onClick={() => handleExcludeCollect(collect)} type="button" color="primary">Excluir</CButton>{' '}
+          <CButton
+            disabled={loading}
+            onClick={() => handleExcludeCollect(collect)}
+            type="button"
+            color="primary"
+          >
+            Excluir
+          </CButton>
           <CButton
             type="button"
             color="danger"

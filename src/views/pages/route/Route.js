@@ -1,15 +1,15 @@
 import { CCard, CCardBody, CCardHeader, CCol, CContainer, CRow } from '@coreui/react';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { listRoutes } from '../../../store/fetch_actions/routes';
+import { fetchAllRoutes } from '../../../store/routes';
 import TableCollect from './TableRoute';
 
 const Route = () => {
-  const { routes } = useSelector(state => state.routes);
+  const { routes, loading } = useSelector(state => state.routes);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(listRoutes())
+    dispatch(fetchAllRoutes())
   }, [dispatch])
 
   return (
@@ -22,6 +22,7 @@ const Route = () => {
             </CCardHeader>
             <CCardBody>
               <TableCollect
+                loading={loading}
                 routes={routes}
               />
             </CCardBody>
