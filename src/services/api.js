@@ -17,6 +17,7 @@ async function refreshToken(error) {
       const header = {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}` ,
+        "Refresh-Token": refresh_token,
       };
       const parameters = {
         method: "POST",
@@ -61,9 +62,15 @@ api.interceptors.response.use(
   },
   async function (error) {
     const access_token = getToken()
-    if (error.response.status === 401 && access_token) {
+    const originalRequest = error.config;
+    if (error.response.status === 401 && access_token && !originalRequest._retry) {
       const response = await refreshToken(error);
-      return response;
+      originalRequest._retry = true;
+      const access_token = response.headers['access-token']
+      const refresh_token = response.headers['refresh-token']
+      axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`
+      login(access_token, refresh_token)
+      return api(originalRequest);
     }
     return Promise.reject(error);
   }

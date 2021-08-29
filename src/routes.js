@@ -10,6 +10,9 @@ import Route from './views/pages/route/Route'
 import NewRoute from './views/pages/route/NewRoute'
 import RouteDetail from './views/pages/route/RouteDetail'
 import Invite from './views/pages/invite/Invite'
+import Settings from './views/pages/settings/Settings'
+import NewSettings from './views/pages/settings/NewSettings'
+import SettingsDetails from './views/pages/settings/SettingsDetails'
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -25,6 +28,9 @@ const routes = [
   { protected: true, path: '/routes/new', exact: true, name: 'Criar Rota', component: NewRoute },
   { protected: true, path: '/routes/:id', exact: true, name: 'Detalhes da Rota', component: RouteDetail },
   { protected: true, path: '/invite', exact: true, name: 'Convidar cliente', component: Invite },
+  { protected: true, path: '/settings', exact: true, name: 'Configurações', component: Settings },
+  { protected: true, path: '/settings/new', exact: true, name: 'Cadastrar Configuração', component: NewSettings },
+  { protected: true, path: '/settings/:id', exact: true, name: 'Atualizar Configuração', component: SettingsDetails },
 ];
 
 export default routes;

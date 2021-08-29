@@ -39,7 +39,6 @@ const _nav = {
       to: '/collects',
       icon: 'cil-pencil',
     },
-
     {
       _tag: 'CSidebarNavDropdown',
       name: 'Manutenção de Rotas',
@@ -59,12 +58,31 @@ const _nav = {
           to: '/routes/new',
         },
       ]
-    }
-
-    // {
-    //   _tag: 'CSidebarNavDivider',
-    //   className: 'm-2'
-    // }
+    },
+    {
+      _tag: 'CSidebarNavDivider',
+      className: 'm-2'
+    },
+    {
+      _tag: 'CSidebarNavDropdown',
+      name: 'Configurações',
+      route: '/settings',
+      icon: 'cil-settings',
+      _children: [
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'Listar',
+          icon: 'cil-clipboard',
+          to: '/settings',
+        },
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'Cadastrar',
+          icon: 'cil-plus',
+          to: '/settings/new',
+        },
+      ]
+    },
   ],
   customer: [
     {
