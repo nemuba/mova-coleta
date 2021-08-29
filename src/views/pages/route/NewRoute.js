@@ -4,7 +4,7 @@ import { Form } from '@unform/web';
 import React, { useRef, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input, SelectInput } from '../../../reusable';
-import { listUsers } from '../../../store/fetch_actions/users';
+import { fetchAllUsers } from '../../../store/users';
 import * as Yup from 'yup';
 import { createRoute } from '../../../store/fetch_actions/routes';
 import { listCollects } from '../../../store/fetch_actions/collects';
@@ -29,7 +29,7 @@ const NewRoute = () => {
   ]
 
   useEffect(() => {
-    dispatch(listUsers())
+    dispatch(fetchAllUsers())
     dispatch(listCollects())
     dispatch(getLocation())
   }, [dispatch])

@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router';
 import { Input, SelectInput } from 'src/reusable';
-import { listUsers } from '../../../store/fetch_actions/users';
+import { fetchAllUsers } from '../../../store/users';
 import { getRoute, updateRoute } from '../../../store/fetch_actions/routes';
 import { useRef } from 'react';
 import * as Yup from 'yup'
@@ -27,7 +27,7 @@ const RouteDetail = () => {
   const formRef = useRef(null)
 
   useEffect(() => {
-    dispatch(listUsers())
+    dispatch(fetchAllUsers())
     dispatch(listCollects())
     dispatch(getLocation())
   }, [dispatch])

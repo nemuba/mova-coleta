@@ -20,11 +20,12 @@ import GooglePlacesAutocomplete, { geocodeByPlaceId } from 'react-google-places-
 
 import { Input } from '../../../reusable'
 import { useDispatch, useSelector } from 'react-redux'
-import { createProfile, updateProfile } from '../../../store/fetch_actions/profile'
+import { fetchAddProfile, fetchUpdateProfile } from '../../../store/profile'
 import * as Yup from 'yup'
+import { toast } from 'react-toastify'
 
 const Profile = () => {
-  const { profile } = useSelector(state => state.profile)
+  const { profile, loading } = useSelector(state => state.profile)
   const dispatch = useDispatch()
   const formRef = useRef(null)
   const [value, setValue] = useState(null)
@@ -58,9 +59,23 @@ const Profile = () => {
       });
 
       if (data.id != null && data.id !== "") {
-        dispatch(updateProfile(data))
+        await dispatch(fetchUpdateProfile(data))
+          .unwrap()
+          .then(() => {
+            toast.success('Perfil atualizado com sucesso!')
+          })
+          .catch(() => {
+            toast.error('Erro ao atualizar perfil!')
+          })
       } else {
-        dispatch(createProfile(data))
+        await dispatch(fetchAddProfile(data))
+          .unwrap()
+          .then(() => {
+            toast.success('Perfil cadastrado com sucesso!')
+          })
+          .catch(() => {
+            toast.error('Erro ao cadastrar perfil!')
+          })
       }
     } catch (err) {
       console.log(err)
@@ -283,7 +298,7 @@ const Profile = () => {
                   </CCard>
                 </Scope>
                 <CFormGroup className="form-actions">
-                  <CButton type="submit" size="sm" color="primary">Salvar</CButton>
+                  <CButton disabled={loading} type="submit" size="sm" color="primary">Salvar</CButton>
                 </CFormGroup>
               </Form>
             </CCardBody>

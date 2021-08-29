@@ -3,7 +3,8 @@ import { CButton, CModal, CModalBody, CModalFooter, CModalHeader } from '@coreui
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
-import { deleteUser, listUsers } from '../../../store/fetch_actions/users';
+import { toast } from 'react-toastify';
+import { fetchDeleteUser, fetchAllUsers } from '../../../store/users';
 
 const Modal = ({ user, title }) => {
   const dispatch = useDispatch(null);
@@ -14,9 +15,14 @@ const Modal = ({ user, title }) => {
     setModal(!modal);
   }
 
-  const handleExcludeUser = (user) => {
-    dispatch(deleteUser(user))
-    dispatch(listUsers())
+  const handleExcludeUser = async (user) => {
+    await dispatch(fetchDeleteUser(user.id))
+      .unwrap()
+      .then(async () => {
+        await dispatch(fetchAllUsers())
+        toast.success('Usuário excluído com sucesso!');
+      })
+
     toggle();
     history.push('/users');
   }

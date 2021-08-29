@@ -12,7 +12,7 @@ import {
 } from '@coreui/react'
 
 import { useDispatch, useSelector } from 'react-redux'
-import { listUsers } from '../../../store/fetch_actions/users'
+import { fetchAllUsers } from '../../../store/users'
 import CIcon from '@coreui/icons-react'
 import Modal from './Modal'
 
@@ -23,7 +23,7 @@ const Users = () => {
   const currentPage = Number(queryPage && queryPage[1] ? queryPage[1] : 1)
   const [page, setPage] = useState(currentPage)
   const [pages, setPages] = useState(0)
-  const { users } = useSelector(state => state.users)
+  const { users, loading } = useSelector(state => state.users)
   const dispatch = useDispatch()
 
   const pageChange = newPage => {
@@ -35,7 +35,7 @@ const Users = () => {
   }, [currentPage, page])
 
   useEffect(() => {
-    dispatch(listUsers())
+    dispatch(fetchAllUsers())
   }, [dispatch]);
 
   useEffect(() => {
@@ -65,8 +65,9 @@ const Users = () => {
           <CDataTable
               items={users}
               fields={fields}
-            hover
-            striped
+              loading={loading}
+              hover
+              striped
               tableFilter={{ label: 'Pesquisar:', placeholder: 'Digite o termo da busca' }}
               footer
               sorter

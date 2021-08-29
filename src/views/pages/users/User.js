@@ -5,10 +5,12 @@ import { Scope } from '@unform/core'
 import { useDispatch, useSelector } from 'react-redux'
 import GooglePlacesAutocomplete, { geocodeByPlaceId } from 'react-google-places-autocomplete';
 import { Input, SelectInput } from '../../../reusable'
-import { getUser, updateUser } from '../../../store/fetch_actions/users'
+import { fetchFindUser, fetchUpdateUser } from '../../../store/users'
 import * as Yup from 'yup'
 import { listModules } from '../../../store/fetch_actions/system_modules'
 import { useRouteMatch } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import { push } from 'connected-react-router'
 
 const roles = [
   {
@@ -30,7 +32,7 @@ const roles = [
 ]
 
 const User = () => {
-  const { user } = useSelector(state => state.users)
+  const { user, loading } = useSelector(state => state.users)
   const { system_modules } = useSelector(state => state.system_modules)
   const { params } = useRouteMatch()
 
@@ -41,7 +43,7 @@ const User = () => {
 
   useEffect(() => {
     if (params && params.id) {
-      dispatch(getUser(params.id))
+      dispatch(fetchFindUser(params.id))
     }
   }, [params, dispatch])
 
@@ -134,7 +136,15 @@ const User = () => {
       const user_data = data
       user_data.system_module_users_attributes = treatSystemModuleUsers(data)
 
-      dispatch(updateUser(user_data))
+      await dispatch(fetchUpdateUser(user_data))
+        .unwrap()
+        .then(() => {
+          toast.success('Usuário atualizado com sucesso');
+          dispatch(push('/users'))
+        })
+        .catch(() => {
+          toast.error('Erro ao atualizar usuário')
+        });
 
     } catch (err) {
       const validationErrors = {};
@@ -312,7 +322,7 @@ const User = () => {
                 </Scope>
               </Scope>
               <CFormGroup>
-                <CButton type="submit" color="success" className="mt-2">Salvar</CButton>
+                <CButton disabled={loading} type="submit" color="success" className="mt-2">Salvar</CButton>
               </CFormGroup>
               <CInputGroup className="mt-3">
                 <CLink className="text-danger" to="/users">Voltar</CLink>

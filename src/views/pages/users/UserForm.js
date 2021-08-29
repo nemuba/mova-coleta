@@ -3,14 +3,17 @@ import { CButton, CCol, CFormGroup, CInputGroup, CInputGroupAppend, CInputGroupP
 import { Scope } from '@unform/core';
 import { Form } from '@unform/web';
 import React, { useEffect, useRef } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import GooglePlacesAutocomplete, { geocodeByPlaceId } from 'react-google-places-autocomplete';
 import { Input } from '../../../reusable';
-import { createUser } from '../../../store/fetch_actions/users'
+import { fetchCreateUser } from '../../../store/users'
 import * as Yup from 'yup'
 import { useState } from 'react';
+import { toast } from 'react-toastify';
+import { push } from 'connected-react-router';
 
 const UserForm = ({ title, role }) => {
+  const { loading } = useSelector(state => state.users)
   const dispatch = useDispatch()
   const formRef = useRef(null)
   const [value, setValue] = useState(null)
@@ -45,9 +48,16 @@ const UserForm = ({ title, role }) => {
       });
 
 
-      dispatch(createUser(data))
+      await dispatch(fetchCreateUser(data))
+        .unwrap()
+        .then(() => {
+          toast.success('Usuário criado com sucesso!')
+          dispatch(push('/users'))
+        })
+        .catch(() => {
+          toast.error('Erro ao criar usuário!')
+        })
 
-      reset()
     } catch (err) {
       const validationErrors = {};
 
@@ -301,7 +311,7 @@ const UserForm = ({ title, role }) => {
             </Scope>
           </Scope>
           <CFormGroup>
-            <CButton color="primary" type="submit" className="mb-2">Cadastrar</CButton>
+            <CButton disabled={loading} color="primary" type="submit" className="mb-2">Cadastrar</CButton>
           </CFormGroup>
         </Form>
       </CCol>
