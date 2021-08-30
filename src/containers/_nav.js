@@ -83,6 +83,26 @@ const _nav = {
         },
       ]
     },
+    {
+      _tag: 'CSidebarNavDropdown',
+      name: 'Módulos',
+      route: '/modules',
+      icon: 'cil-notes',
+      _children: [
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'Listar',
+          icon: 'cil-clipboard',
+          to: '/modules',
+        },
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'Cadastrar',
+          icon: 'cil-plus',
+          to: '/modules/new',
+        },
+      ]
+    },
   ],
   customer: [
     {

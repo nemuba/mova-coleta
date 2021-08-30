@@ -13,6 +13,9 @@ import Invite from './views/pages/invite/Invite'
 import Settings from './views/pages/settings/Settings'
 import NewSettings from './views/pages/settings/NewSettings'
 import SettingsDetails from './views/pages/settings/SettingsDetails'
+import Modules from './views/pages/modules/Modules'
+import NewModule from './views/pages/modules/NewModule'
+import ModuleDetails from './views/pages/modules/ModuleDetails'
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -31,6 +34,9 @@ const routes = [
   { protected: true, path: '/settings', exact: true, name: 'Configurações', component: Settings },
   { protected: true, path: '/settings/new', exact: true, name: 'Cadastrar Configuração', component: NewSettings },
   { protected: true, path: '/settings/:id', exact: true, name: 'Atualizar Configuração', component: SettingsDetails },
+  { protected: true, path: '/modules', exact: true, name: 'Módulos', component: Modules },
+  { protected: true, path: '/modules/new', exact: true, name: 'Cadastrar Módulo', component: NewModule },
+  { protected: true, path: '/modules/:id', exact: true, name: 'Atualizar Módulo', component: ModuleDetails },
 ];
 
 export default routes;

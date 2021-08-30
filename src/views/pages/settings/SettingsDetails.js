@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { Input, SelectInput } from 'src/reusable';
 import { fetchFindSettings, fetchUpdateSettings } from '../../../store/settings'
-import { listModules } from '../../../store/fetch_actions/system_modules'
+import { fetchAllSystemModules } from '../../../store/system_modules'
 import * as Yup from 'yup';
 import { push } from 'connected-react-router';
 import { useRouteMatch } from 'react-router-dom';
@@ -56,7 +56,7 @@ const SettingsDetails = () => {
   }, [error])
 
   useEffect(() => {
-    dispatch(listModules())
+    dispatch(fetchAllSystemModules())
   }, [dispatch])
 
   useEffect(() => {

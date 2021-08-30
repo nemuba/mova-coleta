@@ -72,8 +72,8 @@ const Dashboard = ({ users }) => {
       <CWidgetProgressIcon
         header={totalRoutes.toString()}
         text="Total de Rotas"
-        color="gradient-secondary"
-        progressSlot={<CProgress color="secondary" size="xs" className="my-3" value={100} />}
+        color="gradient-danger"
+        progressSlot={<CProgress color="danger" size="xs" className="my-3" value={100} />}
       >
         <CIcon name="cil-location-pin" height="36" />
       </CWidgetProgressIcon>

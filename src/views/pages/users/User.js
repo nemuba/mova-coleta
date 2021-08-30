@@ -7,7 +7,7 @@ import GooglePlacesAutocomplete, { geocodeByPlaceId } from 'react-google-places-
 import { Input, SelectInput } from '../../../reusable'
 import { fetchFindUser, fetchUpdateUser } from '../../../store/users'
 import * as Yup from 'yup'
-import { listModules } from '../../../store/fetch_actions/system_modules'
+import { fetchAllSystemModules } from '../../../store/system_modules'
 import { useRouteMatch } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import { push } from 'connected-react-router'
@@ -159,7 +159,7 @@ const User = () => {
   };
 
   useEffect(() => {
-    dispatch(listModules())
+    dispatch(fetchAllSystemModules())
   }, [dispatch]);
 
   useEffect(() => {
