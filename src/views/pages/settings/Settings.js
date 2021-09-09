@@ -58,7 +58,7 @@ const Settings = () => {
                       >
                         <CIcon name="cil-search" />
                       </CButton>
-                      <Modal setting={item} title="Remover configuração ?" />
+                      {/* <Modal setting={item} title="Remover configuração ?" /> */}
                     </td>
                   ),
                   system_module: (item) => (

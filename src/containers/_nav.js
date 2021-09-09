@@ -75,12 +75,12 @@ const _nav = {
           icon: 'cil-clipboard',
           to: '/settings',
         },
-        {
-          _tag: 'CSidebarNavItem',
-          name: 'Cadastrar',
-          icon: 'cil-plus',
-          to: '/settings/new',
-        },
+        // {
+        //   _tag: 'CSidebarNavItem',
+        //   name: 'Cadastrar',
+        //   icon: 'cil-plus',
+        //   to: '/settings/new',
+        // },
       ]
     },
     {
@@ -95,12 +95,12 @@ const _nav = {
           icon: 'cil-clipboard',
           to: '/modules',
         },
-        {
-          _tag: 'CSidebarNavItem',
-          name: 'Cadastrar',
-          icon: 'cil-plus',
-          to: '/modules/new',
-        },
+        // {
+        //   _tag: 'CSidebarNavItem',
+        //   name: 'Cadastrar',
+        //   icon: 'cil-plus',
+        //   to: '/modules/new',
+        // },
       ]
     },
   ],

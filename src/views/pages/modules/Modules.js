@@ -51,7 +51,7 @@ const Modules = () => {
                       >
                         <CIcon name="cil-search" />
                       </CButton>
-                      <Modal className="m-1" module={item} title={"Excluir módulo ?"} />
+                      {/* <Modal className="m-1" module={item} title={"Excluir módulo ?"} /> */}
                     </td>
                   )
                 }}
