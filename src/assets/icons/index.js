@@ -141,6 +141,7 @@ import {
   cilAlarm,
   cilSend,
   cilCopy,
+  cilGift,
 } from '@coreui/icons'
 
 export const icons = Object.assign({}, {
@@ -252,6 +253,7 @@ export const icons = Object.assign({}, {
   cilAlarm,
   cilSend,
   cilCopy,
+  cilGift,
 }, {
   cifUs,
   cifBr,

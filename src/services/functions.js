@@ -24,7 +24,6 @@ export function retry(fn, retriesLeft = 10, interval = 1000) {
   });
 }
 
-
 export function getBadge(status) {
   switch (status) {
     case 'Coletado': return 'success'

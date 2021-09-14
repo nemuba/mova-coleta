@@ -8,13 +8,14 @@ import {
   CDataTable,
   CRow,
   CPagination,
-  CButton
+  CButton,
 } from '@coreui/react'
 
 import { useDispatch, useSelector } from 'react-redux'
 import { fetchAllUsers } from '../../../store/users'
 import CIcon from '@coreui/icons-react'
 import Modal from './Modal'
+import ModalUserPoint from './point/Modal'
 
 
 const Users = () => {
@@ -49,6 +50,7 @@ const Users = () => {
     { key: 'profile', label: 'Nome', sorter: true, filter: true },
     { key: 'user_modules', label: 'Módulos', sorter: true, filter: true },
     { key: 'role', label: 'Role', sorter: true, filter: true },
+    { key: 'user_point', label: 'Pontos', sorter: true, filter: true },
     { key: 'created_at', label: 'Criado em', sorter: true, filter: true },
     { key: 'updated_at', label: 'Atualizado em', sorter: true, filter: true },
     { key: 'options', label: 'Opções' }
@@ -81,6 +83,12 @@ const Users = () => {
                     {item?.profile?.name}
                   </td>
                 ),
+              'user_point':
+                (item) => (
+                  <td>
+                    {item?.user_point?.value}
+                  </td>
+                ),
               'user_modules':
                 (item) => (
                   <td>
@@ -106,6 +114,7 @@ const Users = () => {
                       <CIcon name="cil-search" />
                     </CButton>
                     <Modal user={item} title={'Excluir usuário ?'} />
+                    <ModalUserPoint user={item} title={'Atualizar Ponto do usuário'} />
                   </td>
                 )
 

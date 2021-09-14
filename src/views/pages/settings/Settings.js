@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { fetchAllSettings } from '../../../store/settings';
-import Modal from './Modal';
 
 const Settings = () => {
   const { settings, loading, error } = useSelector(state => state.settings);

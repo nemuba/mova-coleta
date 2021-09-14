@@ -5,7 +5,6 @@ import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useHistory } from 'react-router-dom'
 import { fetchAllSystemModules } from 'src/store/system_modules'
-import Modal from './Modal'
 
 const Modules = () => {
   const dispatch = useDispatch(null)
