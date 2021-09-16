@@ -1,5 +1,5 @@
 import CIcon from '@coreui/icons-react';
-import { CButton, CFormGroup, CLabel, CModal, CModalBody, CModalHeader } from '@coreui/react';
+import { CButton, CFormGroup, CLabel, CModal, CModalBody, CModalHeader, CInput } from '@coreui/react';
 import { Scope } from '@unform/core';
 import { Form } from '@unform/web';
 import React, { useEffect, useRef, useState } from 'react';
@@ -21,7 +21,15 @@ const Modal = ({ user, title }) => {
     setModal(!modal);
   }
 
-  const handleSubmit = async (data) => {
+  const handleChangePonto = (e) => {
+    formRef.current.setData({
+      user_point_attributes: {
+        value: (user?.user_point?.value || 0) + (Number(e.target.value) || 0)
+      }
+    })
+  }
+
+  const handleSubmit = async (data, { reset }) => {
     try {
       const schema = Yup.object().shape({
         id: Yup.string().required(''),
@@ -45,7 +53,7 @@ const Modal = ({ user, title }) => {
           console.log(error)
           toast.error('Erro ao atualizar pontuação do usuário !');
         })
-
+      reset();
     } catch (err) {
       const validationErrors = {};
       console.log(err)
@@ -64,7 +72,7 @@ const Modal = ({ user, title }) => {
         id: user?.id,
         user_point_attributes: {
           id: user?.user_point?.id,
-          value: user?.user_point?.value,
+          value: user?.user_point?.value || 0,
         }
       });
     }
@@ -95,9 +103,13 @@ const Modal = ({ user, title }) => {
             <CFormGroup>
               <Scope path="user_point_attributes">
                 <Input id="user_point_id" name="id" hidden />
-                <CLabel>Ponto</CLabel>
-                <Input id="value" name="value" type="number" />
+                <CLabel>Pontos do usário</CLabel>
+                <Input id="value" name="value" type="number" disabled/>
               </Scope>
+            </CFormGroup>
+            <CFormGroup>
+              <CLabel>Adicionar ponto</CLabel>
+              <CInput id="ponto" name="ponto" type="number" defaultValue="0" onChange={handleChangePonto}/>
             </CFormGroup>
             <CFormGroup>
               <CButton
