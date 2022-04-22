@@ -1,5 +1,6 @@
 import React, { useEffect, useRef } from 'react'
 import { useField } from '@unform/core'
+import { CFormText } from '@coreui/react'
 export default function Input({ name, ...rest }) {
 
   const inputRef = useRef(null)
@@ -22,6 +23,7 @@ export default function Input({ name, ...rest }) {
         placeholder={error}
         {...rest}
       />
+      {error && <CFormText>{error}</CFormText>}
     </>
   )
 }
