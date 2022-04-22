@@ -60,12 +60,12 @@
     "sass": "^1.32.8",
     "styled-components": "^5.3.0",
     "vanilla-masker": "^1.2.0",
+    "react-scripts": "3.4.0",
     "yup": "^0.32.9"
   },
   "devDependencies": {
     "@babel/core": "^7.13.14",
-    "auto-changelog": "~2.2.1",
-    "react-scripts": "^4.0.3"
+    "auto-changelog": "~2.2.1"
   },
   "scripts": {
     "start": "react-scripts start",
