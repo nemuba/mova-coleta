@@ -16,6 +16,12 @@ import SettingsDetails from './views/pages/settings/SettingsDetails'
 import Modules from './views/pages/modules/Modules'
 import NewModule from './views/pages/modules/NewModule'
 import ModuleDetails from './views/pages/modules/ModuleDetails'
+import Products from './views/pages/products/Products'
+import NewProduct from './views/pages/products/NewProduct'
+import ProductDetails from './views/pages/products/ProductDetails'
+import Recyclables from './views/pages/recyclables/Recyclables'
+import NewRecyclable from './views/pages/recyclables/NewRecyclable'
+import RecyclableDetails from './views/pages/recyclables/RecyclableDetails'
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -37,6 +43,12 @@ const routes = [
   { protected: true, path: '/modules', exact: true, name: 'Módulos', component: Modules },
   { protected: true, path: '/modules/new', exact: true, name: 'Cadastrar Módulo', component: NewModule },
   { protected: true, path: '/modules/:id', exact: true, name: 'Atualizar Módulo', component: ModuleDetails },
+  { protected: true, path: '/products', exact: true, name: 'Produtos', component: Products },
+  { protected: true, path: '/products/new', exact: true, name: 'Cadastrar Produto', component: NewProduct },
+  { protected: true, path: '/products/:id', exact: true, name: 'Atualizar Produto', component: ProductDetails },
+  { protected: true, path: '/recyclables', exact: true, name: 'Recicláveis', component: Recyclables },
+  { protected: true, path: '/recyclables/new', exact: true, name: 'Cadastrar Reciclável', component: NewRecyclable },
+  { protected: true, path: '/recyclables/:id', exact: true, name: 'Atualizar Reciclável', component: RecyclableDetails },
 ];
 
 export default routes;

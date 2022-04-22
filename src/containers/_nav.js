@@ -103,6 +103,26 @@ const _nav = {
         // },
       ]
     },
+    {
+      _tag: 'CSidebarNavDropdown',
+      name: 'Recicláveis',
+      route: '/recyclables',
+      icon: 'cil-recycle',
+      _children: [
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'Listar',
+          icon: 'cil-clipboard',
+          to: '/recyclables',
+        },
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'Cadastrar',
+          icon: 'cil-plus',
+          to: '/recyclables/new',
+        },
+      ]
+    },
   ],
   customer: [
     {
@@ -135,7 +155,55 @@ const _nav = {
         },
       ]
     },
-  ]
+  ],
+  collector: [
+    {
+      _tag: 'CSidebarNavItem',
+      name: 'Dashboard',
+      to: '/dashboard',
+      icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
+    },
+    {
+      _tag: 'CSidebarNavItem',
+      name: 'Coletas',
+      to: '/collects',
+      icon: <CIcon name="cil-leaf" customClasses="c-sidebar-nav-icon" />,
+    },
+    {
+      _tag: 'CSidebarNavItem',
+      name: 'Rotas',
+      to: '/routes',
+      icon: <CIcon name="cil-map" customClasses="c-sidebar-nav-icon" />,
+    }
+  ],
+  business: [
+    {
+      _tag: 'CSidebarNavItem',
+      name: 'Dadshboard',
+      to: '/dashboard',
+      icon: <CIcon name="cil-speedometer" customClasses="c-sidebar-nav-icon" />,
+    },
+    {
+      _tag: 'CSidebarNavDropdown',
+      name: 'Produtos',
+      to: '/products',
+      icon: <CIcon name="cil-leaf" customClasses="c-sidebar-nav-icon" />,
+      _children: [
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'Listar',
+          icon: 'cil-clipboard',
+          to: '/products',
+        },
+        {
+          _tag: 'CSidebarNavItem',
+          name: 'Cadastrar',
+          icon: 'cil-plus',
+          to: '/products/new',
+        }
+      ]
+    }
+  ],
 }
 
 export default _nav
