@@ -79,6 +79,8 @@ const User = () => {
             city: user_form?.profile?.address?.city,
             state: user_form?.profile?.address?.state,
             country: user_form?.profile?.address?.country,
+            latitude: user_form?.profile?.address?.latitude,
+            longitude: user_form?.profile?.address?.longitude,
             zip_code: user_form?.profile?.address?.zip_code
           }
         }
