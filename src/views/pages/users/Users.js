@@ -61,7 +61,7 @@ const Users = () => {
       <CCol>
         <CCard>
           <CCardHeader>
-            Usuários
+            <h3>Usuários</h3>
           </CCardHeader>
           <CCardBody>
           <CDataTable

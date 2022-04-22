@@ -2,7 +2,7 @@ import axios from 'axios'
 import { getToken, login } from './auth'
 
 const api = axios.create({
-  baseURL: 'https://app-coleta-api.herokuapp.com/api/v1',
+  baseURL: `${process.env.REACT_APP_HOST_DEV}/api/v1`,
   headers: {
     'Accept': '*/*',
     'Content-Type': 'application/json',

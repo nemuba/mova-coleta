@@ -34,7 +34,7 @@ const NewSettings = () => {
         .then(() => {
           toast.success('Configuração criada com sucesso!');
           dispatch(push('/settings'));
-        }).cath(err => {
+        }).catch(err => {
           toast.error(err.message);
         });
     } catch (err) {
