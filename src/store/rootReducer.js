@@ -11,6 +11,8 @@ import MapReducer from './map'
 import LocationReducer from './location'
 import RouteCollectReducer from './route_collect'
 import SettingsReducer from './settings'
+import ProductsSlicer from './products'
+import RecyclableSlicer from './recyclables'
 
 const rootReducer = (history) => combineReducers({
   router: connectRouter(history),
@@ -24,7 +26,9 @@ const rootReducer = (history) => combineReducers({
   location: LocationReducer,
   routes: RouteReducer,
   route_collect: RouteCollectReducer,
-  settings: SettingsReducer
+  settings: SettingsReducer,
+  products: ProductsSlicer,
+  recyclables: RecyclableSlicer
 })
 
 export default rootReducer
