@@ -1,5 +1,6 @@
-import React, { useEffect, useRef } from 'react'
+import { CFormText } from '@coreui/react'
 import { useField } from '@unform/core'
+import React, { useEffect, useRef } from 'react'
 
 export default function TextArea({ name, ...rest }) {
 
@@ -15,12 +16,15 @@ export default function TextArea({ name, ...rest }) {
   }, [fieldName, registerField])
 
   return (
-    <textarea
-      ref={inputRef}
-      defaultValue={defaultValue}
-      className={error ? 'form-control is-invalid' : 'form-control'}
-      placeholder={error}
-      {...rest}
-    />
+    <>
+      <textarea
+        ref={inputRef}
+        defaultValue={defaultValue}
+        className={error ? 'form-control is-invalid' : 'form-control'}
+        placeholder={error}
+        {...rest}
+      />
+      {error && <CFormText>{error}</CFormText>}
+    </>
   )
 }

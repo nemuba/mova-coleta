@@ -1,0 +1,111 @@
+import { CButton, CCard, CCardBody, CCardHeader, CCol, CContainer, CFormGroup, CLabel, CRow } from '@coreui/react';
+import { Form } from '@unform/web';
+import { push } from 'connected-react-router';
+import React from 'react';
+import { useEffect } from 'react';
+import { useRef } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useRouteMatch } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { Input } from 'src/reusable';
+import { fetchFindProduct, fetchUpdateProduct } from 'src/store/products';
+import * as Yup from 'yup';
+
+const ProductDetails = () => {
+  const { product, loading } = useSelector(state => state.products);
+  const dispatch = useDispatch(null)
+  const formRef = useRef(null)
+  const { params } = useRouteMatch()
+
+  useEffect(() => {
+    if (params && params.id) {
+      dispatch(fetchFindProduct(params.id))
+    }
+  }, [params, dispatch])
+
+  useEffect(() => {
+    if (product) {
+      formRef.current.setData({
+        id: product?.id,
+        user_id: product?.user?.id,
+        name: product?.name,
+        price: product?.price,
+        point: product?.point,
+      })
+    }
+  }, [product])
+
+
+  const handleSubmit = async (data) => {
+    try {
+      const schema = Yup.object().shape({
+        user_id: Yup.string().required('Usuário é obrigatório'),
+        name: Yup.string().required('Nome é obrigatório'),
+        price: Yup.number().typeError('Preço é obrigatório').required('Preço é obrigatório'),
+        point: Yup.number().typeError('Ponto é obrigatório').required('Ponto é obrigatório'),
+      });
+
+      await schema.validate(data, {
+        abortEarly: false,
+      });
+
+      await dispatch(fetchUpdateProduct(data))
+        .unwrap()
+        .then(() => {
+          toast.success('Produto atualizado com sucesso!');
+          dispatch(push('/products'))
+        })
+        .catch(() => {
+          toast.error('Erro ao atualizar produto!');
+        })
+    } catch (err) {
+      const validationErrors = {};
+
+      if (err instanceof Yup.ValidationError) {
+        err.inner.forEach(error => {
+          validationErrors[error.path] = error.message;
+        });
+        formRef.current.setErrors(validationErrors);
+      }
+    }
+  }
+
+  return (
+    <CContainer>
+      <CRow>
+        <CCol>
+          <CCard>
+            <CCardHeader>
+              <h3>Atualizar produto</h3>
+            </CCardHeader>
+            <CCardBody>
+              <Form onSubmit={handleSubmit} ref={formRef}>
+                <Input name="id" hidden />
+                <Input name="user_id" hidden />
+                <CFormGroup>
+                  <CLabel>Nome</CLabel>
+                  <Input name="name" type="text" placeholder="Nome" />
+                </CFormGroup>
+                <CFormGroup>
+                  <CLabel>Preço</CLabel>
+                  <Input name="price" type="number" placeholder="Preço" />
+                </CFormGroup>
+                <CFormGroup>
+                  <CLabel>Ponto</CLabel>
+                  <Input name="point" type="number" placeholder="Ponto" />
+                </CFormGroup>
+                <CFormGroup>
+                  <CButton disabled={loading} type="submit" color="success">
+                    Atualizar
+                  </CButton>
+                </CFormGroup>
+              </Form>
+            </CCardBody>
+          </CCard>
+        </CCol>
+      </CRow>
+    </CContainer>
+  );
+}
+
+export default ProductDetails;
