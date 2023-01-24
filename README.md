@@ -15,7 +15,7 @@
 [npm-next]: https://img.shields.io/npm/v/@coreui/react/next.png?style=flat-square
 [npm]: https://www.npmjs.com/package/@coreui/react
 
-[![Netlify Status](https://api.netlify.com/api/v1/badges/13b394c2-0940-42e2-873e-1d22089fda61/deploy-status)](https://app.netlify.com/sites/mova-coleta/deploys)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/86c10492-81db-45ce-911a-dadf530d68bc/deploy-status)](https://app.netlify.com/sites/mova-coleta/deploys)
 
 # MOVA - Coleta
 
