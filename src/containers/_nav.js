@@ -165,12 +165,6 @@ const _nav = {
     },
     {
       _tag: 'CSidebarNavItem',
-      name: 'Coletas',
-      to: '/collects',
-      icon: <CIcon name="cil-leaf" customClasses="c-sidebar-nav-icon" />,
-    },
-    {
-      _tag: 'CSidebarNavItem',
       name: 'Rotas',
       to: '/routes',
       icon: <CIcon name="cil-map" customClasses="c-sidebar-nav-icon" />,

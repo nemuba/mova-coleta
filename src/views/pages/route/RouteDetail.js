@@ -1,20 +1,18 @@
 import CIcon from '@coreui/icons-react';
-import { CButton, CCard, CCardBody, CCardHeader, CCol, CContainer, CFormGroup, CInputGroup, CInputGroupAppend, CInputGroupPrepend, CInputGroupText, CLabel, CRow } from '@coreui/react';
+import { CButton, CCard, CCardBody, CCardHeader, CCol, CContainer, CFormGroup, CInputGroup, CInputGroupPrepend, CInputGroupText, CLabel, CRow } from '@coreui/react';
 import { Form } from '@unform/web';
-import React, { useState } from 'react';
-import { useEffect } from 'react';
+import { push } from 'connected-react-router';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useRouteMatch } from 'react-router';
+import { toast } from 'react-toastify';
 import { Input, SelectInput } from 'src/reusable';
-import { fetchAllUsers } from '../../../store/users';
-import { fetchFindRoute, fetchUpdateRoute } from '../../../store/routes';
-import { useRef } from 'react';
-import * as Yup from 'yup'
+import * as Yup from 'yup';
 import { fetchAllCollects } from '../../../store/collects';
 import { getLocation } from '../../../store/fetch_actions/location';
+import { fetchFindRoute, fetchUpdateRoute } from '../../../store/routes';
+import { fetchAllUsers } from '../../../store/users';
 import MapRouteCollectDetail from './MapRouteCollectDetail';
-import { toast } from 'react-toastify';
-import { push } from 'connected-react-router';
 
 
 const RouteDetail = () => {
@@ -124,10 +122,7 @@ const RouteDetail = () => {
                       <CInputGroupPrepend>
                         <CInputGroupText><CIcon name="cil-calendar" /></CInputGroupText>
                       </CInputGroupPrepend>
-                      <Input type="date" id="request_date" name="request_date" placeholder="Data da Solicitação" />
-                      <CInputGroupAppend>
-                        <CInputGroupText><CIcon name="cil-truck" /></CInputGroupText>
-                      </CInputGroupAppend>
+                      <Input readOnly type="date" id="request_date" name="request_date" placeholder="Data da Solicitação" />
                     </CInputGroup>
                   </CCol>
                   <CCol lg="4" md="4" sm="12" className="pt-2">
@@ -136,10 +131,7 @@ const RouteDetail = () => {
                       <CInputGroupPrepend>
                         <CInputGroupText><CIcon name="cil-calendar" /></CInputGroupText>
                       </CInputGroupPrepend>
-                      <Input type="date" id="collect_date" name="collect_date" placeholder="Data da Coleta" />
-                      <CInputGroupAppend>
-                        <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
-                      </CInputGroupAppend>
+                      <Input readOnly type="date" id="collect_date" name="collect_date" placeholder="Data da Coleta" />
                     </CInputGroup>
                   </CCol>
                   <CCol lg="4" md="4" sm="12" className="pt-2">
