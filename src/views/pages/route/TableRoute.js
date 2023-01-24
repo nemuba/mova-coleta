@@ -1,9 +1,9 @@
 import CIcon from '@coreui/icons-react'
 import { CButton, CDataTable } from '@coreui/react'
-import React from 'react'
+import moment from 'moment'
 import { Link, useHistory } from 'react-router-dom'
 import Modal from './Modal'
-import moment from 'moment'
+import ModalFinished from './ModalFinished'
 
 const TableRoute = ({ routes = [], loading }) => {
   const history = useHistory()
@@ -12,6 +12,7 @@ const TableRoute = ({ routes = [], loading }) => {
     { key: 'request_date', label: 'Data da Solicitação', _style: { width: '20%' } },
     { key: 'collect_date', label: 'Data da Coleta', _style: { width: '20%' } },
     { key: 'user_id', label: 'Coletor', _style: { width: '20%' } },
+    { key: 'status', label: 'Status', _style: { width: '20%' } },
     { key: 'options', label: 'Opções', sorter: false, filter: false, _style: { width: '20%' } },
   ]
 
@@ -46,12 +47,16 @@ const TableRoute = ({ routes = [], loading }) => {
           const date = item.collect_date ? moment(item.collect_date) : null
           return <td>{date ? date.format('DD/MM/YYYY') : date}</td>
         },
+        'status': (item) => {
+          return <td>{item.status}</td>
+        },
         'options': (item) => (
           <td>
             <CButton title="Visualizar" size="sm" color="primary" className="mr-1" onClick={() => viewRoute(item)}>
               <CIcon name="cil-search" />
             </CButton>
             <Modal route={item} title="Excluir rota" />
+            <ModalFinished route={item} title="MOVA - Finalizar rota" />
           </td>
         )
       }}

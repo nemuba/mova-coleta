@@ -1,15 +1,15 @@
 import CIcon from '@coreui/icons-react';
 import { CButton, CModal, CModalBody, CModalFooter, CModalHeader } from '@coreui/react';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { updateAction } from 'src/store/profile';
 import { fetchCurrentUser } from '../../../store/auth';
-import { fetchDeleteRoute } from '../../../store/routes';
+import { fetchUpdateRoute } from '../../../store/routes';
 import { push } from 'connected-react-router';
 
-const Modal = ({ route, title }) => {
+const ModalFinished = ({ route, title }) => {
   const dispatch = useDispatch(null);
   const history = useHistory();
   const [modal, setModal] = useState(false);
@@ -18,18 +18,19 @@ const Modal = ({ route, title }) => {
     setModal(!modal);
   }
 
-  const handleExcludeCollect = async (route) => {
-    await dispatch(fetchDeleteRoute(route.id))
+  const handleFinishedRoute = async (route) => {
+    await dispatch(fetchUpdateRoute({ ...route, status: 1 }))
       .unwrap()
-      .then(async () =>{
-        toast.success('Rota excluída com sucesso!');
+      .then(async () => {
+        toast.success('Rota finalizada!');
         await dispatch(fetchCurrentUser())
           .unwrap()
           .then(res => dispatch(updateAction(res.profile)))
+
         dispatch(push('/routes'));
       })
-      .catch(() =>{
-        toast.error('Erro ao excluir rota');
+      .catch(() => {
+        toast.error('Erro ao finalizar rota');
       })
 
     toggle();
@@ -41,11 +42,11 @@ const Modal = ({ route, title }) => {
       <CButton
         type="button"
         size="sm"
-        color="danger"
+        color="success"
         onClick={toggle}
-        title="Excluir"
+        title="Finalizar rota"
       >
-        <CIcon name="cil-trash" />
+        <CIcon name="cil-check" />
       </CButton>
       <CModal
         show={modal}
@@ -54,10 +55,10 @@ const Modal = ({ route, title }) => {
       >
         <CModalHeader>{title}</CModalHeader>
         <CModalBody>
-          Realmente deseja confirmar operação de exclusão?
+          <p>Tem certeza que deseja finalizar a rota?</p>
         </CModalBody>
         <CModalFooter>
-          <CButton onClick={() => handleExcludeCollect(route)} type="button" color="primary">Excluir</CButton>{' '}
+          <CButton onClick={() => handleFinishedRoute(route)} type="button" color="primary">Finalizar</CButton>{' '}
           <CButton
             type="button"
             color="danger"
@@ -69,4 +70,4 @@ const Modal = ({ route, title }) => {
   )
 }
 
-export default Modal;
+export default ModalFinished;

@@ -1,18 +1,19 @@
+import { CButton, CCard, CCardBody, CCardHeader, CCol, CContainer, CDataTable, CFormGroup, CInputGroup, CInputGroupPrepend, CInputGroupText, CLabel, CRow } from '@coreui/react';
 import CIcon from '@coreui/icons-react';
-import { CButton, CCard, CCardBody, CCardHeader, CCol, CContainer, CDataTable, CFormGroup, CInputGroup, CInputGroupAppend, CInputGroupPrepend, CInputGroupText, CLabel, CRow } from '@coreui/react';
 import { Form } from '@unform/web';
-import React, { useRef, useEffect, useState } from 'react';
+import { push } from 'connected-react-router';
+import moment from 'moment';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Input, SelectInput } from '../../../reusable';
-import { fetchAllUsers } from '../../../store/users';
+import { toast } from 'react-toastify';
 import * as Yup from 'yup';
-import { fetchCreateRoute } from '../../../store/routes';
+import { Input, SelectInput } from '../../../reusable';
 import { fetchAllCollects } from '../../../store/collects';
 import { getLocation } from '../../../store/fetch_actions/location';
+import { fetchCreateRoute } from '../../../store/routes';
+import { fetchAllUsers } from '../../../store/users';
 import MapRouteCollect from './MapRouteCollect';
 import ModalRemoveRouteCollect from './ModalRemoveRouteCollect';
-import { push } from 'connected-react-router';
-import { toast } from 'react-toastify';
 
 const NewRoute = () => {
   const { loading } = useSelector(state => state.routes);
@@ -129,6 +130,7 @@ const NewRoute = () => {
     }
   }
 
+
   return (
     <CContainer>
       <CRow>
@@ -144,24 +146,19 @@ const NewRoute = () => {
                     <CLabel>Data da Solicitação</CLabel>
                     <CInputGroup>
                       <CInputGroupPrepend>
-                        <CInputGroupText><CIcon name="cil-calendar" /></CInputGroupText>
+                        <CInputGroupText>
+                          <CIcon name="cil-calendar" />
+                        </CInputGroupText>
                       </CInputGroupPrepend>
-                      <Input type="date" id="request_date" name="request_date" placeholder="Data da Solicitação" />
-                      <CInputGroupAppend>
-                        <CInputGroupText><CIcon name="cil-location-pin" /></CInputGroupText>
-                      </CInputGroupAppend>
-                    </CInputGroup>
-                  </CCol>
-                  <CCol lg="4" md="4" sm="12" className="pt-2">
-                    <CLabel>Data da Coleta</CLabel>
-                    <CInputGroup>
-                      <CInputGroupPrepend>
-                        <CInputGroupText><CIcon name="cil-calendar" /></CInputGroupText>
-                      </CInputGroupPrepend>
-                      <Input type="date" id="collect_date" name="collect_date" placeholder="Data da Coleta" />
-                      <CInputGroupAppend>
-                        <CInputGroupText><CIcon name="cil-truck" /></CInputGroupText>
-                      </CInputGroupAppend>
+
+                      <Input
+                        readOnly
+                        type="date"
+                        id="request_date"
+                        name="request_date"
+                        placeholder="Data da Solicitação"
+                        value={new moment().format('YYYY-MM-DD')}
+                      />
                     </CInputGroup>
                   </CCol>
                   <CCol lg="4" md="4" sm="12" className="pt-2">
