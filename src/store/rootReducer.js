@@ -13,6 +13,7 @@ import RouteCollectReducer from './route_collect'
 import SettingsReducer from './settings'
 import ProductsSlicer from './products'
 import RecyclableSlicer from './recyclables'
+import CustomerSlicer from './customers'
 
 const rootReducer = (history) => combineReducers({
   router: connectRouter(history),
@@ -20,6 +21,7 @@ const rootReducer = (history) => combineReducers({
   auth: AuthReducer,
   profile: ProfileReducer,
   users: UsersReducer,
+  customers: CustomerSlicer,
   system_modules: SystemModuleReducer,
   collects: CollectReducer,
   map: MapReducer,
