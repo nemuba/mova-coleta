@@ -6,33 +6,34 @@ import { toast } from 'react-toastify';
 import { Input, SelectInput } from 'src/reusable';
 import { fetchCurrentUser } from 'src/store/auth';
 import { fetchAllCustomers, fetchUpdateCustomer } from 'src/store/customers';
+import { fetchAllProducts } from 'src/store/products';
 import * as Yup from 'yup';
 
 const ExchangeForm = () => {
   const { customers } = useSelector(state => state.customers)
+  const { products } = useSelector(state => state.products)
   const { user } = useSelector(state => state.auth)
   const dispatch = useDispatch(null)
   const formRef = useRef(null)
 
-  const [products, setProducts] = useState([])
-  const [options, setOptions] = useState([])
+  const [optionProducts, setOptionProducts] = useState([])
+  const [optionCustomers, setOptionCustomers] = useState([])
 
   useEffect(() => {
     dispatch(fetchAllCustomers())
+    dispatch(fetchAllProducts())
   }, [dispatch])
 
   useEffect(() => {
     if (customers) {
-      const options = customers.map(customer => ({ label: customer.email, value: customer.id }))
-      setOptions(options)
+      setOptionCustomers(customers.map(customer => ({ value: customer.id, label: customer.email })))
     }
 
-    if (user) {
-      const products = user?.products.map(product => ({ label: product.name, value: product.id }))
-      setProducts(products)
+    if (products) {
+      setOptionProducts(products.map(product => ({ value: product.id, label: product.name })))
     }
 
-  }, [customers, user]);
+  }, [customers, products]);
 
   const onChangeCustomer = (e) => {
     const customer = customers.find(customer => customer.id === e.value)
@@ -135,7 +136,7 @@ const ExchangeForm = () => {
                       id="user_id"
                       name="user_id"
                       placeholder="Cliente"
-                      options={options}
+                      options={optionCustomers}
                       onChange={onChangeCustomer}
                     />
                   </CCol>
@@ -151,7 +152,7 @@ const ExchangeForm = () => {
                       id="product_id"
                       name="product_id"
                       placeholder="Cliente"
-                      options={products}
+                      options={optionProducts}
                       onChange={onChangeProduct}
                     />
                   </CCol>
