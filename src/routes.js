@@ -22,6 +22,8 @@ import ProductDetails from './views/pages/products/ProductDetails'
 import Recyclables from './views/pages/recyclables/Recyclables'
 import NewRecyclable from './views/pages/recyclables/NewRecyclable'
 import RecyclableDetails from './views/pages/recyclables/RecyclableDetails'
+import Exchange from './views/pages/exchange/Exchange'
+import ExchangeForm from './views/pages/exchange/ExchangeForm'
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -49,6 +51,8 @@ const routes = [
   { protected: true, path: '/recyclables', exact: true, name: 'Recicláveis', component: Recyclables },
   { protected: true, path: '/recyclables/new', exact: true, name: 'Cadastrar Reciclável', component: NewRecyclable },
   { protected: true, path: '/recyclables/:id', exact: true, name: 'Atualizar Reciclável', component: RecyclableDetails },
+  { protected: true, path: '/exchange', exact: true, name: 'Troca de Pontos', component: Exchange },
+  { protected: true, path: '/exchange/new', exact: true, name: 'Cadastrar Troca', component: ExchangeForm },
 ];
 
 export default routes;

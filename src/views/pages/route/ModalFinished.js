@@ -19,7 +19,7 @@ const ModalFinished = ({ route, title }) => {
   }
 
   const handleFinishedRoute = async (route) => {
-    await dispatch(fetchUpdateRoute({ ...route, status: 1 }))
+    await dispatch(fetchUpdateRoute({ id: route.id, status: 1, collect_date: new Date() }))
       .unwrap()
       .then(async () => {
         toast.success('Rota finalizada!');
