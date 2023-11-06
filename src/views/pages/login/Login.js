@@ -1,5 +1,4 @@
-import React, { useRef } from 'react'
-import { Link } from 'react-router-dom'
+import CIcon from '@coreui/icons-react'
 import {
   CButton,
   CCard,
@@ -12,17 +11,18 @@ import {
   CInputGroupText,
   CRow
 } from '@coreui/react'
-import CIcon from '@coreui/icons-react'
 import { Form } from '@unform/web'
-import logo from '../../../assets/images/logo.png'
-import * as Yup from 'yup'
-import { Input } from  '../../../reusable'
+import { push } from 'connected-react-router'
+import { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
+import * as Yup from 'yup'
+import logo from '../../../assets/images/logo.png'
+import { Input } from '../../../reusable'
+import { isAuthenticated, login } from '../../../services/auth'
 import { fetchLoginAuth } from '../../../store/auth'
 import { updateAction } from '../../../store/profile'
-import { login, isAuthenticated } from '../../../services/auth'
-import { toast } from 'react-toastify'
-import { push } from 'connected-react-router'
 
 const Login = () => {
   const { loading } = useSelector(state => state.auth)
@@ -76,7 +76,7 @@ const Login = () => {
     <div className="c-app c-default-layout flex-row align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
-          <CCol md="8">
+          <CCol md="8" lg="12" sm="12">
             <CCardGroup>
               <CCard className="p-4">
                 <CCardBody>
@@ -107,7 +107,7 @@ const Login = () => {
                   </Form>
                 </CCardBody>
               </CCard>
-              <CCard className="text-white bg-primary py-5 d-md-down-none" style={{ width: '44%' }}>
+              <CCard className="text-white bg-primary py-5">
                 <CCardBody className="d-flex align-items-between flex-column">
                   <CCol sm="12" lg="12" xs="12" className="text-center">
                     <h2>Criar conta</h2>
